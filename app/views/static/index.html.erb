@@ -1,0 +1,116 @@
+<div class="container">
+  <!-- Hero Section -->
+  <section class="hero animate-fade-in">
+    <h2><%= @site_config.welcome_title %></h2>
+    <p><%= @site_config.welcome_text %></p>
+  </section>
+
+  <% if @posts.any? %>
+    <!-- Featured Post (First Post) -->
+    <% featured_post = @posts.first %>
+    <% remaining_posts = @posts[1..-1] || [] %>
+    
+    <section class="featured-post animate-slide-up" style="margin-bottom: var(--space-16);">
+      <article class="post-card" style="max-width: none; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border: 1px solid var(--gray-200);">
+        <% if featured_post.featured_image_url.present? %>
+          <div class="post-card-image" style="aspect-ratio: 21/9; position: relative; overflow: hidden;">
+            <img src="<%= featured_post.featured_image_url %>" alt="<%= featured_post.featured_image_alt.presence || featured_post.title %>" loading="lazy" style="transition: transform 0.5s var(--ease-out);">
+            <div style="position: absolute; top: 1.5rem; left: 1.5rem;">
+              <span class="badge badge-featured">FEATURED</span>
+            </div>
+          </div>
+        <% else %>
+          <div style="padding: var(--space-6); text-align: center;">
+            <span class="badge badge-featured">FEATURED</span>
+          </div>
+        <% end %>
+        <div class="post-card-content" style="padding: var(--space-8);">
+          <header style="margin-bottom: var(--space-6);">
+            <h2 style="font-size: var(--text-3xl); margin-bottom: var(--space-4); font-weight: 800; letter-spacing: var(--tracking-tight); line-height: var(--leading-tight);">
+              <a href="/<%= featured_post.slug %>.html" style="color: var(--gray-900); text-decoration: none; transition: color 0.3s var(--ease-out);" onmouseover="this.style.color='var(--primary-600)'" onmouseout="this.style.color='var(--gray-900)'">
+                <%= featured_post.title %>
+              </a>
+            </h2>
+            <div class="post-card-meta" style="font-size: var(--text-sm); margin-bottom: var(--space-4);">
+              <span><%= (featured_post.published_at || featured_post.created_at).strftime("%B %d, %Y") %></span>
+              <span class="post-meta-divider"></span>
+              <span><%= featured_post.reading_time %> min read</span>
+            </div>
+          </header>
+          <div class="post-excerpt" style="font-size: var(--text-lg); line-height: var(--leading-relaxed); color: var(--gray-700); margin-bottom: var(--space-6); font-family: var(--font-serif);">
+            <%= featured_post.excerpt.presence || truncate(strip_tags(markdown_to_html(featured_post.body_md)), length: 300) %>
+          </div>
+          <a href="/<%= featured_post.slug %>.html" class="btn btn-primary">
+            Read Full Article
+            <div style="margin-left: var(--space-2); width: 1rem; height: 1rem;">
+              <%= heroicon_tag "arrow-right", size: 20 %>
+            </div>
+          </a>
+        </div>
+      </article>
+    </section>
+    
+    <% if remaining_posts.any? %>
+      <!-- Recent Posts Grid -->
+      <section class="animate-slide-up" style="animation-delay: 0.2s;">
+        <header style="text-align: center; margin-bottom: var(--space-12);">
+          <h3 style="font-size: var(--text-3xl); font-weight: 700; color: var(--gray-900); margin-bottom: var(--space-2); letter-spacing: var(--tracking-tight);">Recent Posts</h3>
+          <p style="color: var(--gray-600); font-size: var(--text-lg);">Latest thoughts and insights</p>
+        </header>
+        <div class="post-grid">
+          <% remaining_posts.each_with_index do |post, index| %>
+            <article class="post-card animate-slide-up" style="animation-delay: <%= (index * 0.1) + 0.3 %>s;">
+              <% if post.featured_image_url.present? %>
+                <div class="post-card-image">
+                  <img src="<%= post.featured_image_url %>" alt="<%= post.featured_image_alt.presence || post.title %>" loading="lazy">
+                </div>
+              <% else %>
+                <div class="post-card-image" style="background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-50) 100%); display: flex; align-items: center; justify-content: center;">
+                  <div style="width: 3rem; height: 3rem; color: var(--gray-400);">
+                    <%= heroicon_tag "document-text", size: 24 %>
+                  </div>
+                </div>
+              <% end %>
+              <div class="post-card-content">
+                <header style="margin-bottom: var(--space-3);">
+                  <h2 style="margin-bottom: var(--space-2);">
+                    <a href="/<%= post.slug %>.html" style="color: var(--gray-900); text-decoration: none; transition: color 0.3s var(--ease-out); line-height: var(--leading-tight); display: block;" onmouseover="this.style.color='var(--primary-600)'" onmouseout="this.style.color='var(--gray-900)'">
+                      <%= post.title %>
+                    </a>
+                  </h2>
+                  <div class="post-card-meta">
+                    <span><%= (post.published_at || post.created_at).strftime("%b %d, %Y") %></span>
+                    <span class="post-meta-divider"></span>
+                    <span><%= post.reading_time %> min read</span>
+                  </div>
+                </header>
+                <div class="post-excerpt" style="flex: 1; margin-bottom: var(--space-4); color: var(--gray-600); line-height: var(--leading-relaxed);">
+                  <%= post.excerpt.presence || truncate(strip_tags(markdown_to_html(post.body_md)), length: 150) %>
+                </div>
+                <a href="/<%= post.slug %>.html" style="color: var(--primary-600); font-weight: 500; font-size: var(--text-sm); text-decoration: none; display: inline-flex; align-items: center; transition: color 0.2s var(--ease-out);" onmouseover="this.style.color='var(--primary-700)'" onmouseout="this.style.color='var(--primary-600)'">
+                  Read article
+                  <div style="margin-left: var(--space-1); width: 0.875rem; height: 0.875rem;">
+                    <%= heroicon_tag "arrow-right", size: 20 %>
+                  </div>
+                </a>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  <% else %>
+    <!-- Empty State -->
+    <div class="animate-fade-in" style="text-align: center; padding: var(--space-20) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="margin-bottom: var(--space-8);">
+        <div style="width: 5rem; height: 5rem; margin: 0 auto var(--space-4); background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 2.5rem; height: 2.5rem; color: var(--gray-400);">
+            <%= heroicon_tag "book-open", size: 24 %>
+          </div>
+        </div>
+      </div>
+      <h2 style="font-size: var(--text-2xl); font-weight: 700; color: var(--gray-900); margin-bottom: var(--space-2); letter-spacing: var(--tracking-tight);">No posts yet</h2>
+      <p style="color: var(--gray-600); font-size: var(--text-lg); line-height: var(--leading-relaxed); max-width: 400px; margin: 0 auto;">Check back soon for new content and insights on Rails development!</p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,16 @@
+<div class="container-narrow">
+  <article>
+    <header>
+      <h1>About <%= @site_config.site_name %></h1>
+      <div class="post-meta">
+        <span>Learn more about this blog</span>
+      </div>
+    </header>
+
+    <div class="post-content">
+      <%# brakeman:disable CrossSiteScripting %>
+      <%= raw markdown_to_html(@site_config.about_content) %>
+      <%# brakeman:enable CrossSiteScripting %>
+    </div>
+  </article>
+</div>
