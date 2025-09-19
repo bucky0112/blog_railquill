@@ -6,38 +6,2793 @@
     <description>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.</description>
     <language>en-us</language>
     <atom:link href="https://railquill.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sun, 07 Sep 2025 12:17:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Sep 2025 18:54:59 +0000</lastBuildDate>
     <generator>Railquill - Rails Blog Generator</generator>
     
     <item>
-      <title>Debug Test Post 1757247452</title>
-      <link>https://railquill.vercel.app/debug-test-post-1757247452.html</link>
-      <description>Test Header
+      <title>用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲</title>
+      <link>https://railquill.vercel.app/rust-bevy-Raiden.html</link>
+      <description>小時候在大型機台玩《雷電》時，總覺得能自己做出一個射擊遊戲一定很酷。
 
-Some content here</description>
+現在算是實現了，而且還是用 Rust
+...</description>
       <content:encoded><![CDATA[
-        &lt;h2 id=&quot;test-header&quot;&gt;Test Header&lt;/h2&gt;
+          <img src="https://github.com/bucky0112/blog-images/blob/main/images/ferris_plane.webp?raw=true" alt="Bevy version Raiden" style="max-width: 100%; height: auto; margin-bottom: 1rem;" />
+        &lt;p&gt;小時候在大型機台玩《雷電》時，總覺得能自己做出一個射擊遊戲一定很酷。最近我正好在研究 Rust 的遊戲引擎 &lt;a href=&quot;https://bevy.org/&quot;&gt;Bevy&lt;/a&gt;，挑戰做出一個簡化版的經典射擊遊戲 &lt;strong&gt;雷電 (Raiden)&lt;/strong&gt;。&lt;/p&gt;
 
-&lt;p&gt;Some content here&lt;/p&gt;
+&lt;p&gt;這個 Demo 包含以下功能：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;玩家可以用 WASD / 方向鍵 移動飛機&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;按 空白鍵 發射子彈&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;敵人會自動生成並從上方往下移動&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;子彈擊中敵人 → 敵人與子彈同時消失&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;超出畫面的物件會自動清理&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;最終效果大概是這樣：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/bucky0112/blog-images/main/images/img_20250919_000255.gif&quot; alt=&quot;demo&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;bevy&quot;&gt;Bevy 為什麼適合這個題材？&lt;/h2&gt;
+
+&lt;p&gt;Bevy 採用 ECS（Entity Component System） 架構，把遊戲物件拆成三個元素：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Entity（實體）：玩家、敵人、子彈&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Component（元件）：位置、速度、角色類型&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;System（系統）：移動、生成、碰撞、清理&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;對「射擊遊戲」來說，這個架構超直觀：敵人就是一個 entity，子彈也是，給它一個 velocity component，它們就會自己動起來。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2d1a51ebcd84e3ca&quot;&gt;玩家控制&lt;/h2&gt;
+
+&lt;p&gt;玩家飛機的操作就是 方向鍵 / WASD。這裡我加了一個小細節：玩家不能飛出螢幕邊界。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;transform.translation.x = transform.translation.x
+    .clamp(-WINDOW_WIDTH / 2.0 + 25.0, WINDOW_WIDTH / 2.0 - 25.0);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這行程式碼就是用來「把你擋在畫面裡」。我一開始還忘了加，結果飛機直接飛出視窗消失XD&lt;/p&gt;
+
+&lt;h2 id=&quot;part-6542ac97d61&quot;&gt;射擊&lt;/h2&gt;
+
+&lt;p&gt;只要按空白鍵，玩家就能發射一顆黃色小子彈往上飛。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;commands.spawn((
+    Sprite {
+        color: Color::srgb(1.0, 1.0, 0.0),
+        custom_size: Some(Vec2::new(5.0, 10.0)),
+        ..default()
+    },
+    Transform::from_xyz(player_x, player_y + 30.0, 0.0),
+    Bullet,
+    Velocity(Vec3::new(0.0, BULLET_SPEED, 0.0)),
+));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;子彈就是一個矩形精靈，加上 Velocity，剩下交給移動系統就好。
+第一次按下空白鍵，看到畫面裡飛出黃色子彈的瞬間，彷彿夢回童年。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2d39d1bed1bb5444&quot;&gt;產生敵人&lt;/h2&gt;
+
+&lt;p&gt;敵人每隔兩秒會在隨機位置生成，然後慢慢往下移動：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;let x = (rand::random::&amp;lt;f32&amp;gt;() - 0.5) * (WINDOW_WIDTH - 100.0);
+commands.spawn((
+    Sprite::from_image(asset_server.load(&quot;player2.png&quot;)),
+    Transform::from_xyz(x, WINDOW_HEIGHT / 2.0 + 50.0, 0.0),
+    Enemy,
+    Velocity(Vec3::new(0.0, -ENEMY_SPEED, 0.0)),
+));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;當我第一次看到敵人真的「一架一架掉下來」時，瞬間覺得好像真的可以玩了 😎。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2d884cd2bcd875b0&quot;&gt;碰撞檢測&lt;/h2&gt;
+
+&lt;p&gt;子彈跟敵人碰到就同歸於盡，這裡我用了最直白的寫法：算距離。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;if bullet_transform.translation.distance(enemy_transform.translation) &amp;lt; 30.0 {
+    commands.entity(bullet_entity).despawn();
+    commands.entity(enemy_entity).despawn();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完全沒有物理引擎，單純距離小於 30 就消失。但就算這麼陽春，打掉第一架敵機的瞬間還是很讚。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2da7f3c6269d5783&quot;&gt;自動清理&lt;/h2&gt;
+
+&lt;p&gt;最後一件必須要處理的是，子彈飛出畫面、敵人掉下去，都要刪掉。不然遊戲跑久了會 lag。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;if transform.translation.y &amp;gt; WINDOW_HEIGHT / 2.0 + 100.0
+    || transform.translation.y &amp;lt; -WINDOW_HEIGHT / 2.0 - 100.0 {
+    commands.entity(entity).despawn();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;記得把這段加上去，不然最後會卡QQ&lt;/p&gt;
+
+&lt;h2 id=&quot;part-6542acf8e35&quot;&gt;小結&lt;/h2&gt;
+
+&lt;p&gt;總之，這是一個運用 Bevy 就能寫出來的一個遊戲，雖然很簡單，但是應該可以有很多可能性，例如可以再加上特效、聲音，可能還可以加上計分系統。&lt;/p&gt;
+
+&lt;p&gt;這篇文章只是我用 Bevy 寫遊戲的一個小實驗。其實我還在寫一個完整的 Bevy 系列文，會一步一步帶大家從 ECS 入門，到做出一個 Rogue-lite 小遊戲。
+如果你對 Rust 遊戲開發有興趣，歡迎看一下&lt;a href=&quot;https://ithelp.ithome.com.tw/users/20120293/ironman/8770&quot;&gt;鐵人賽系列&lt;/a&gt;&lt;/p&gt;
 
       ]]></content:encoded>
-      <pubDate>Sun, 07 Sep 2025 12:17:32 +0000</pubDate>
-      <guid isPermaLink="true">https://railquill.vercel.app/debug-test-post-1757247452.html</guid>
+      <pubDate>Sat, 20 Sep 2025 02:24:24 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/rust-bevy-Raiden.html</guid>
       <author>bucky0112@gmail.com (Bucky Chu)</author>
       <category>Reading Time: 1 minutes</category>
     </item>
     <item>
-      <title>Test Post</title>
-      <link>https://railquill.vercel.app/test-post.html</link>
-      <description>Test Header\n\nSome content</description>
+      <title>基礎 Vue.js(上)</title>
+      <link>https://railquill.vercel.app/vue-js.html</link>
+      <description>身為目前 3 大前端應用框架之一的 Vue.js，截至目前為止在 GitHub 已經累積 160k 的星星數，以下是個人的學習筆記。</description>
       <content:encoded><![CDATA[
-        &lt;h2 id=&quot;test-header-n-nsome-content&quot;&gt;Test Header\n\nSome content&lt;/h2&gt;
+        &lt;p&gt;身為目前 3 大前端應用框架之一的 Vue.js，截至目前為止在 GitHub 已經累積 160k 的星星數，以下是個人的學習筆記。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-2ea8089a39269bfe&quot;&gt;開發環境&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;在 &lt;a href=&quot;https://cn.vuejs.org/v2/guide/installation.html&quot;&gt;Vue.js官網&lt;/a&gt; 中建議在瀏覽器上安裝 &lt;a href=&quot;https://github.com/vuejs/vue-devtools#vue-devtools&quot;&gt;Vue Devtools&lt;/a&gt;，這樣可以方便在瀏覽器中觀看訊息。&lt;/p&gt;
+
+&lt;p&gt;在 &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 中直接載入 Vue 的檔案，在官網有提供各式檔案來源可供存取，要注意的是如果在開發環境下，建議使用開發版本，這樣會提供完整的警告訊息，方便開發者去查閱問題來源。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-1096b2c8a6428fbf&quot;&gt;應用程式建立&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;首先在 HTML 建立一個 &lt;code&gt;div&lt;/code&gt; ，這邊可以使用 id 或是 class，一般建議是使用 id，&lt;/p&gt;
+
+&lt;p&gt;接著在 &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 中輸入建立 Vue 的起手式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div&amp;gt;
+  &amp;lt;div id=&quot;app&quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+  var app = new Vue({
+    el: &#39;#app&#39;
+  })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後打開瀏覽器的開發人員工具，如果有安裝  &lt;a href=&quot;https://github.com/vuejs/vue-devtools#vue-devtools&quot;&gt;Vue Devtools&lt;/a&gt; 就可以看到已經建立了一個 Root&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/01jwjmg.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果要建立資料的話，然後顯示在 HTML 上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div&amp;gt;
+  &amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;!-- 建立完data，想要顯示message的話，在 {{ }} 中放入名稱就可以顯示 --&amp;gt;
+    {{message}} 
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+  var app = new Vue({
+    el: &#39;#app&#39;,
+    // 建立data，裡面可以存放資料，例如 message
+    data: {
+      message: &#39;Hello World&#39;
+    }
+  })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意事項： 一個頁面可以同時建立 2 個 app，但是 3 個就沒辦法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div&amp;gt;
+  &amp;lt;div id=&quot;app&quot;&amp;gt;
+    {{message}} 
+  &amp;lt;/div&amp;gt;
+
+  &amp;lt;div id=&quot;app2&quot;&amp;gt;
+    {{message}} 
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+  var app = new Vue({
+    el: &#39;#app&#39;,
+    data: {
+        message: &#39;Hello&#39;
+    }
+  })
+
+  var app2 = new Vue({
+    el: &#39;app2&#39;,
+    data: {
+        message: &#39;World&#39;
+    }
+  })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;建立兩個是可以的，一樣會出現 2 個 Root&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/BYN501c.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;但是如果建立 3 個 app，就會出現找不到 element&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/eyWxDkg.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;part-262484cb5922076f&quot;&gt;雙向綁定的資料&lt;/h2&gt;
+
+&lt;p&gt;在 Vue 中，有雙向綁定的特色，&lt;/p&gt;
+
+&lt;p&gt;前面提到如果要將資料顯示在網頁上，可以使用 &lt;code&gt;{% raw %}{{  }}{% endraw %}&lt;/code&gt; 這個語法，在 Vue 的語法中還有其他可以使用的：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;v-model&lt;/li&gt;
+&lt;li&gt;v-text&lt;/li&gt;
+&lt;li&gt;v-html&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;v-model&quot;&gt;v-model 的使用&lt;/h3&gt;
+
+&lt;p&gt;主要是使用在：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;input&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;textarea&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;components&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  {{message}}
+  &amp;lt;input type=&quot;text&quot; v-model=&quot;message&quot;&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+  var app = new Vue({
+    el: &#39;#app&#39;,
+    data: {
+        message: &#39;Hello&#39;
+    }
+  })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在畫面上 &lt;code&gt;&amp;lt;text&amp;gt;&lt;/code&gt; 跟 &lt;code&gt;{{message}}&lt;/code&gt; 就會顯示一樣的內容&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/bwOOIxu.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;而當直接在畫面修改 &lt;code&gt;&amp;lt;text&amp;gt;&lt;/code&gt; 輸入欄中的內容時，&lt;code&gt;{{message}}&lt;/code&gt;也會一起改變。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/NvbXPV9.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;v-text-v-html&quot;&gt;v-text 跟 v-html 使用的方法&lt;/h3&gt;
+
+&lt;p&gt;兩者差不多，都可以直接顯示內容，差別在 &lt;code&gt;v-html&lt;/code&gt; 可以加入 html 標籤&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  {{message}}
+  &amp;lt;input type=&quot;text&quot; v-model=&quot;message&quot;&amp;gt;
+  &amp;lt;div v-text=&quot;message&quot;&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;div v-html=&quot;message&quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script&amp;gt;
+  var app = new Vue({
+    el: &#39;#app&#39;,
+
+    data: {
+        message: &#39;&amp;lt;h1&amp;gt;Hello&amp;lt;/h1&amp;gt;&#39;
+    }
+  })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在畫面上的呈現是這樣：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Rhr0U3R.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
       ]]></content:encoded>
-      <pubDate>Sun, 07 Sep 2025 12:15:43 +0000</pubDate>
-      <guid isPermaLink="true">https://railquill.vercel.app/test-post.html</guid>
+      <pubDate>Mon, 30 Mar 2020 11:34:35 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue-js.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>使用 Hexo 在 GitHub 部署 Blog</title>
+      <link>https://railquill.vercel.app/hexo-github-blog.html</link>
+      <description>本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。&lt;/p&gt;
+
+&lt;p&gt;剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-2b9362c5b74b6287&quot;&gt;前置作業&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;strong&gt;安裝需求&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;需要安裝：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Node.js&lt;/li&gt;
+&lt;li&gt;Git&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;以下方式為 Mac 使用者方法，其他作業系統請詳閱&lt;a href=&quot;https://hexo.io/docs/index.html&quot;&gt;官網&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝 Xcode&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;首先到 App Store 安裝 Xcode，安裝完成後，
+開啟它並前往 Preferences -&amp;gt; Download -&amp;gt; Command Line Tools -&amp;gt; Install 安裝命令列工具。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝 node.js&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;使用 NVM，或是直接用 HomeBrew 安裝：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install node
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝 Hexo：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;$ npm install -g hexo-cli
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;完成後可以輸入指令，看看有無安裝成功，成功的話會顯示版本：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我的版本是：&lt;/p&gt;
+
+&lt;p&gt;hexo: 4.2.0
+hexo-cli: 3.1.0&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2caaddad57c9f7a8&quot;&gt;建立專案&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;在指定資料夾建立檔案：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo init &amp;lt;folder&amp;gt;
+$ cd &amp;lt;folder&amp;gt;
+$ npm install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完成後會建立以下資料：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/1eucaEQ.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;part-862ac4c092f996f0&quot;&gt;更改主題與其他設定&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;主題選用的是 &lt;a href=&quot;https://github.com/theme-next/hexo-theme-next&quot;&gt;Next&lt;/a&gt;，更改步驟如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;把 next 這個主題 clone 下來：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;   $ git clone https://github.com/theme-next/hexo-theme-next themes/next
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;找到 /_config.yml，打開修改：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next    // 改為 next
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;網站設定：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;# Site
+title: 標題
+subtitle: 副標題
+description: 網站描述
+keywords: 網站關鍵字
+author: 作者名
+language: zh-TW
+timezone: 時區
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其他一些細部設定就可以自己慢慢摸索。&lt;/p&gt;
+
+&lt;p&gt;如果要先看看網站的樣式，可以啟動本地端的 server：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;part-6542accc4a1&quot;&gt;寫作&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;接下來，大概設定完就可以開始建立文章了。&lt;/p&gt;
+
+&lt;p&gt;指令是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo new [layout] &amp;lt;title&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Layout 有 3 種，分別是：post、page(頁面)、draft(草稿)，&lt;/p&gt;
+
+&lt;p&gt;假設要發一篇檔名為 Hello-World 草稿的話：&lt;code&gt;hexo new draft Hello-World&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;如果要將 draft 發布為 post 的話，就鍵入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo publish [layout] &amp;lt;title&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;github&quot;&gt;把網站部署到 GitHub&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;既然都做的差不多了，就可以開始把網站部署到 GitHub Pages。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;新增名為 &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt; 的 repo，例如：&lt;code&gt;bucky0112.github.io&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安裝 &lt;a href=&quot;https://github.com/hexojs/hexo-deployer-git&quot;&gt;hexo-deployer-git&lt;/a&gt; 這個插件：&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;$ npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;修改 /_config.yml：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;url: https://username.github.io
+root: /repo.github.io/
+
+deploy:
+  type: git
+  repo: &amp;lt;repository url&amp;gt; #新增repo的網址
+  branch: master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;上傳網站，執行：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo deploy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;接著需要等待一些時間，讓子彈飛一會，就可以去你的網站看看成果了。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;https://username.github.io/repo.github.io
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;hexo&quot;&gt;Hexo 常用指令&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;以下是之後再使用 Hexo 發佈文章時常用的指令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hexo generate      #產生靜態檔案 / hexo g
+$ hexo deploy        #部署網站 
+$ hexo server        #啟動本地端伺服器 / hexo s
+$ hexo new &amp;lt;post&amp;gt;    #新增文章
+$ hexo clean         #清除快取檔案和已產生的靜態檔案
+&lt;/code&gt;&lt;/pre&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sat, 28 Mar 2020 14:55:52 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/hexo-github-blog.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>用 Vuex 來管理 State 資料狀態</title>
+      <link>https://railquill.vercel.app/vuex-state.html</link>
+      <description>在之前的專案中，如果碰到要資料傳遞的部份，例如是父子層關係的話，只要用 `props` 跟 `emit` 就可以解決了，而遇到同階層的關係，就用 `$eventbus` 來處理，不過這個方法只能處理比較簡單的資料，而且在 Vue 3 也不支援了。不怕，總是有技術可以解決問題，所以就從 state 開始來學學 Vu...</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;在之前的專案中，如果碰到要資料傳遞的部份，例如是父子層關係的話，只要用 &lt;code&gt;props&lt;/code&gt; 跟 &lt;code&gt;emit&lt;/code&gt; 就可以解決了，而遇到同階層的關係，就用 &lt;code&gt;$eventbus&lt;/code&gt; 來處理，不過這個方法只能處理比較簡單的資料，而且在 Vue 3 也不支援了。不怕，總是有技術可以解決問題，所以就從 state 開始來學學 Vuex 吧～&lt;/p&gt;
+
+
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/JY7TkcK.png&quot; alt=&quot;image-20201026231043927&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;vuex&quot;&gt;什麼是 Vuex？&lt;/h2&gt;
+
+&lt;p&gt;Vuex 是 Vue 官方開發的一種狀態管理模式，它的設計是把所有元件的狀態集中式管理，放在一個 &lt;strong&gt;store&lt;/strong&gt; 裡面。
+以下是 Vuex 的處理方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Vuex
+state ----------&amp;gt; 資料狀態，類似 component 中的 data
+actions ---------&amp;gt; 跟 methods 一樣，進行非同步的行為及取得資料
+getter ---------&amp;gt; 跟 computed 一樣，資料呈現的方式
+mutations -------&amp;gt; 改變資料內容的方法
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;state&quot;&gt;怎麼使用 state？&lt;/h2&gt;
+
+&lt;p&gt;由於 State 就跟 Data 差不多概念，只是 State 是一個統一存放在 Vuex 的 Store 中的 Data，要使用的話也蠻簡單的，打開 store/index.js：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/RqaI0zQ.png&quot; alt=&quot;2BE446E7-3B75-4D76-82C6-079E0B65E4DD&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;直接在  state 中建立一筆資料：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;state: {
+  movieTitle: &#39;Joker&#39;,
+},
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後在需要存取的頁面中，使用 &lt;code&gt;computed&lt;/code&gt; 來拿到 State：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;computed: {
+  movieTitle() {
+    return this.$store.state.movieTitle;
+  },
+},
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;要怎麼確定有沒有拿到 state 呢？可以使用 Vue Devtools，如果成功的話就可以看到以下畫面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/eBAbVAd.png&quot; alt=&quot;F9A26099-07F2-4A62-9A6A-26D55756DC0A&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;mapstate-state&quot;&gt;使用 mapState 來輔助存取 state&lt;/h3&gt;
+
+&lt;p&gt;如果一個 component 中需要大量地從 store 中存取 state 的話，這時候可以使用 mapState 來省去很多 return 的步驟：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;從 Vuex 中 import &lt;code&gt;mapState&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;computed&lt;/code&gt; 調用  &lt;code&gt;mapState&lt;/code&gt; 拿到 Vuex 的 State&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;import { mapState } from &#39;vuex&#39;;
+
+export default {
+  computed: {
+    ...mapState([&#39;movieTitle&#39;]),
+  },
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;接著就可以在這個頁面中使用拿到的 State，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;&amp;lt;p&amp;gt;{{ movieTitle }}&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果在 store 中有其他 State 要調用的話，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;state: {
+  movieTitle: &#39;Joker&#39;,
+  movieAge: &#39;PG13&#39;,
+},
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那麼在 computed 中就可以這樣用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;&amp;lt;script&amp;gt;
+import { mapState } from &#39;vuex&#39;;
+
+export default {
+  computed: {
+    ...mapState([&#39;movieTitle&#39;, &#39;movieAge&#39;]),
+  },
+};
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;像這樣就可以拿到從 Store 的 State&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/TMdDYi6.png&quot; alt=&quot;B34E7F44-3764-4B1A-8982-7CE0D0122152&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;可以從 CodeSandbox看一下實際是怎麼運作的：&lt;/p&gt;
+
+
+
+      ]]></content:encoded>
+      <pubDate>Sat, 10 Oct 2020 21:53:34 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vuex-state.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>Vuex 中的 Computed 用法 - Getters</title>
+      <link>https://railquill.vercel.app/vuex-computed-getters.html</link>
+      <description>在公司專案中，有多筆資料是從 `actions` 的回傳結果再透過 `mutations` 來更改資料狀態。這時候想要透過 computed 來處理這些資料，但是還要再把資料傳入 components 中再做處理，感覺總是沒那麼即時，如果在 Vuex 裡面也可以做 computed 就好了...咦？還真的有嗎！？...</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;在公司專案中，有多筆資料是從 &lt;code&gt;actions&lt;/code&gt; 的回傳結果再透過 &lt;code&gt;mutations&lt;/code&gt; 來更改資料狀態。這時候想要透過 computed 來處理這些資料，但是還要再把資料傳入 components 中再做處理，感覺總是沒那麼即時，如果在 Vuex 裡面也可以做 computed 就好了...咦？還真的有嗎！？太方便了吧！&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-65432b20823&quot;&gt;需求&lt;/h2&gt;
+
+&lt;p&gt;我的資料有複數筆陣列，結構如下示範：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;const list_one = [&#39;A001&#39;, &#39;A002&#39;, &#39;A003&#39;, &#39;A004&#39;],
+const list_two = [&#39;B001&#39;, &#39;B002&#39;, &#39;B003&#39;],
+const list_three = [&#39;C001&#39;, &#39;C002&#39;, &#39;C003&#39;, &#39;C004&#39;, &#39;C005&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我的需要是將複數筆陣列的資料給合併成一個陣列，然後再去做資料處理。&lt;/p&gt;
+
+&lt;h2 id=&quot;getters&quot;&gt;Getters 的用法&lt;/h2&gt;
+
+&lt;p&gt;如果要把 &lt;code&gt;state&lt;/code&gt; 的資料給傳入 component 中再做處理也是一種作法，但是先在 Vuex 中做完，然後再拿到處理好的資料看要再做其他處理，這樣應該會是一個更好的作法。&lt;/p&gt;
+
+&lt;p&gt;以下是我在 CodeSandbox 做的範例&lt;/p&gt;
+
+
+
+&lt;p&gt;作法跟一般 component  中的 &lt;code&gt;computed&lt;/code&gt; 差不多，差別在需要帶一個參數，也就是資料來源 &lt;code&gt;state&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;vue&quot;&gt;state: {
+  list_one: [&quot;A001&quot;, &quot;A002&quot;, &quot;A003&quot;, &quot;A004&quot;],
+  list_two: [&quot;B001&quot;, &quot;B002&quot;, &quot;B003&quot;],
+  list_three: [&quot;C001&quot;, &quot;C002&quot;, &quot;C003&quot;, &quot;C004&quot;, &quot;C005&quot;]
+},
+getters: {
+  combineArray(state) {
+    const { list_one, list_two, list_three } = state;
+    return list_one.concat(list_two, list_three); // 這裏使用 concat() 來做合併陣列
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;接著在 component 中來接收資料狀態：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;vue&quot;&gt;computed: {
+  combineArray() {
+    return this.$store.getters.combineArray;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果有多筆來自 Vuex 的資料的話，最方便可以使用 &lt;code&gt;mapGetters&lt;/code&gt;，效果也是一樣的：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;&amp;lt;script&amp;gt;
+import { mapGetters } from &quot;vuex&quot;;
+export default {
+  computed: {
+    ...mapGetters([&quot;combineArray&quot;]),
+  },
+};
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+      ]]></content:encoded>
+      <pubDate>Thu, 18 Mar 2021 21:30:50 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vuex-computed-getters.html</guid>
       <author>bucky0112@gmail.com (Bucky Chu)</author>
       <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>使用 Actions 跟 Mutations 來改變資料狀態</title>
+      <link>https://railquill.vercel.app/actions-mutations.html</link>
+      <description>上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;actions-mutations&quot;&gt;Actions 跟 Mutations 如何改變資料&lt;/h2&gt;
+
+&lt;p&gt;先看官網的 Vuex 的週期介紹圖，如果 Component 要改變 State 的話，就要透過 Actions 發出 Commit 去呼叫 Mutations，藉由 Mutations 去改變 State。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/J10wJPU.png&quot; alt=&quot;vuex&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;part-2c2f5a82c4859feb&quot;&gt;如何使用&lt;/h3&gt;
+
+&lt;p&gt;我在 CodeSandbox 建立了一個 Vuex 來模擬變更資料，當按下 Click Me 按鈕，原本顯示在頁面上的 Hello Vuex 會變更為 Good Job，在過 5 秒後則會再變更為 Try Again，就可以繼續按，觀察資料如何變更。&lt;/p&gt;
+
+
+
+&lt;p&gt;首先在 State 中設立一筆資料&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;state: {
+  testWord: &quot;Hello Vuex&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;接著就可以透過 Actions 跟 Mutations 來改變資料：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在 Actions 及 Mutations 加入：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;mutations: {
+  CHANGE(state, word) {
+    state.testWord = word;
+  }
+},
+actions: {
+  changeStateWord(context, word) {
+    context.commit(&quot;CHANGE&quot;, word);
+  }
+},
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在 actions 建立一個函式，並帶入 &lt;code&gt;context&lt;/code&gt; 為第一個參數，第二個參數則是 &lt;code&gt;payload&lt;/code&gt;，可以自定義名稱，而 &lt;code&gt;context&lt;/code&gt; 則是有下列屬性：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;{
+  state,      // 等同于 `store.state`，若在模块中则为局部状态
+  rootState,  // 等同于 `store.state`，只存在于模块中
+  commit,     // 等同于 `store.commit`
+  dispatch,   // 等同于 `store.dispatch`
+  getters,    // 等同于 `store.getters`
+  rootGetters // 等同于 `store.getters`，只存在于模块中
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;接著在函式中使用 &lt;code&gt;commit&lt;/code&gt; 屬性，呼叫 &lt;code&gt;mutations&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;mutations&lt;/code&gt; 也建立一個函式，建議使用常數來命名方便區分，並帶入 &lt;code&gt;state&lt;/code&gt; 為第一個參數，第二個參數則是 &lt;code&gt;payload&lt;/code&gt; 。&lt;/li&gt;
+&lt;li&gt;因為要藉由 &lt;code&gt;mutations&lt;/code&gt; 來改變 &lt;code&gt;state&lt;/code&gt;，所以在函式中加入動作。&lt;/li&gt;
+&lt;li&gt;最後在 component 中加入 Actions，使用 &lt;code&gt;this.$store.dispatch(&#39;actions&#39;, 欲變更資料)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;part-922e5932763000bc&quot;&gt;使用嚴格模式&lt;/h2&gt;
+
+&lt;p&gt;在使用 Actions 跟 Mutations 時，還需要特別注意的是，當使用非同步處理時，要在 Actions 處理，而不要在 Mutations。
+這時候可以開啟嚴格模式，幫助追蹤所有的狀態變更，使用方法很簡單，在 Vuex 中加入 strict，並開啟即可：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;export default new Vuex.Store({
+  strict: true
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+      ]]></content:encoded>
+      <pubDate>Mon, 12 Oct 2020 00:02:47 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/actions-mutations.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>讓 Vue 每次換頁都能在最上方的方法</title>
+      <link>https://railquill.vercel.app/vue.html</link>
+      <description>在 Vue 開發的 SPA 上，每次換頁總是會有一個問題，那就是換到其他頁面，畫面總是不會在最頂端，而是在上一頁的位置，這個問題以前覺得還好，但客戶要求修正這個問題，那就來修正吧！</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;在 Vue 開發的 SPA 上，每次換頁總是會有一個問題，那就是換到其他頁面，畫面總是不會在最頂端，而是在上一頁的位置，這個問題以前覺得還好，但客戶要求修正這個問題，那就來修正吧！&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-3786c41d2ba97e6&quot;&gt;問題點&lt;/h2&gt;
+
+&lt;p&gt;以我所做的 &lt;a href=&quot;https://bucky0112.github.io/house_of_card/#/&quot;&gt;side project&lt;/a&gt; 來說，假設當我按下認識桌遊後，接著會跳到認識桌遊的頁面，在一般的網站理所當然的會刷新然後會顯示在最頂端並且讓使用者可以從上往下看。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/aavRHAo.png&quot; alt=&quot;image-20201227152948092&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;但是在 Vue 開發的 SPA 中，則是會顯示上一個頁面的位置，那麼接著就來說說該如何解決這個問題。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/9ukM2or.png&quot; alt=&quot;image-20201227153157046&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2e54ede85a0c1ceb&quot;&gt;解決方法&lt;/h2&gt;
+
+&lt;p&gt;找了一下關鍵字，就找到了解法，只要使用 &lt;code&gt;afterEach&lt;/code&gt; 這個 hook 就解決了。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在 main.js 加入&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;router.afterEach((to, from, next) =&amp;gt; {
+    window.scrollTo(0, 0);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣就結束了，好輕鬆啊～～&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;參考來源&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/weixin_40881970/article/details/102912283&quot;&gt;https://blog.csdn.net/weixin_40881970/article/details/102912283&lt;/a&gt;&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 27 Dec 2020 15:45:31 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>圖片剪裁套件的使用 - Vue-Cropper</title>
+      <link>https://railquill.vercel.app/vue-cropper.html</link>
+      <description>Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-654280cbc50&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;當主管告知需要在後台將前台的圖片做剪裁修改後，並且能夠即時預覽結果，最後再將圖片存成新檔案。找了一下有沒有前人造的輪子，發現還真的有，所以設置了一下後就可以達到我要的效果了。&lt;/p&gt;
+
+&lt;h2 id=&quot;vue-cropper&quot;&gt;Vue Cropper&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;   npm install vue-cropper
+
+   yarn add vue-cropper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在 component 裡使用&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;vue&quot;&gt;   import { VueCropper } from &quot;vue-cropper&quot;;
+
+   components: {
+    VueCropper,
+   },
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;data 跟 methods 的設定：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;vue&quot;&gt;data() {
+    return {
+      modelSrc: &quot;&quot;,
+      option: {
+        img: &quot;https://fakeimg.pl/450x300/&quot;, // 圖片來源
+        outputType: &quot;png&quot;, // 產生圖片的格式
+        autoCrop: true, // 是否要有截圖框
+        autoCropWidth: 350, // 截圖框寬
+        autoCropHeight: 220, //截圖框高
+      },
+    };
+  },
+  methods: {
+  // *********預覽目前截圖結果************
+    preview() {
+      this.$refs.cropper.getCropData((data) =&amp;gt; {
+        // console.log(data);
+        this.modelSrc = data;
+      });
+    },
+  // *********即時預覽函數************
+    realTime(data) {
+      this.previews = data;
+      // console.log(data);
+    },
+    // *********得到截圖的 base64 數據************
+    demo() {
+      this.$refs.cropper.getCropData((data) =&amp;gt; {
+        console.log(data);
+      });
+    },
+  },
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;最後在 component 的綁定&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;vue&quot;&gt;   &amp;lt;vueCropper
+    ref=&quot;cropper&quot;
+     :img=&quot;option.img&quot;
+     :outputType=&quot;option.outputType&quot;
+     :autoCrop=&quot;option.autoCrop&quot;
+     :autoCropWidth=&quot;option.autoCropWidth&quot;
+     :autoCropHeight=&quot;option.autoCropHeight&quot;
+     @realTime=&quot;realTime&quot;
+    &amp;gt;
+    &amp;lt;/vueCropper&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣就會產生一個可以自由切割並且截圖的區塊，可以試著玩看看我建立的 CodeSandBox：&lt;/p&gt;
+
+
+
+&lt;p&gt;最後要記得給這個 component 一個高度，不然會顯示不出來。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;資料來源：&lt;a href=&quot;https://github.com/xyxiao001/vue-cropper&quot;&gt;vue-cropper&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 24 Jan 2021 17:23:27 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue-cropper.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>Vue.js 的 component 是什麼？</title>
+      <link>https://railquill.vercel.app/vue-js-component.html</link>
+      <description>當做完一個專案時，每當想要修改某樣東西時，都要再重新審視程式碼，這時候就會非常痛苦。
+而 Vue.js 中有一個 component 的概念，就不用再害怕維護專案啦。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;當做完一個專案時，每當想要修改某樣東西時，都要再重新審視程式碼，這時候就會非常痛苦。
+而 Vue.js 中有一個 component 的概念，就不用再害怕維護專案啦。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-2b7bf4e7ae43a66e&quot;&gt;元件概念&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;而什麼是 component 呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/MeHiDbO.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;圖片來源：&lt;a href=&quot;https://cn.vuejs.org/v2/guide/components.html&quot;&gt;Vue.js 官網&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;它的概念是一個網頁中，一些比較常用的組件，例如：nav bar 或是 side bar 等等區塊。這時候使用 component 來控制一個區塊，這樣就會非常好整理以及修改。&lt;/p&gt;
+
+&lt;p&gt;下面有一個點擊的範例，是從 &lt;a href=&quot;https://vuejs.org/v2/guide/components.html&quot;&gt;Components Basics&lt;/a&gt; 稍微做個修改的範例，讓我們試著改成使用 Component 來看看：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;button-counter&amp;gt;
+    &amp;lt;button @click=&quot;plus&quot;&amp;gt;
+      我被按了 {{ count }} 下
+    &amp;lt;/button&amp;gt;
+  &amp;lt;/button-counter&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;let vm = new Vue({
+    el: &#39;#app&#39;,
+  data: {
+    count: 0
+  },
+  methods: {
+    plus: function() {
+        this.count +=1
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;component&quot;&gt;做一個一樣功能的 component&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;使用方式如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;為了跟上面區別，所以定義一個名稱為 click-counter 的 component。&lt;/li&gt;
+&lt;li&gt;建立 data， 必須是 function，並 return 值。&lt;/li&gt;
+&lt;li&gt;建立 template，把原本 HTML 中的 template 放入。&lt;/li&gt;
+&lt;li&gt;建立 methods，跟原本的 methods 一樣。&lt;/li&gt;
+&lt;li&gt;HTML 只要留有跟 component 同名稱的元素就好。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;Vue.component(&#39;click-counter&#39;, {
+  data: function() {
+    return {
+      count: 0
+    }
+  },
+  template: `
+    &amp;lt;button @click=&quot;plus&quot;&amp;gt;
+      我被按了 {{ count }} 下
+    &amp;lt;/button&amp;gt;
+  `,
+  methods: {
+    plus: function() {
+        this.count +=1
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;click-counter&amp;gt;&amp;lt;/click-counter&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣的好處是可以讓建立好的 component 可以重複使用，如果你要一次擺 5 個，也是可以的，並且每個都是獨立運行的，想要試玩可以看下方 JSFiddle 建立的範例：&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;prop-component&quot;&gt;透過 prop 傳遞建立 component&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;如果想要從外層傳遞資料到內層來建立 component 的話，也就是透過原本的 &lt;code&gt;new Vue()&lt;/code&gt; 建立的資料，而不是在 component 中取得資料的話，就可以透過 &lt;code&gt;props&lt;/code&gt; 來存取。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;建立 &lt;code&gt;Vue.component(&#39;component 名稱&#39;, {})&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;在 component 中建立 &lt;code&gt;template&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;在 component 中建立 &lt;code&gt;props&lt;/code&gt;，並定義它來獲取資料。&lt;/li&gt;
+&lt;li&gt;在 HTML 的 component 中綁定 &lt;code&gt;props&lt;/code&gt; 定義的名稱，並指定給 data 中的資料。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;component-plus 
+    :compo-count= &#39;count&#39;  // prop 綁定 count
+  &amp;gt;
+  &amp;lt;/component-plus&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Vue.component(&#39;component-plus&#39;, {
+  props: [&#39;compoCount&#39;], // 透過 prop 傳值
+  template: `
+    &amp;lt;button @click=&quot;plus&quot;&amp;gt;  
+        我被按了 {{ compoCount }} 下 // template 中都要使用 props 的名稱，而不是原本的名稱
+    &amp;lt;/button&amp;gt;
+  `,
+  methods: {
+    plus: function() {
+      this.count +=1
+    }
+  }
+})
+
+let vm = new Vue({
+    el: &#39;#app&#39;,
+  data: {
+    count: 0
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用效果是一樣的：&lt;/p&gt;
+
+
+
+&lt;p&gt;&lt;strong&gt;注意定義 props 時，命名方式按照官方說明最好使用 camelCase，在 HTML 中則是使用 kebab-case。&lt;/strong&gt;
+&lt;strong&gt;並且在定義時，應該盡量詳細，至少指定其類型。雖然這裡例子使用字串組成陣列可以使用，但如果定義詳細一點可以改成以下：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;props: {
+    compoCount: String
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;x-template-component&quot;&gt;使用 x-template 建立 component&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;在 Vue.js 中，還可以使用另一種方式來建立 component，這邊要介紹的是使用 x-template，這邊使用上面的例子來修改。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;建立 &lt;code&gt;Vue.component(&#39;component 名稱&#39;, {})&lt;/code&gt;。 &lt;/li&gt;
+&lt;li&gt;在 HTML 中建立一個 &lt;code&gt;&amp;lt;script type=&quot;text/x-template&quot; id=&quot;id名稱&quot;&amp;gt;&lt;/code&gt;，id 將 template 引用過去。&lt;/li&gt;
+&lt;li&gt;在 component 中建立 &lt;code&gt;template: &#39;#id名稱&#39;&lt;/code&gt;，放入 id 名稱。&lt;/li&gt;
+&lt;li&gt;在 component 中建立 &lt;code&gt;props&lt;/code&gt;，並定義它來獲取資料。&lt;/li&gt;
+&lt;li&gt;在 HTML 的 component 中綁定 &lt;code&gt;props&lt;/code&gt; 定義的名稱，並指定給 data 中的資料。&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;&amp;lt;script type=&quot;text/x-template&quot; id=&quot;id名稱&quot;&amp;gt;&lt;/code&gt; 中放入要顯示的 template。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;component-plus 
+    :compo-count=&#39;count&#39;
+  &amp;gt;  
+  &amp;lt;/component-plus&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;script type=&quot;text/x-template&quot; id=&quot;componentCount&quot;&amp;gt;
+    &amp;lt;button @click=&quot;plus&quot;&amp;gt;
+    我被按了 {{ compoCount }} 下
+  &amp;lt;/button&amp;gt;
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Vue.component(&#39;component-plus&#39;, {
+    template: &#39;#componentCount&#39;,
+  props: [&#39;compoCount&#39;],
+  methods: {
+    plus: function() {
+        this.compoCount +=1
+    }
+  }
+})
+
+let vm = new Vue({
+    el: &#39;#app&#39;,
+    data: {
+    count: 0
+  },
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;有些情況，例如 HTML 沒有辦法正確渲染元素時，等等的例子會提到，就可以使用 &lt;code&gt;is&lt;/code&gt; 來掛載 template，像下方的例子：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div 
+  is=&quot;component-plus&quot;
+  :compo-count=&#39;count&#39;
+&amp;gt;  
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完成的效果也是一樣：&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;x-template&quot;&gt;使用 x-template 顯示表格&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;前面有提到有些情況下，HTML 會需要使用 &lt;code&gt;is&lt;/code&gt; 來掛載顯示正確的畫面，這裏會使用表格的例子來說明。
+下方有一個表格，接下來要試著使用 x-template 製作 component：&lt;/p&gt;
+
+
+
+&lt;p&gt;跟前面提到的使用 x-template 的方法差不多，這邊就不再多做示範，直接上做好的樣子：&lt;/p&gt;
+
+
+
+&lt;p&gt;結果出來的樣子跑版了。
+打開開發者工具看一下，發現結構怪怪的，只有 4 個 &lt;code&gt;&amp;lt;tr&amp;gt;&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/8U0Yl27.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;原因是 HTML 的特性，在 &lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt; 中只能夠放 &lt;code&gt;&amp;lt;tr&amp;gt;&lt;/code&gt;，但是這裏卻是放入 component 的模板，所以需要使用 &lt;code&gt;is&lt;/code&gt; 來掛載。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;tbody&amp;gt;
+  &amp;lt;!-- &amp;lt;slam-dunk
+    v-for=&quot;(item, key) in data&quot; 
+    :character=&quot;item&quot; 
+    :key=&quot;key&quot;
+  &amp;gt;
+  &amp;lt;/slam-dunk&amp;gt; --&amp;gt;
+
+  &amp;lt;!-- 改成用 is 來掛載 tr --&amp;gt;
+
+  &amp;lt;tr
+    is=&quot;slam-dunk&quot;
+    v-for=&quot;(item, key) in data&quot; 
+    :character=&quot;item&quot; 
+    :key=&quot;key&quot;
+  &amp;gt;
+  &amp;lt;/tr&amp;gt;
+
+&amp;lt;/tbody&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;結構就變正常，資料也可以正確的顯示了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/PL2mzwI.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-3353052cff8d932e&quot;&gt;全局註冊與局部註冊&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;h3 id=&quot;part-2b820f8a45d9ac0d&quot;&gt;全局註冊&lt;/h3&gt;
+
+&lt;p&gt;目前為止，我們都是使用全局註冊來製作 component：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Vue.component(&#39;component-name&#39;, {})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣做的話，如果之後有新創建 Vue 根實例 (&lt;code&gt;new Vue&lt;/code&gt;) 的話，就會一起共用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Vue.component(&#39;component-a&#39;, {})
+Vue.component(&#39;component-b&#39;, {})
+Vue.component(&#39;component-c&#39;, {})
+
+new Vue({ el: &#39;#app&#39; })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  &amp;lt;component-a&amp;gt;&amp;lt;/component-a&amp;gt;
+  &amp;lt;component-b&amp;gt;&amp;lt;/component-b&amp;gt;
+  &amp;lt;component-c&amp;gt;&amp;lt;/component-c&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;part-2c6ae4d9f55927cf&quot;&gt;局部註冊&lt;/h3&gt;
+
+&lt;p&gt;根據&lt;a href=&quot;https://cn.vuejs.org/v2/guide/components-registration.html#%E5%B1%80%E9%83%A8%E6%B3%A8%E5%86%8C&quot;&gt;官網&lt;/a&gt;表示，如果使用全局註冊，假設某個 component 不再使用的話，一樣會保留在最終的建構結果中，這樣會造成用戶無謂的下載 JavaScript 資料。
+所以更好的用法，會是使用局部註冊：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;透過一個物件來定義 component：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;var componentA = {}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在 &lt;code&gt;new Vue&lt;/code&gt; 中建立 &lt;code&gt;components&lt;/code&gt; 並定義要使用的 component:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;new Vue({
+  el: &#39;#app&#39;,
+  components: {
+    &#39;component-a&#39;: componentA
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;把上面的範例改成局部註冊：&lt;/p&gt;
+
+
+
+&lt;p&gt;要注意的是，&lt;strong&gt;局部註冊的組件在其子組件中是不可用的&lt;/strong&gt;。
+如果想要讓 A 組件可以在 B 組件中使用的話，可以這樣寫：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var componentA = {}
+
+var componentB = {
+  components: {
+    &#39;component-a&#39;: componentA
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+      ]]></content:encoded>
+      <pubDate>Mon, 01 Jun 2020 22:01:07 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue-js-component.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 4 minutes</category>
+    </item>
+    <item>
+      <title>如何使用 Vue CLI 建置專案</title>
+      <link>https://railquill.vercel.app/vue-cli.html</link>
+      <description>Vue CLI 介紹與環境建置，以及建置專案。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;Vue CLI 介紹與環境建置，以及建置專案。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;vue-cli&quot;&gt;Vue CLI 是什麼？&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;之前所用到的 Vue.js 都是使用 CDN 載入的模式來開發，而 Vue CLI 有什麼不同呢？
+它有以下幾點特色：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;基於 Webpack 所建置的開發工具。&lt;/li&gt;
+&lt;li&gt;便於使用各種第三方套件 (Bootstrap, Vue Router...)。&lt;/li&gt;
+&lt;li&gt;可運行 Sass、Bebal 等編譯工具。&lt;/li&gt;
+&lt;li&gt;便於開發 SPA 的網頁工具。&lt;/li&gt;
+&lt;li&gt;簡單設定，就能搭建開發常用環境。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;缺點：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不便開發非 SPA 的網頁（改用 CDN 模式開發）。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;了解以上 Vue CLI 的優缺點後，就可以來試著安裝了，但是首先首要條件要先安裝 Node.js。&lt;/p&gt;
+
+&lt;h2 id=&quot;nvm-node-version-manager&quot;&gt;安裝 nvm (Node Version Manager)&lt;/h2&gt;
+
+&lt;p&gt;由於 JavaScript 只能在瀏覽器中運行，所以為了要讓 Vue CLI 能夠在電腦本地端運行，就需要 Node.js，所以先來安裝 Node.js。
+而安裝 Node.js 最推薦的是採用 nvm 的方法，這樣之後可以方便切換不同版本。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在終端機執行指令安裝：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安裝完後執行 &lt;code&gt;nvm --version&lt;/code&gt; ，如果成功的話，就會顯示版本。
+因為 nvm 可以控管 Node.js 的版本，所以可以執行指令觀看版本：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nvm ls
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;node-js&quot;&gt;安裝 Node.js&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/slUd39w.png&quot; alt=&quot;顯示目前版本跟可以安裝的版本&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果沒有要安裝特定版本的話，直接安裝最新穩定版本的 Node.js：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;nvm install stable
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安裝完後，執行指令，確定是否安裝成功：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;vue-cli&quot;&gt;安裝 Vue CLI&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;nvm 及 Node.js 都沒問題後，接著就使用 Node.js 的 npm 繼續安裝 Vue CLI。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install -g @vue/cli
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安裝完後，檢查是否安裝成功，執行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vue -V
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;成功的話，會顯示版本，目前最新版本為 4.3.1。&lt;/p&gt;
+
+&lt;h2 id=&quot;vue-cli&quot;&gt;使用 Vue CLI&lt;/h2&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;當安裝成功後，可以輸入 &lt;code&gt;vue&lt;/code&gt;，會秀出可以輸入的指令。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/qHXcEIX.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;part-2caadeb473179f53&quot;&gt;建製專案&lt;/h3&gt;
+
+&lt;p&gt;因為接下來要建置專案，所以先 cd 到想建置的資料夾中，然後執行 &lt;code&gt;vue create &amp;lt;project name&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;part-2c66c2dd43435abb&quot;&gt;專案設定&lt;/h3&gt;
+
+&lt;p&gt;建置並命名完專案後，就要接著設定，會有兩個選項可以選，分別有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;default - 安裝基本套件。&lt;/li&gt;
+&lt;li&gt;Manually - 按照需求選擇所需套件。（這邊選擇 Manually）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/IJZucYW.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;選擇 Manually 後，就可以選擇想要裝的套件，接著就開始安裝了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/M2Q71Y0.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;安裝一段時間後，出現以下的畫面，就代表安裝成功了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/9Wu4bru.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;接著照著它的指示，cd 到該資料夾中，執行 &lt;code&gt;npm run serve&lt;/code&gt; 後，連到它提供的 localhost 網址，在瀏覽器看到下面的畫面，就代表專案建置成功了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/kfUEdi2.png&quot; alt=&quot;Image&quot;&gt;&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Mon, 18 May 2020 22:01:47 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue-cli.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>Next.js 如何在 App Router 中使用 Context？</title>
+      <link>https://railquill.vercel.app/next-js-app-router-context.html</link>
+      <description>介紹如何在 Next.js 中使用 Context。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;自從 Next.js 推出 App Router 後，讓開發者可以輕鬆使用強大的路由功能，但是同時也帶來一些在使用 React Hooks 的限制。本篇文章將探討如何在 App Router 中有效使用 &lt;code&gt;useContext&lt;/code&gt; 等 hooks 來傳遞 props，並解釋為什麼在某些情況下不能在 Server Component 中使用 hooks。&lt;/p&gt;
+
+&lt;h2 id=&quot;app-router&quot;&gt;什麼是 App Router？&lt;/h2&gt;
+
+&lt;p&gt;App Router 是 Next.js 13.4 版本引入的一項重大更新，它徹底改變了我們使用 React 的方式。這個新的路由系統是基於 React Server Components，為開發者提供了更強大、更靈活的工具來建立高效能的網頁應用。&lt;/p&gt;
+
+&lt;h3 id=&quot;app-router&quot;&gt;App Router 的核心特性：&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;React Server Components：這是 App Router 的基礎。Server Components 在 Server 端運作，而不是在 Client 端。這代表著它們可以直接使用伺服器資源（如 DataBase），而不用將這些資源暴露給 Client 端或通過網絡傳輸不必要的數據。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;巢狀路由和 Layout：你可以輕鬆人性化地建立複雜的路由結構，如 &lt;code&gt;/news/[id]/page&lt;/code&gt;，並為多個頁面定義共享的 layout，不用再設定複雜的路由設定。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;簡化的資料取得：通過使用 React Server Components 中或從 API 取得資料，不用寫複雜的邏輯或管理狀態。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Streaming 渲染：App Router 可以將資料從 Server Components 以 JSON chunk response 的形式傳輸到 Client 端，而不是一次性傳輸全部數據。這可以明顯升級效能和用戶體驗，特別是在網路較慢的情況下。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;內建 SEO 支持：App Router 自動產生 meta 標籤、sitemaps 和 robots.txt 文件，可以讓搜索引擎更好地找到你的網站。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;更靈活的靜態和動態渲染：開發者可以選擇最適合的渲染策略，實現更精準的效能優化。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;app-router&quot;&gt;為什麼使用 App Router？&lt;/h3&gt;
+
+&lt;p&gt;總的來說，App Router 不僅是 Next.js 的一個新功能，它為開發者提供了建立更快、更容易維護的 Web App 的工具。
+然而，正如本文接下來將討論的，這種新的開發模式也帶來了一些挑戰，特別是在使用 React Hooks 時。理解如何在 App Router 環境中正確使用 Context 等功能，對於充分利用這個強大的新工具非常重要。&lt;/p&gt;
+
+&lt;h2 id=&quot;server-component-hooks&quot;&gt;為什麼不能在 Server Component 中使用 Hooks？&lt;/h2&gt;
+
+&lt;p&gt;在討論具體的使用情境之前,我們需要了解為什麼不能在 Server Components 中使用 hooks。&lt;/p&gt;
+
+&lt;p&gt;Server Components 是在 Server 端渲染的，而 React hooks 的生命週期和狀態管理，這些在 Server 端是不存在的。因此，在 Server Components 中使用 hooks 會導致錯誤。&lt;/p&gt;
+
+&lt;p&gt;解決這個問題的方法是將需要使用 hooks 的部分拆分為 Client Components。只要在該 component 最上方加上 &lt;code&gt;&#39;use client&#39;&lt;/code&gt;，這個作法就會把一個 component 標記為 Client Component，Next.js 就會知道這個 component 是在 Client 端運行的，而不是在 Server 端，所以在這裡可以安全地使用 hooks。&lt;/p&gt;
+
+&lt;h2 id=&quot;props-child-component&quot;&gt;情境： 在頁面中將 Props 傳遞到 Child Component&lt;/h2&gt;
+
+&lt;p&gt;讓我們來看一個非常常見的情況，展示如何在一個 Next.js 頁面中使用 Context 將 props 傳遞到 child component，甚至是更深層的 child component。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Vrv5oXr.png&quot; alt=&quot;20240714183523&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;第一步，我們先建立一個 Context：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;jsx&quot;&gt;&#39;use client&#39;
+import { createContext, useContext, useState, ReactNode } from &#39;react&#39;
+
+type ThemeContextType = {
+  theme: string
+  setTheme: (theme: string) =&amp;gt; void
+}
+
+const ThemeContext = createContext&amp;lt;ThemeContextType | undefined&amp;gt;(undefined)
+
+export const ThemeProvider: React.FC&amp;lt;{ children: ReactNode }&amp;gt; = ({
+  children
+}) =&amp;gt; {
+  const [theme, setTheme] = useState(&#39;light&#39;)
+
+  return (
+    &amp;lt;ThemeContext.Provider value={{ theme, setTheme }}&amp;gt;
+      {children}
+    &amp;lt;/ThemeContext.Provider&amp;gt;
+  )
+}
+
+export const useTheme = () =&amp;gt; {
+  const context = useContext(ThemeContext)
+  if (context === undefined) {
+    throw new Error(&#39;useTheme must be used within a ThemeProvider&#39;)
+  }
+  return context
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;稍微介紹一下這個 Context。一開始最重要的就是 &lt;code&gt;use client&lt;/code&gt;，這樣就可以在 Client Components 中使用 hooks。接著我們建立了一個 &lt;code&gt;ThemeContext&lt;/code&gt;，並且建立了一個 &lt;code&gt;ThemeProvider&lt;/code&gt; 來提供 theme 的值，最後我們建立了一個 &lt;code&gt;useTheme&lt;/code&gt; hook 來使用這個 Context。&lt;/p&gt;
+
+&lt;p&gt;接下來，在 Page 中使用這個 Context：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;jsx&quot;&gt;import { ThemeProvider } from &#39;@/context/themeContext&#39;
+
+export default function Home() {
+  return (
+    &amp;lt;ThemeProvider&amp;gt;
+      &amp;lt;main&amp;gt;&amp;lt;/main&amp;gt;
+    &amp;lt;/ThemeProvider&amp;gt;
+  )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;到這一步，不管是在畫面中的哪個地方，只要是在 &lt;code&gt;ThemeProvider&lt;/code&gt; 的子元素中，都可以使用 &lt;code&gt;useTheme&lt;/code&gt; 來取得 theme 的值。&lt;/p&gt;
+
+&lt;p&gt;然後可以測試一下如果把 Context 的 &lt;code&gt;&#39;use client&#39;&lt;/code&gt; 拿掉，會發生什麼事情。&lt;/p&gt;
+
+&lt;p&gt;畫面上就會出現這個錯誤：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/r08TNFR.png&quot; alt=&quot;20240714170606&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;錯誤訊息會跟你說，你要使用 React 的 hook，就必須要在 Client Component 中使用，因為你不宣告 &lt;code&gt;&#39;use client&#39;&lt;/code&gt;，所以這個 component 預設就會被認為是 Server Component。&lt;/p&gt;
+
+&lt;p&gt;接下來我們建立兩個 child component，分別是 &lt;code&gt;ParentComponent&lt;/code&gt; 跟 &lt;code&gt;ChildComponent&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;jsx&quot;&gt;&#39;use client&#39;
+import { useTheme } from &#39;@/context/themeContext&#39;
+import ChildComponent from &#39;./Child&#39;
+
+export default function ParentComponent() {
+  const { theme } = useTheme()
+
+  return (
+    &amp;lt;div&amp;gt;
+      &amp;lt;p&amp;gt;Current theme: {theme}&amp;lt;/p&amp;gt;
+      &amp;lt;ChildComponent /&amp;gt;
+    &amp;lt;/div&amp;gt;
+  )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;jsx&quot;&gt;&#39;use client&#39;
+import { useTheme } from &#39;@/context/themeContext&#39;
+
+export default function ChildComponent() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    &amp;lt;button
+      type=&#39;button&#39;
+      onClick={() =&amp;gt; setTheme(theme === &#39;light&#39; ? &#39;dark&#39; : &#39;light&#39;)}
+    &amp;gt;
+      Toggle Theme
+    &amp;lt;/button&amp;gt;
+  )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後在 Home Page 中 import &lt;code&gt;ParentComponent&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;jsx&quot;&gt;import ParentComponent from &#39;@/components/Parent&#39;
+
+export default function Home() {
+  return (
+    &amp;lt;ThemeProvider&amp;gt;
+      &amp;lt;main&amp;gt;
+        &amp;lt;ParentComponent /&amp;gt;
+      &amp;lt;/main&amp;gt;
+    &amp;lt;/ThemeProvider&amp;gt;
+  )
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;透過以上的方法，我們就可以做到不管在哪個 component 中，只要是在 &lt;code&gt;ThemeProvider&lt;/code&gt; 的子元素中，都可以使用 &lt;code&gt;useTheme&lt;/code&gt; 來取得 theme 的值，並且可以透過 &lt;code&gt;setTheme&lt;/code&gt; 來改變 theme 的值，這樣就可以在 Next.js 中使用 Context 來傳遞 props。&lt;/p&gt;
+
+&lt;p&gt;下面提供給大家一個 CodeSandbox 試玩：&lt;/p&gt;
+
+
+
+      ]]></content:encoded>
+      <pubDate>Sun, 14 Jul 2024 15:57:00 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/next-js-app-router-context.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 3 minutes</category>
+    </item>
+    <item>
+      <title>Type or Interface?</title>
+      <link>https://railquill.vercel.app/type-or-interface.html</link>
+      <description>TypeScript 的 type 和 interface 有什麼不同？</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;在開發 TS 一段時間後，發覺 type 跟 interface 這兩個東西看起來很像，一直不太清楚使用的時機是什麼，所以研究了一下，寫了一篇文章記錄一下。&lt;/p&gt;
+
+&lt;p&gt;站在巨人的肩膀上，我參考了這部影片，有些觀點很有趣：&lt;/p&gt;
+
+
+
+&lt;p&gt;在開始之前，先簡單介紹一下這兩種東西，並比較一下兩者的差異。&lt;/p&gt;
+
+&lt;h2 id=&quot;type&quot;&gt;什麼是 type？&lt;/h2&gt;
+
+&lt;p&gt;type 是 TypeScript 中用來定義型別別名的關鍵字，它可以定義任何型別。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type UserType = {
+    name: string
+    age: number
+}
+
+const user: UserType = {
+    name: &quot;Bucky&quot;,
+    age: 18,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;interface&quot;&gt;什麼是 interface&lt;/h2&gt;
+
+&lt;p&gt;interface 是用來定義物件型別的一種方式，它主要用於描述物件的形狀。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;interface UserInter {
+    name: string
+    age: number
+}
+
+const user: UserInter = {
+    name: &quot;Bucky&quot;,
+    age: 18,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;typescript&quot;&gt;TypeScript 官方文件推薦哪一個？&lt;/h2&gt;
+
+&lt;p&gt;在官方文件中，&lt;a href=&quot;https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces&quot;&gt;Differences Between Type Aliases and Interfaces&lt;/a&gt;這一段落最後有下一個結論：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;For the most part, you can choose based on personal preference, and TypeScript will tell you if it needs something to be the other kind of declaration. If you would like a heuristic, use interface until you need to use features from type.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;interface&quot;&gt;interface 的局限性&lt;/h2&gt;
+
+&lt;p&gt;在 Kyle 的影片當中，他提到了 interface 只能用在物件上，而不像 type 比較靈活，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type StringType = string
+
+const user: StringType = &quot;Bucky&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是 interface 沒辦法這樣做，這樣做就會壞掉：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;interface StringInter = string
+
+const user: StringInter = &quot;Bucky&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;會跟你說：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&#39;string&#39; only refers to a type, but is being used as a value here.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那麼 type 還可以做到什麼呢？&lt;/p&gt;
+
+&lt;h2 id=&quot;type&quot;&gt;type 的靈活&lt;/h2&gt;
+
+&lt;p&gt;例如一個變數可能有多個型別，type 可以定義聯合型別：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type IdType = string | number
+
+const orderId: IdType = &quot;123&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;type 還可以用於定義交叉型別：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type A = { a: string }
+type B = { b: number }
+type AB = A &amp;amp; B
+
+const ab: AB = { a: &quot;hello&quot;, b: 42 }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;interface&quot;&gt;interface 的擴充性&lt;/h2&gt;
+
+&lt;p&gt;interface 可以通過 &lt;code&gt;extends&lt;/code&gt; 關鍵字進行擴充：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;interface A {
+  age: number
+}
+
+interface User extends A {
+  name: string
+}
+
+const user: User = {
+  name: &quot;John&quot;,
+  age: 30,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是 type 也可以通過交叉型別實現類似的擴充：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type User = {
+  name: string
+} &amp;amp; {
+  age: number
+}
+
+const user: User = {
+  name: &quot;John&quot;,
+  age: 30,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;type&quot;&gt;type 的獨特之處&lt;/h2&gt;
+
+&lt;p&gt;type 可以用於定義聯合型別的物件：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript!&quot;&gt;type User = {
+  name: string
+} | {
+  age: number
+}
+
+const user1: User = { name: &quot;John&quot; }
+const user2: User = { age: 30 }
+const user3: User = { name: &quot;John&quot;, age: 30 } // 這也是合法的
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這是 interface 無法直接實現的功能。&lt;/p&gt;
+
+&lt;h2 id=&quot;interface&quot;&gt;interface 的獨特特性：宣告合併&lt;/h2&gt;
+
+&lt;p&gt;前面講了這麼多 type 做得到，但 interface 做不到的地方。不過 interface 確實是有一個 type 無法實現的特性是宣告合併（Declaration Merging）。&lt;/p&gt;
+
+&lt;p&gt;可以讓你在多個地方定義同一個 interface，TypeScript 會自動將這些定義合併。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;typescript&quot;&gt;interface Order {
+  id: number
+}
+
+interface Order {
+  name: string
+}
+
+interface Order {
+  age: number
+}
+
+const order: Order = {
+  id: 1,
+  name: &quot;John&quot;,
+  age: 30,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但我想不到這樣做的好處有什麼，反而會降低可讀性。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-6543023dced&quot;&gt;總結&lt;/h2&gt;
+
+&lt;p&gt;如果你需要定義複雜的型別（如聯合型別、交叉型別、條件類型等），使用 type。&lt;/p&gt;
+
+&lt;p&gt;如果你主要想定義物件的結構，並且可能需要在未來擴展這個結構，那就可考慮使用 interface。&lt;/p&gt;
+
+&lt;p&gt;最後，無論選擇 type 還是 interface 都是可以的，選擇哪一個主要取決於個人偏好和團隊約定。最重要的還是在整個專案中保持一致性，程式碼的可讀性和可維護性還是最重要的。&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 28 Jul 2024 15:55:31 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/type-or-interface.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 3 minutes</category>
+    </item>
+    <item>
+      <title>Tailwind 安裝 React 篇</title>
+      <link>https://railquill.vercel.app/tailwind-react.html</link>
+      <description>React 專案如何安裝 Tailwind</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;最近幾年火速竄紅的 CSS 框架 Tailwind 也是蠻多前端工程師開始使用，於是就有了本篇跟風仔的安裝篇XD&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-2ca8d8aadd83c3c&quot;&gt;環境版本介紹&lt;/h2&gt;
+
+&lt;p&gt;本篇使用的是 Create-React-App 來建立環境，並且將會透過 NPM 來安裝 Tailwind。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;React 版本：17.0.2&lt;/li&gt;
+&lt;li&gt;Node.js 版本：14.16 （官方建議版本12.13或以上）&lt;/li&gt;
+&lt;li&gt;Tailwind 版本：2.1.4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;part-2c5c0dcf4ac0dd3f&quot;&gt;安裝流程&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;請在終端機輸入： &lt;code&gt;$ npx create-react-app 專案名稱&lt;/code&gt;，安裝完後再 &lt;code&gt;$ cd&lt;/code&gt; 進入專案資料夾中。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;接著就要開始安裝 Tailwind 了，請輸入：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;這時候碰到一個問題，我的終端機跳出一個訊息：&lt;code&gt;no matches found: postcss@^7&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;上網查了一下解法，如果跟我一樣遇到這個問題的話，請輸入：&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat &quot;postcss@^7&quot; &quot;autoprefixer@^9&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝 CRACO：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code&gt;$ npm install @craco/craco&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;接著請打開編輯器，並將 package.json 中的 scripts 物件中的部份替換成:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;json&quot;&gt;   &quot;scripts&quot;: {
+       // &quot;start&quot;: &quot;react-scripts start&quot;,
+       // &quot;build&quot;: &quot;react-scripts build&quot;,
+       // &quot;test&quot;: &quot;react-scripts test&quot;,
+       &quot;start&quot;: &quot;craco start&quot;,
+       &quot;build&quot;: &quot;craco build&quot;,
+       &quot;test&quot;: &quot;craco test&quot;,
+       &quot;eject&quot;: &quot;react-scripts eject&quot;
+     },
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在終端機輸入： &lt;code&gt;$ touch craco.config.js&lt;/code&gt;，會在專案的根目錄產生一個檔案，並在檔案中手動加上：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;   module.exports = {
+     style: {
+       postcss: {
+         plugins: [
+           require(&#39;tailwindcss&#39;),
+           require(&#39;autoprefixer&#39;),
+         ],
+       },
+     },
+   }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;在終端機輸入：&lt;code&gt;$ npx tailwindcss-cli@latest init&lt;/code&gt;，成功的話會自動生成一個 &lt;code&gt;tailwind.config.js&lt;/code&gt; 在 根目錄中。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然後修改一下該檔案：&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;   module.exports = {
+     // purge: [],  將原本的 purge 替換成以下
+     purge: [&#39;./src/**/*.{js,jsx,ts,tsx}&#39;, &#39;./public/index.html&#39;],
+     darkMode: false,
+     theme: {
+       extend: {},
+     },
+     variants: {
+       extend: {},
+     },
+     plugins: [],
+   }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;接著打開 &lt;code&gt;/src&lt;/code&gt; 目錄中的 &lt;code&gt;index.css&lt;/code&gt;，並將其內容替換成：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;css&quot;&gt;   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;最後一個步驟，請確保 &lt;code&gt;index.css&lt;/code&gt; 有被引入到 &lt;code&gt;/src/index.js&lt;/code&gt; 中&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;   import React from &#39;react&#39;;
+   import ReactDOM from &#39;react-dom&#39;;
+   import &#39;./index.css&#39;;
+   import App from &#39;./App&#39;;
+   import reportWebVitals from;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;執行 &lt;code&gt;$ npm run start&lt;/code&gt;，，畫面有顯示就代表恭喜你，可以準備進入 Tailwind 的坑了XD&lt;/li&gt;
+&lt;/ol&gt;
+
+      ]]></content:encoded>
+      <pubDate>Thu, 03 Jun 2021 23:06:07 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/tailwind-react.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>淺談在 2023 年的 React 還需要 Redux 嗎？</title>
+      <link>https://railquill.vercel.app/2023-react-redux.html</link>
+      <description>淺談在 2023 年的 React 還需要 Redux 嗎？</description>
+      <content:encoded><![CDATA[
+        &lt;h1 id=&quot;2023-react-redux&quot;&gt;淺談在 2023 年的 React 還需要 Redux 嗎？&lt;/h1&gt;
+
+&lt;p&gt;前幾天在推特上看到有人提問標題這個問題，有些網友回覆 Redux 太複雜，建議改用其他的狀態管理套件。也有網友提出 React 都有 context API 來處理跨元件狀態了，根本不需要 Redux。&lt;/p&gt;
+
+&lt;p&gt;在這個問題上，許多開發者可能會有不同的觀點，但讓我們先從最基本的 React context 開始比較，然後再探討 Redux。&lt;/p&gt;
+
+&lt;p&gt;首先，我們來看看 React 的 context API。React context 提供了一種方式來共享值，例如這些值是全域的，例如主題、語言偏好等等，而不需要手動將 &lt;code&gt;props&lt;/code&gt; 傳遞過多層。然而，當我們使用 &lt;code&gt;useContext&lt;/code&gt; 並搭配 &lt;code&gt;useReducer&lt;/code&gt; 來作為全域狀態管理時，所有使用該 context 的元件將會在 state 變更時重新 render，不論他們使用的 state 部分是否有改變。如果你有一個沒有被 &lt;code&gt;useCallback&lt;/code&gt; 包裹的處理器，那麼虛擬 DOM 比對將會失敗，這些元件將會導致 DOM 更新。當然你可以有多個小的 contexts，但這樣你就會有多個狀態的來源，這可能還是得根據你的需求和實作方式來判別這樣是好是壞。&lt;/p&gt;
+
+&lt;p&gt;另一方面，Redux 提供了一個集中式和預測性的 state 容器，讓你可以在整個應用程式中管理狀態。儘管在引入 hooks 和 context API 之後，React 提供了一種方式來在組件之間共享狀態，但 Redux 仍然有其價值。Redux 的主要優勢在於它的嚴謹的更新邏輯：所有的狀態更新都被集中處理並通過 actions 和 reducers 來描述。這種方法提供了很高的可預測性和一致性，這在複雜的應用程式中是很有價值的。&lt;/p&gt;
+
+&lt;p&gt;不過 Redux 出了名困難的學習曲線，對於開發者來說也是一個望而卻步的門檻。我之前也寫了一篇介紹 Redux 的文章，有興趣的朋友可以看我之前的&lt;a href=&quot;https://bucky0112.github.io/2022/03/10/libraries-redux/&quot;&gt;這篇文章&lt;/a&gt;去看看。&lt;/p&gt;
+
+&lt;p&gt;為了解決這個問題，Redux 也推出了 Redux Toolkit(RTK) 來進一步簡化 Redux 的使用。RTK 是 Redux 的官方工具集，其主要目標是解決 Redux 過於複雜的問題，並且提供了一組工具來協助你更簡單地寫 Redux，所以開發者可以寫出更精簡、更可讀的 Redux 代碼，並且有更好的開發者體驗。&lt;/p&gt;
+
+&lt;p&gt;RTK 提供了 &lt;code&gt;configureStore()&lt;/code&gt; 函數來建立 store，這比過去的 &lt;code&gt;createStore()&lt;/code&gt; 提供了更多的好處。&lt;code&gt;configureStore()&lt;/code&gt; 會自動添加非同步的能力，並且支援 &lt;a href=&quot;https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd&quot;&gt;Redux Devtools Extension&lt;/a&gt;，這可以讓開發者在瀏覽器開發者工具輕鬆看到狀態的變更，當然還有其他的好處，例如我們不再需要 &lt;code&gt;combineReducers()&lt;/code&gt;，以下是用 RTK 所做的一個簡單的範例：&lt;/p&gt;
+
+
+
+&lt;p&gt;因此，儘管 React 的 context 提供了簡易的方式來處理跨元件的狀態，但從上面的 RTK 的範例來看，在不失去原本 Redux 強大的狀態管理之下，卻簡化了很多繁複的設定。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-6542fd4e95a&quot;&gt;結論&lt;/h2&gt;
+
+&lt;p&gt;React Context API 是一種非常有效的工具，它可以處理許多跨元件的狀態共享問題。然而，對於大型或複雜的應用程式來說，Redux 提供的集中式狀態管理能力可能會更適合。尤其是當你需要更嚴謹的狀態更新邏輯，或是與其他工具（例如 Redux DevTools）的搭配時。&lt;/p&gt;
+
+&lt;p&gt;而 Redux Toolkit 是 Redux 的現代化版本，它簡化了 Redux 的許多繁複部分，並加入了許多有用的功能，例如自動處理 action 和 reducer 的創建、處理異步邏輯和狀態的不可變性。因此，對於需要複雜狀態管理且尋求簡化開發體驗的專案，Redux Toolkit 是一個很好的選擇。&lt;/p&gt;
+
+&lt;p&gt;總的來說，選擇使用 Redux 或是 React Context，或是其他的狀態管理工具，應該基於你的專案需求，並考慮到每種工具的優缺點。在某些情況下，Redux 提供的嚴謹的狀態管理和健全的開發者工具可能是必要的；而在其他情況下，React Context 的輕量級和靈活性可能就足夠了。所以，在你選擇工具的時候，最重要的是理解你的專案需求和這些工具的適用情境。&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sat, 20 May 2023 11:27:10 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/2023-react-redux.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>開始我的 Vue 3</title>
+      <link>https://railquill.vercel.app/vue-3.html</link>
+      <description>Vue 3 正式版問世也一段時間了，也是時候來認識一下新朋友了，前端就是要不停地追技術啊0.0</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;Vue 3 正式版問世也一段時間了，也是時候來認識一下新朋友了，前端就是要不停地追技術啊0.0&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-654280cbc50&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;自從 Vue 3 的消息不斷傳出，相信主力開發工具為 Vue 的前端工程師也多少都有耳聞，小弟我也不例外，常常會跟朋友討論相關訊息。而當正式版（代號：one piece）發布之後，全世界前端大概都開始了尋找大秘寶之旅。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/r1znob8.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;雖然公司目前專案大概也還不到使用 Vue 3 的時機，但是多了解新技術總是不會錯。剛好 Vue.js Taiwan 的主辦人 - Kuro 大大，在過年前出了一本 Vue 3 的書 - &lt;a href=&quot;https://www.tenlong.com.tw/products/9789864345687&quot;&gt;重新認識 Vue.js：008天絕對看不完的 Vue.js 3 指南&lt;/a&gt;，想趁著過年期間來學一下，本系列就是紀錄我學習 Vue 3 的歷程，那麼就開始吧！&lt;/p&gt;
+
+&lt;h2 id=&quot;part-6542aa814e9&quot;&gt;安裝&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果想要小試一下的話，可以使用 CDN 的方式來掛載，只要加上：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;html&quot;&gt;  &amp;lt;script src=&quot;https://unpkg.com/vue@next&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;有經驗的開發者想透過 Vue-CLI 的話：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;  $ npm install -g @vue/cli
+  $ vue create 專案名稱
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;hello-world&quot;&gt;來寫個 Hello World 吧&lt;/h2&gt;
+
+&lt;p&gt;以往在 Vue 2.x 版本中的寫法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;html&quot;&gt;&amp;lt;div id=&quot;app&quot;&amp;gt;
+  {{ text }}
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;const vm = new Vue({
+  el: &#39;#app&#39;,
+  data() {
+    return {
+      text: &quot;Hello World&quot;,
+    };
+  },
+})
+
+// 或是使用 mount 掛載
+const vm = new Vue({
+  data() {
+    return {
+      text: &quot;Hello&quot;,
+    };
+  },
+})
+
+vm.$mount(&quot;#app&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;而在 Vue 3 則是加入了 Composition API 的寫法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;const { createApp, ref } = Vue;
+
+const vm = createApp({
+  setup() {
+    const text = ref(&quot;Hello World&quot;);
+    return {
+      text
+    };
+  }
+});
+
+vm.mount(&quot;#app&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;謎之音：不得不說，看起來還真有點像 React。&lt;/p&gt;
+
+&lt;h2 id=&quot;vue-3&quot;&gt;Vue 3 試玩後有感的新增特性&lt;/h2&gt;
+
+&lt;p&gt;根據 &lt;a href=&quot;https://v3.vuejs.org/guide/migration/introduction.html#notable-new-features&quot;&gt;Vue 官方文件&lt;/a&gt;中介紹的新增特性有不少，其中最有感的是上方有提到的 Composition API，還有 Fragment ，讓原本必須要單一根元素下編譯模板的情況下，取消了這個限制，將會變得更加直覺。&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/mdOrRNv&#39;&amp;gt;Vue 2  Fragment&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;p&gt;像上面的 CodePen 例子，原本在 Vue 2 中，template 中如果有一個以上的元素，那麼必須使用一個 &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 包起來才能正常顯示。&lt;/p&gt;
+
+&lt;p&gt;而在 Vue 3 中，就少了這個限制：&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/zYoKNWN&#39;&amp;gt;Vue 3  Fragment&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;p&gt;其他還有很多新功能等待發掘，就一起來加入 Vue 3 的行列吧！&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Wed, 10 Feb 2021 10:55:50 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/vue-3.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>從手把手環境設定到建立第一個 Flutter 專案</title>
+      <link>https://railquill.vercel.app/flutter.html</link>
+      <description>帶你手把手把 Flutter 的環境設定弄好！</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;環境設定永遠是開發者一開始遇到的新人殺手，尤其是當你下定決定想學一項技術，但在環境設定就卡關，然後...就沒有然後了😭。Flutter 的環境設定算有點麻煩，但希望本篇文章可以幫助你打贏第一個關卡。然後由於我手上只有 macOS，所以這篇文章會以 macOS 的用戶視角來進行環境安裝。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2e3d2e4d10913e3a&quot;&gt;選擇環境&lt;/h2&gt;
+
+&lt;p&gt;進到&lt;a href=&quot;https://docs.flutter.dev/get-started/install&quot;&gt;官網&lt;/a&gt;之後，可以選擇你的開發系統，並按照官方文件來一步一步完成環境設定的前置作業，這裡選擇 macOS 來示範。
+&lt;img src=&quot;https://i.imgur.com/2CWMTTi.png&quot; alt=&quot;20240914001628&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;接下來會問你主要想開發什麼類型的 App，由於 Flutter 是一個可以跨平台開發的框架，不管是 iOS 還是 Android，甚至是 Desktop App 還是 Web 都能勝任。不過我們的目標主要是要開發 mobile app，所以這裡我們選擇 iOS 或是 Android 都可以，這裡我們先選擇 iOS。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ot17JUJ.png&quot; alt=&quot;20240914001714&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;part-28fef6f2d54380ae&quot;&gt;安裝必要的開發工具&lt;/h2&gt;
+
+&lt;p&gt;進到 iOS 的設定頁面，會先看到密密麻麻的一堆文字，但不用擔心，接下來一步一步帶你設定。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;首先想要開發 iOS app，那麼就必須要安裝必要的 Xcode（這是一個在 App Store 上評分超低分，而且又超級肥的工具，但只能用它），後面會需要做一些設定。
+&lt;img src=&quot;https://i.imgur.com/fZ9YXQD.png&quot; alt=&quot;20240914001743&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;理論上安裝完這個東西你還可以順便得到 Git，但我想一個合格的工程師電腦上應該都有 Git 吧？&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;接下來如果你的電腦是 Apple silicon，舉凡 M1、M2 等等的晶片，那麼你要在終端機執行以下的指令：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;sudo softwareupdate --install-rosetta --agree-to-license
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;flutter-sdk&quot;&gt;安裝 Flutter SDK&lt;/h2&gt;
+
+&lt;p&gt;進到 iOS 的設定頁面，直接畫面往下滑到 &lt;code&gt;Install the Flutter SDK&lt;/code&gt; 的部分，這裡有兩個選擇：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use VS Code to install&lt;/li&gt;
+&lt;li&gt;Download and install&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;那麼這兩個有什麼差別呢？主要是看你之後用什麼方式開發，並且用什麼來模擬。如果是選擇 VSCode，未來都可以在 VSCode 上面就好；反之如果你想要另外開終端機來輸入指令的話，那就可以選擇 Download and install。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;下載 SDK&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我是建議直接下載 SDK，然後再視情況安裝 VSCode Extension。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/fGeZEvj.png&quot; alt=&quot;20240914001852&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果是 Intel 晶片的就選 inter Processor；反之如果是 Apple Silicon 的就選另一個。&lt;/p&gt;
+
+&lt;p&gt;下載 zip 檔案之後解壓縮，會得到一個 &lt;code&gt;flutter&lt;/code&gt; 的資料夾，裡面就是 Flutter 的 SDK，然後在你的根目錄建立一個 &lt;code&gt;development&lt;/code&gt; 的資料夾，接著把整包 &lt;code&gt;flutter&lt;/code&gt; 資料夾丟進去。所以你的架構應該會是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;~/development/flutter/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;加入 Flutter 到 PATH&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;移動到你的根目錄，打開你的終端機，並輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;cd ~/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;檢查看有沒有 &lt;code&gt;.zshenv&lt;/code&gt; 這個檔案：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;ls -a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;沒有的話就自己新增一個。接下來用你習慣的編輯器打開它，我是蠻推薦直接用 vim 來直接新增或者是編輯：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;vim .zshenv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後把這一段直接複製貼上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export PATH=$HOME/development/flutter/bin:$PATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;路徑就是剛剛在根目錄新增的 &lt;code&gt;/development/flutter/&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;存檔之後最好重開終端機，然後在終端機輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;which flutter
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;應該可以看到類似的東西：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/sGy5bYM.png&quot; alt=&quot;20240914001920&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果沒看到或是顯示錯誤，也不用擔心，代表可能是路徑錯誤，再仔細看一下有沒有打錯字。&lt;/p&gt;
+
+&lt;p&gt;最後在終端機輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter doctor
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ogMyCcD.png&quot; alt=&quot;20240914001940&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;那麼你的 Flutter SDK 設定大致上就完成了👏。&lt;/p&gt;
+
+&lt;h2 id=&quot;xcode&quot;&gt;設定 Xcode&lt;/h2&gt;
+
+&lt;p&gt;前面提到想要開發 iOS 必定要有 Xcode，接下來打開你的 App Store，搜尋 Xcode。&lt;/p&gt;
+
+&lt;p&gt;安裝完 Xcode 之後，在終端機輸入指令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;sudo sh -c &#39;xcode-select -s /Applications/Xcode.app/Contents/Developer &amp;amp;&amp;amp; xcodebuild -runFirstLaunch&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再次輸入指令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;sudo xcodebuild -license
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這是一段協議書，需要你看完並同意，沒問題的話就直接輸入 &lt;code&gt;agree&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-40f050023a78a025&quot;&gt;模擬工具設定&lt;/h2&gt;
+
+&lt;p&gt;在開發的過程中，我們需要畫面來查看是否正確，或者是操作上有沒有問題。&lt;/p&gt;
+
+&lt;p&gt;Xcode 提供了 Simulator 這個工具，可以讓你在 Mac 上直接模擬一台 iPhone 甚至是 iPad。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;安裝 iOS Simulator，在終端機輸入指令：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;xcodebuild -downloadPlatform iOS
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;打開 Simulator：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;open -a Simulator
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;就可以看到一台 iPhone 的畫面呈現在你的電腦上。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/K02nq2q.png&quot; alt=&quot;20240914002011&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;恭喜你，你的 Flutter 現在就可以開發 iOS app 了。&lt;/p&gt;
+
+&lt;p&gt;經歷完環境安裝的艱難過程後，終於可以開始來建立我們第一個 Flutter 專案了，這篇文章將會介紹幾個方式來建立專案。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-commend-line&quot;&gt;1. 使用 Commend Line 來建立&lt;/h2&gt;
+
+&lt;p&gt;首先打開終端機，然後在你想要建立專案的位置，例如 desktop，輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;mkdir first_flutter &amp;amp;&amp;amp; cd &quot;$_&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這段指令會直接新增一個叫做 &lt;code&gt;first_flutter&lt;/code&gt; 的資料夾，並移動進該 &lt;code&gt;first_flutter&lt;/code&gt; 中。&lt;/p&gt;
+
+&lt;p&gt;然後接下來介紹一下 Flutter 的指令有哪些。&lt;/p&gt;
+
+&lt;p&gt;如果你一開始什麼都不知道的話，那麼可以輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter -h
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這段指令就是 &lt;code&gt;flutter --help&lt;/code&gt; 的簡易版，想成是要進入 Flutter 的遊客中心，裡面會列出基本的資訊，這是一段非常實用的指令，可以記一下。&lt;/p&gt;
+
+&lt;p&gt;如果想確認一下現在安裝在你電腦中的 Flutter 版本是哪一版的話，就輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter --version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;例如可以看到我現在安裝的 Flutter 版本是 3.22.3，Dart 的版本是 3.4.4。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VHAgDon.png&quot; alt=&quot;20240914002418&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後如果你輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這一段不是 &lt;code&gt;flutter --version&lt;/code&gt; 的簡易版喔，而是代表 Flutter “詳細”的選項。&lt;/p&gt;
+
+&lt;p&gt;如果你輸入 &lt;code&gt;flutter -v&lt;/code&gt; 的話，應該可以發現跟 &lt;code&gt;flutter -h&lt;/code&gt; 有點像，但是解釋的更詳細。在目前的版本中，&lt;code&gt;flutter -v&lt;/code&gt; 就等同於 &lt;code&gt;flutter --help -v&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;所以如果你想得到某些指令更詳細的資訊的話，就在最後面加上 &lt;code&gt;-v&lt;/code&gt;，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter --version -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;就可以顯示更詳細的 Flutter 版本資訊了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/rHC7DBt.png&quot; alt=&quot;20240914002444&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;稍微介紹了一下 Flutter 的指令之後，你可能有看到並知道怎麼輸入建立專案的指令了，沒錯，輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter create hello_world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;後面的 &lt;code&gt;hello_world&lt;/code&gt; 你可以帶入任何的名稱，不過最好是使用 Snake case，因為這個是慣例。&lt;/p&gt;
+
+&lt;p&gt;沒問題的話，就可以看到如同下面圖片的資訊：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/RODR486.png&quot; alt=&quot;20240914002505&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;會跟你說接下來你應該移動到新建的專案資料夾中，接著執行 &lt;code&gt;flutter run&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;但我們先不要急，先移動到該新建的專案資料夾中，然後使用你慣用的編輯器打開資料夾，這裡會使用 VSCode 來示範。&lt;/p&gt;
+
+&lt;p&gt;使用 VSCode 開啟專案之後，接下來在 Extensions 搜尋 flutter，認明這個 Flutter 官方的 Extension。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/B1V2Qig.png&quot; alt=&quot;20240914002531&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;或者是直接點&lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter&quot;&gt;這裡&lt;/a&gt;下載。&lt;/p&gt;
+
+&lt;p&gt;接下來要來介紹第二種建立 Flutter 專案的方法。&lt;/p&gt;
+
+&lt;h2 id=&quot;vscode&quot;&gt;使用 VSCode 建立專案&lt;/h2&gt;
+
+&lt;p&gt;這個方法適合不喜歡開太多東西，只想開一個 VSCode 就搞定的人。&lt;/p&gt;
+
+&lt;p&gt;那麼一樣先建立一個空的資料夾，然後進去該新建的資料夾，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;mkdir first_flutter &amp;amp;&amp;amp; cd &quot;$_&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後用 VSCode 打開這個新增的資料夾，接下來鍵盤指令 combo，按下 &lt;code&gt;command&lt;/code&gt; + &lt;code&gt;shift&lt;/code&gt; + &lt;code&gt;p&lt;/code&gt;，如果是 Windows 的用戶應該會是 &lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;shift&lt;/code&gt; + &lt;code&gt;p&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;會在你的 VSCode 跳出一個 Command Palette。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/4UT8v5c.png&quot; alt=&quot;20240914002558&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後輸入 flutter，然後選擇 &lt;code&gt;Flutter: New Project&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/5fj4fLE.png&quot; alt=&quot;20240914002615&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;接下來會跳出：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/jmygdFd.png&quot; alt=&quot;20240914002631&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;這裡有幾個 Template 可以選擇，沒特別要求的話，就選 Application 就好，這個就等同於指令 flutter create 建立新專案。&lt;/p&gt;
+
+&lt;p&gt;建立完你的 VSCode 就會跳出一個提示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/n7AckkG.png&quot; alt=&quot;20240914002711&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;跟你說 Flutter 專案已經建立完成，可以直接按 F5 就可以跑囉！&lt;/p&gt;
+
+&lt;h2 id=&quot;flutter-app&quot;&gt;執行你的第一個 Flutter App&lt;/h2&gt;
+
+&lt;p&gt;接下來介紹一下要怎麼執行 Flutter App。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-vscode&quot;&gt;1. 在 VSCode 上執行&lt;/h2&gt;
+
+&lt;p&gt;第一種方法先介紹如何在 VSCode 上執行模擬器。&lt;/p&gt;
+
+&lt;p&gt;先使用 VSCode 打開你的專案，應該會看到如同下圖的畫面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/XLTgKRL.png&quot; alt=&quot;20240914003051&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後用 VSCode 打開這個新增的資料夾，接下來鍵盤指令 combo，按下 &lt;code&gt;command&lt;/code&gt; + &lt;code&gt;shift&lt;/code&gt; + &lt;code&gt;p&lt;/code&gt;，如果是 Windows 的用戶應該會是 &lt;code&gt;ctrl&lt;/code&gt; + &lt;code&gt;shift&lt;/code&gt; + &lt;code&gt;p&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;會在你的 VSCode 跳出一個 Command Palette。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/hupC5W3.png&quot; alt=&quot;20240914003122&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後輸入 flutter，然後選擇 &lt;code&gt;Launch Emulator&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VhsA0dR.png&quot; alt=&quot;20240914003155&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;接下來應該會跳出一些模擬器的選擇：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/XbEuNov.png&quot; alt=&quot;20240914003215&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;例如有 iOS 的跟 android 的，這裡先示範 iOS 的。&lt;/p&gt;
+
+&lt;p&gt;當你選完 iOS 之後，就會跳出一個 Simulator，可以看到一個 iPhone 的畫面在你的電腦上，不過還沒有真正執行你的專案中的程式碼。&lt;/p&gt;
+
+&lt;p&gt;現在請你的 VSCode 上面，並按照兩個步驟點擊。可以參考下圖中的範例：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/6ku3khZ.png&quot; alt=&quot;20240914003246&quot;&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;找到 &lt;code&gt;lib&lt;/code&gt; 資料夾中的 &lt;code&gt;main.dart&lt;/code&gt; 檔案。&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;main()&lt;/code&gt; 的上方，可以看到有一排文字：&lt;code&gt;Run | Debug | Profile&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果沒看到這排文字，可能代表你沒安裝 &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter&quot;&gt;Flutter&lt;/a&gt; 的官方 Extension。可以試著再安裝一次，或者重新開啟 VSCode。&lt;/p&gt;
+
+&lt;p&gt;然後點擊 &lt;code&gt;Run&lt;/code&gt;，就可以看到 VSCode 右下角正在執行中：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/MkG5xk0.png&quot; alt=&quot;20240914003316&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;成功運作的話，可以看到 VSCode 多了一個控制列。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/3EJKDiQ.png&quot; alt=&quot;20240914003333&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後你的 iOS Simulator 畫面應該會是這樣：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/TRIRn0N.png&quot; alt=&quot;20240914003345&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;接下來我們試著改變一下程式碼。&lt;/p&gt;
+
+&lt;p&gt;在 &lt;code&gt;main.dart&lt;/code&gt; 這個檔案，往下滑找到：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;dart!&quot;&gt;&#39;You have pushed the button this many times:&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這一段就是在畫面上的顯示的文字，我們隨便改一下之後，畫面會隨著你修改之後馬上 Hot Reload 更新。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Aq2TTRk.png&quot; alt=&quot;20240914003412&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;有時候可能會遇到沒有更新的情況，沒關係。直接在 VSCode 的那個控制列，點擊 ⚡️ 的按鈕，這個是 Save and Hot Reload 的功能，這樣你的畫面應該就會按照你修改的更新了。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-d978f4e315e7e7d1&quot;&gt;在終端機上執行&lt;/h2&gt;
+
+&lt;p&gt;前面示範了如何在 VSCode 執行 Flutter 的專案，並且如何即時更新，接下來來示範如何在終端機做這些動作。&lt;/p&gt;
+
+&lt;p&gt;首先打開你的終端機，如果你直接執行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter run
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;應該會顯示以下的畫面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/h0gsxjU.png&quot; alt=&quot;20240914003436&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;這是代表我們並沒有連結任何的裝置，或是模擬器。&lt;/p&gt;
+
+&lt;p&gt;如果我們想確認一下現在 Flutter 有沒有連結任何裝置或模擬器，可以執行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter devices
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;應該會看到類似以下的訊息：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/MmVQRQW.png&quot; alt=&quot;20240914003457&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果有連結的話，會顯示在上面，但如果沒有，他提示你說，可以執行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter emulators
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;執行完會跟你說，現在有哪些模擬器可以使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Vio1JAi.png&quot; alt=&quot;20240914003516&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;並且提示你目前你如果要執行模擬器，可以執行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter emulators --launch &amp;lt;emulator id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以我目前的狀況，我想打開 iOS Simulator 就是輸入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter emulators --launch apple_ios_simulator
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果這裡都沒出現任何裝置的話，那麼他也提示你，可以輸入指令自己新增：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter emulators --create [--name xyz]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通常只要模擬器已經開啟，那麼就可以直接執行 Flutter 專案了：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash!&quot;&gt;flutter run
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你的終端機會出現這樣的畫面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/BcavgsG.png&quot; alt=&quot;20240914003539&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然後如果我們修改一下程式碼，可以發現可能沒辦法即時更新畫面。&lt;/p&gt;
+
+&lt;p&gt;沒關係，終端機有提示我們可以執行 &lt;code&gt;r&lt;/code&gt; 來做 Hot reload，也可以做到更新程式碼的動作。&lt;/p&gt;
+
+&lt;p&gt;以上就是如何透過 VSCode 和終端機來執行 Flutter 專案的流程，各位可以選擇喜歡並且順手的方式。&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sat, 14 Sep 2024 00:08:54 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/flutter.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 4 minutes</category>
+    </item>
+    <item>
+      <title>SCSS 變數運用</title>
+      <link>https://railquill.vercel.app/scss.html</link>
+      <description>說來慚愧，立志成為一名前端工程師的我，只會純 CSS 跟框架來幫網頁做樣式，對於 SASS 這個好用的語言工具卻是知道的不多，所以想趁有時間來學一下 SASS，就開了這個學習筆記系列。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;說來慚愧，立志成為一名前端工程師的我，只會純 CSS 跟框架來幫網頁做樣式，對於 SASS 這個好用的語言工具卻是知道的不多，所以想趁有時間來學一下 SASS，就開了這個學習筆記系列。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;sass&quot;&gt;何謂 SASS？&lt;/h2&gt;
+
+&lt;p&gt;根據&lt;a href=&quot;https://zh.wikipedia.org/wiki/Sass&quot;&gt;維基百科中&lt;/a&gt;介紹，SASS 全名為 &lt;strong&gt;S&lt;/strong&gt;yntactically &lt;strong&gt;A&lt;/strong&gt;wesome &lt;strong&gt;S&lt;/strong&gt;tyle*&lt;em&gt;s&lt;/em&gt;*heets，是一個將指令碼解析成 CSS 的手稿語言，也就是 SassScript。SASS 有兩種語法，一種是 SASS，另一種是 SCSS，那麼兩種有什麼差別呢？&lt;/p&gt;
+
+&lt;p&gt;這是 SCSS 的寫法：&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/OJNBqGK&#39;&amp;gt;scss sample&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;p&gt;這是 SASS 的寫法：&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/XWdxGwe&#39;&amp;gt;sass sample&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;p&gt;跟普通的 CSS 相比，SCSS 是相對好入門的寫法，在相同架構下，例如 li 就可以寫在 ul 中，而且寫法差不多；而 SASS 看起來架構也一樣，差別在於完全沒有大括號跟分號，感覺很適合懶人的寫法。
+不過我似乎很少看到有人使用 SASS，也許是我孤陋寡聞，看的東西不夠多qq。所以為了避免未來協作實務上的困難，所以我之後的實用還是會以 SCSS 為主。&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2e76e4492ecf6190&quot;&gt;變數運用&lt;/h2&gt;
+
+&lt;p&gt;前面稍微簡單介紹一下 SCSS 語法之間的差異，這裡就要來講一下 SCSS 好用的地方 - &lt;strong&gt;變數&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;在寫 CSS 時，有時候會遇到文字或是區塊共用同樣的顏色，例如下方例子：&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/JjXmVjZ&#39;&amp;gt;same color&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;p&gt;如果遇到需要改變顏色的需求時，可能就得要一個一個更換。
+不過在 SCSS 就可以運用到變數的概念，設定變數也很簡單，一個錢字符號加上變數的名稱，後面設定想要的效果，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// 設定字型大小
+$size-xl: 40px;
+// 設定字型顏色
+$font-color: red;
+
+.header {
+  font-size: $size-xl;
+  color: $font-color;
+}
+
+.content {
+  font-size: $size-xl;
+  color: $font-color;
+}
+
+.footer {
+  font-size: $size-xl;
+  color: $font-color;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上就可以一口氣更換大量的效果，如果想要再改的話，只要變更變數的值就可以了，非常靈活。&lt;/p&gt;
+
+&lt;h2 id=&quot;scss&quot;&gt;SCSS 變數做加減乘除好方便&lt;/h2&gt;
+
+&lt;p&gt;傳統 CSS 要做數值運算的話，得要透過 &lt;code&gt;calc()&lt;/code&gt; 才能做到，不過在 SCSS 中的變數，很輕易的就可以做到跟一般的程式語言一樣的數值運算，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// 設定一個基準
+$font-m: 20px;
+// 將基準 * 2
+$font-l: $font-m * 2;
+
+h1 {
+  font-size: $font-l;
+}
+
+p {
+  font-size: $font-m;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;part-2c58e785e14bbf14&quot;&gt;字串運用&lt;/h2&gt;
+
+&lt;p&gt;變數在 SCSS 中也可以做一般程式語言字串的使用，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;@import url(&#39;https://fonts.googleapis.com/css2?family=Kufam&amp;amp;display=swap&#39;);
+$font-family-base: &#39;Kufam&#39;, cursive;
+
+h1 {
+  font-family: $font-family-base;
+}
+
+p {
+  font-family: $font-family-base;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;darken-lighten&quot;&gt;透過 darken、lighten 來調顏色&lt;/h2&gt;
+
+&lt;p&gt;darken、lighten 是 SCSS 內建的功能，可以用來微調顏色，是一個非常有趣的功能，使用方法是 &lt;code&gt;darken(orange, 10%);&lt;/code&gt;，這樣就可以將 orange 的顏色調深 10%，反之 lighten 就是調淺，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;$bg-red: red;
+$bg-green: green;
+
+h1 {
+  background-color: lighten($bg-red, 30%);
+}
+
+p {
+  background-color: darken($bg-green, 10%);
+}
+
+span {
+  background-color: darken(orange, 10%);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+      ]]></content:encoded>
+      <pubDate>Sun, 20 Sep 2020 20:23:38 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/scss.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
+    </item>
+    <item>
+      <title>學會 Mixin，讓你 SCSS 開發更快速</title>
+      <link>https://railquill.vercel.app/mixin-scss.html</link>
+      <description>以往自己在寫 CSS 時，多少會遇到想要寫某一個效果卻忘記怎麼開始，然後就需要上網找怎麼解決問題。當下雖然問題解決了，不過可能過沒多久，當遇到同樣問題時，又需要再去找解法，這時候 Mixin 就派上用場了。</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;以往自己在寫 CSS 時，多少會遇到想要寫某一個效果卻忘記怎麼開始，然後就需要上網找怎麼解決問題。當下雖然問題解決了，不過可能過沒多久，當遇到同樣問題時，又需要再去找解法，這時候 &lt;strong&gt;Mixin&lt;/strong&gt; 就派上用場了。&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;mixin&quot;&gt;如何開始用 Mixin&lt;/h2&gt;
+
+&lt;h3 id=&quot;part-2c1280e4645140e2&quot;&gt;基本用法&lt;/h3&gt;
+
+&lt;p&gt;Mixin 的用法我覺得有點像變數，只是差在變數只能給一個值，而 Mixin 則是把一個物件定義成一個變數，然後要用的時候再呼叫變數名稱就可以使用裡面的方法，就像下面的 CodePen：&lt;/p&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/NWNowvB&#39;&amp;gt;mixin demo&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// 定義一個 @mixin，並給它一個名稱
+@mixin hide-text {
+    text-indent: 110%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+// 要使用時，呼叫 @include 加上 mixin 名稱
+.h1 {
+    @include hide-text
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;part-29e7e761d3fb4b27&quot;&gt;帶入參數的用法&lt;/h3&gt;
+
+&lt;p&gt;這是比較進階的用法，用法跟 JavaScript 的函式蠻像的，可以帶入複數個參數，非常方便，寫 CSS 變的更像在寫一般程式語言了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// 下面有重複使用的部份
+.head {
+  font-size: 25px;
+  line-height: 2em;
+  color: #ff0999;
+  margin: 15px;
+}
+
+.main {
+  font-size: 25px;
+  line-height: 2em;
+  color: #ff0999;
+  margin: 15px;
+}
+
+.footer {
+  font-size: 25px;
+  line-height: 2em;
+  color: #ff0999;
+  margin: 15px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// 可以帶入參數來更靈活使用
+@mixin p-style($p-size, $p-color) {
+  font-size: $p-size;
+  line-height: 2em;
+  color: $p-color;
+  margin: 15px;
+}
+
+.head {
+  @include p-style(20px, #677962);
+}
+
+.main {
+  @include p-style(30px, #933962);
+}
+
+.footer {
+  @include p-style(10px, #946809);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+
+  See the Pen &amp;lt;a href=&#39;https://codepen.io/bucky0112/pen/gOrqooE&#39;&amp;gt;mixin demo2&amp;lt;/a&amp;gt; by Bucky Chu
+  (&amp;lt;a href=&#39;https://codepen.io/bucky0112&#39;&amp;gt;@bucky0112&amp;lt;/a&amp;gt;) on &amp;lt;a href=&#39;https://codepen.io&#39;&amp;gt;CodePen&amp;lt;/a&amp;gt;.
+
+
+      ]]></content:encoded>
+      <pubDate>Thu, 24 Sep 2020 22:49:10 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/mixin-scss.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>SCSS import 切分檔案管理</title>
+      <link>https://railquill.vercel.app/scss-import.html</link>
+      <description>在以往單純使用 CSS 的開發經驗中，總是會使用一支 CSS 檔案來設計所有的樣式，但是這樣的缺點是之後的維護相當困難，要找一個樣式的 code 可能要找很久。之前在寫 Vue 專案的時候，覺得元件式的管理很棒，所有元件分離讓之後的管理變得容易很多，現在才發現原來 SCSS 也可以做類似的事情，感覺好用很多啊～</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;在以往單純使用 CSS 的開發經驗中，總是會使用一支 CSS 檔案來設計所有的樣式，但是這樣的缺點是之後的維護相當困難，要找一個樣式的 code 可能要找很久。之前在寫 Vue 專案的時候，覺得元件式的管理很棒，所有元件分離讓之後的管理變得容易很多，現在才發現原來 SCSS 也可以做類似的事情，感覺好用很多啊～&lt;/p&gt;
+
+
+
+&lt;h2 id=&quot;part-2e76e4492d5f6eab&quot;&gt;變數管理&lt;/h2&gt;
+
+&lt;p&gt;這個方法在我上次的專案中， 在我自定義 BootstrapVue 的顏色時有用到。而在 SCSS 中的作法也是差不多，假設目前有一支 .scss 檔案，已經有設定顏色的變數，想要讓變數分割成一支獨立的檔案來管理的話，做兩步驟就可以成功使用 import 來管理：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;新增一支 &lt;code&gt;_variable.scss&lt;/code&gt;，裡面放變數的設定。&lt;/li&gt;
+&lt;li&gt;在主要 .scss 檔中 import 檔案：&lt;code&gt;@import &quot;variable&quot;;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// all.scss
+@import &quot;variable&quot;;
+
+.banner-title {
+    max-width: 460px;
+    background: lighten($danger, 20%);
+    color: $white;
+  }
+  .main-menu {
+    background: $danger;
+    overflow: hidden;
+    a:hover {
+      background: $danger;
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;scss&quot;&gt;// _variable.scss
+$danger: #ff0000;
+$white: #fff;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;scss&quot;&gt;分離式管理 SCSS&lt;/h2&gt;
+
+&lt;p&gt;前面提到將變數分開管理，那麼如果要將元件分得更細的話也可以，例如可以分成每一頁一個 .scss 檔，或是把 navbar 或是 footer 分開放，當然如果有使用 CSS Reset 的話，也是可以使用 import 管理，例如下方的例子：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;新增一個 &lt;code&gt;_header.scss&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;all.scss&lt;/code&gt; 中 &lt;code&gt;@import “header”&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;這樣子把 &lt;code&gt;all.scss&lt;/code&gt; 當作一個管理其他元件的檔案，在維護管理上就更加的方便了。&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Tue, 22 Sep 2020 22:40:59 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/scss-import.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 1 minutes</category>
+    </item>
+    <item>
+      <title>用 Rust 來寫前端 - Yew</title>
+      <link>https://railquill.vercel.app/rust-yew.html</link>
+      <description>Rust 的框架 Rocket</description>
+      <content:encoded><![CDATA[
+        &lt;p&gt;今天是我們一起學習 Rust 的第 29 天了，前面我們玩了很多後端的東西，今天我們來玩一下前端的東西吧！&lt;/p&gt;
+
+&lt;h2 id=&quot;webassembly&quot;&gt;WebAssembly&lt;/h2&gt;
+
+&lt;p&gt;在開始之前，想先介紹一下 WebAssembly，它是一種可以在瀏覽器中執行的程式語言，它可以讓我們在瀏覽器中執行非常複雜的程式，而且它的執行速度也非常快，所以我們可以在瀏覽器中執行一些比較複雜的運算，而不會影響到瀏覽器的體驗。&lt;/p&gt;
+
+&lt;h2 id=&quot;yew&quot;&gt;Yew&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://yew.rs/&quot;&gt;Yew&lt;/a&gt; 是一個可以讓我們在 Rust 中使用 WebAssembly 的框架，它可以讓我們在 Rust 中撰寫前端的程式，並且可以編譯成 WebAssembly，讓我們在瀏覽器中執行。&lt;/p&gt;
+
+&lt;h2 id=&quot;yew&quot;&gt;安裝 Yew&lt;/h2&gt;
+
+&lt;p&gt;那麼我們要如何使用 Yew 來開發前端的程式呢？按照官網的指示，我們要先安裝以下的東西：&lt;/p&gt;
+
+&lt;h3 id=&quot;webassembly&quot;&gt;WebAssembly&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;$ rustup target add wasm32-unknown-unknown
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;trunk&quot;&gt;Trunk&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;$ cargo install trunk
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;part-2ea8073161887627&quot;&gt;開新專案&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;$ cargo new yew-demo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後在 &lt;code&gt;Cargo.toml&lt;/code&gt; 中加入以下的內容：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;toml&quot;&gt;[dependencies]
+yew = &quot;0.19&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;到這邊我們就可以開始撰寫程式了！&lt;/p&gt;
+
+&lt;p&gt;先在 &lt;code&gt;src/main.rs&lt;/code&gt; 中加入以下的內容：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;use yew::prelude::*;
+
+enum Msg {
+    AddOne,
+}
+
+struct Model {
+    value: i64,
+}
+
+impl Component for Model {
+    type Message = Msg;
+    type Properties = ();
+
+    fn create(_ctx: &amp;amp;Context&amp;lt;Self&amp;gt;) -&amp;gt; Self {
+        Self {
+            value: 0,
+        }
+    }
+
+    fn update(&amp;amp;mut self, _ctx: &amp;amp;Context&amp;lt;Self&amp;gt;, msg: Self::Message) -&amp;gt; bool {
+        match msg {
+            Msg::AddOne =&amp;gt; {
+                self.value += 1;
+                // the value has changed so we need to
+                // re-render for it to appear on the page
+                true
+            }
+        }
+    }
+
+    fn view(&amp;amp;self, ctx: &amp;amp;Context&amp;lt;Self&amp;gt;) -&amp;gt; Html {
+        // This gives us a component&#39;s &quot;`Scope`&quot; which allows us to send messages, etc to the component.
+        let link = ctx.link();
+        html! {
+            &amp;lt;div&amp;gt;
+                &amp;lt;button onclick={link.callback(|_| Msg::AddOne)}&amp;gt;{ &quot;+1&quot; }&amp;lt;/button&amp;gt;
+                &amp;lt;p&amp;gt;{ self.value }&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        }
+    }
+}
+
+fn main() {
+    yew::start_app::&amp;lt;Model&amp;gt;();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後在根目錄下新增一個 &lt;code&gt;index.html&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;html&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&quot;utf-8&quot; /&amp;gt;
+    &amp;lt;title&amp;gt;Yew App&amp;lt;/title&amp;gt;
+  &amp;lt;/head&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然後執行 &lt;code&gt;trunk serve&lt;/code&gt;，就可以在瀏覽器中看到我們的網頁了！&lt;/p&gt;
+
+&lt;p&gt;不過目前只能讓數字加 1，那我們再加另一個按鈕可以 - 1 看起來比較完整一點：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;rust&quot;&gt;enum Msg {
+    AddOne,
+    MinusOne,
+}
+
+impl Component for Model {
+    // 省略..
+        fn update(&amp;amp;mut self, _ctx: &amp;amp;Context&amp;lt;Self&amp;gt;, msg: Self::Message) -&amp;gt; bool {
+        match msg {
+            Msg::AddOne =&amp;gt; {
+                self.value += 1;
+                true
+            }
+
+            Msg::MinusOne =&amp;gt; {
+                if (self.value &amp;gt; 0) {
+                    self.value -= 1;
+                }
+                true
+            }
+        }
+    }
+
+    fn view(&amp;amp;self, ctx: &amp;amp;Context&amp;lt;Self&amp;gt;) -&amp;gt; Html {
+        let link = ctx.link();
+        html! {
+            &amp;lt;div class=&quot;content&quot;&amp;gt;
+                &amp;lt;button onclick={link.callback(|_| Msg::AddOne)} class=&quot;btn&quot;&amp;gt;{ &quot;+1&quot; }&amp;lt;/button&amp;gt;
+                &amp;lt;p class=&quot;result&quot;&amp;gt;{ self.value }&amp;lt;/p&amp;gt;
+                &amp;lt;button onclick={link.callback(|_| Msg::MinusOne)} class=&quot;btn&quot;&amp;gt;{ &quot;-1&quot; }&amp;lt;/button&amp;gt;
+            &amp;lt;/div&amp;gt;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果要順便加上一些 CSS 的話，可以在在根目錄新增一個 &lt;code&gt;style.css&lt;/code&gt;，然後在 &lt;code&gt;index.html&lt;/code&gt; 中加入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;html&quot;&gt;&amp;lt;link data-trunk href=&quot;style.css&quot; rel=&quot;css&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;這樣就完成一個用 Yew 寫的 App 了！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ibz0XCZ.gif&quot; alt=&quot;CleanShot 2022-10-14 at 00.21.36&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;大家如果有興趣的話，可以參考我的 &lt;a href=&quot;https://github.com/bucky0112/yew_calculator&quot;&gt;GitHub repo&lt;/a&gt; 來玩玩看。&lt;/p&gt;
+
+      ]]></content:encoded>
+      <pubDate>Fri, 14 Oct 2022 00:31:42 +0000</pubDate>
+      <guid isPermaLink="true">https://railquill.vercel.app/rust-yew.html</guid>
+      <author>bucky0112@gmail.com (Bucky Chu)</author>
+      <category>Reading Time: 2 minutes</category>
     </item>
   </channel>
 </rss>

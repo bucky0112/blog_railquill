@@ -1,48 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Debug Test Post 1757247452 - Railquill</title>
+    <title>用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲 - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Test Header
-
-Some content here">
+      <meta name="description" content="用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/debug-test-post-1757247452.html">
+    <meta property="og:url" content="https://railquill.vercel.app/rust-bevy-Raiden.html">
       <meta property="og:type" content="article">
-      <meta property="og:title" content="Debug Test Post 1757247452">
-      <meta property="og:description" content="Test Header
-
-Some content here">
-      <meta property="og:image" content="/og-image.png">
+      <meta property="og:title" content="用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲">
+      <meta property="og:description" content="用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲">
+      <meta property="og:image" content="https://github.com/bucky0112/blog-images/blob/main/images/ferris_plane.webp?raw=true">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="Debug Test Post 1757247452">
-      <meta property="twitter:description" content="Test Header
-
-Some content here">
-      <meta property="twitter:image" content="/og-image.png">
+      <meta property="twitter:title" content="用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲">
+      <meta property="twitter:description" content="用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲">
+      <meta property="twitter:image" content="https://github.com/bucky0112/blog-images/blob/main/images/ferris_plane.webp?raw=true">
       
       <!-- Article specific meta tags -->
-      <meta property="article:published_time" content="2025-09-07T12:17:32Z">
-      <meta property="article:modified_time" content="2025-09-07T12:17:32Z">
+      <meta property="article:published_time" content="2025-09-20T02:24:24Z">
+      <meta property="article:modified_time" content="2025-09-19T18:54:59Z">
       <meta property="article:author" content="Bucky Chu">
       <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Debug Test Post 1757247452","description":"Test Header\n\nSome content here","url":"https://railquill.vercel.app/debug-test-post-1757247452.html","datePublished":"2025-09-07T12:17:32Z","dateModified":"2025-09-07T12:17:32Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/debug-test-post-1757247452.html"},"articleBody":"Test Header\n\nSome content here\n","wordCount":6,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲","description":"用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲","url":"https://railquill.vercel.app/rust-bevy-Raiden.html","datePublished":"2025-09-20T02:24:24Z","dateModified":"2025-09-19T18:54:59Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust-bevy-Raiden.html"},"articleBody":"小時候在大型機台玩《雷電》時，總覺得能自己做出一個射擊遊戲一定很酷。最近我正好在研究 Rust 的遊戲引擎 Bevy，挑戰做出一個簡化版的經典射擊遊戲 雷電 (Raiden)。\n\n這個 Demo 包含以下功能：\n\n\n玩家可以用 WASD / 方向鍵 移動飛機\n按 空白鍵 發射子彈\n敵人會自動生成並從上方往下移動\n子彈擊中敵人 → 敵人與子彈同時消失\n超出畫面的物件會自動清理\n\n\n最終效果大概是這樣：\n\n\n\nBevy 為什麼適合這個題材？\n\nBevy 採用 ECS（Entity Component System） 架構，把遊戲物件拆成三個元素：\n\n\nEntity（實體）：玩家、敵人、子彈\nComponent（元件）：位置、速度、角色類型\nSystem（系統）：移動、生成、碰撞、清理\n\n\n對「射擊遊戲」來說，這個架構超直觀：敵人就是一個 entity，子彈也是，給它一個 velocity component，它們就會自己動起來。\n\n玩家控制\n\n玩家飛機的操作就是 方向鍵 / WASD。這裡我加了一個小細節：玩家不能飛出螢幕邊界。\n\ntransform.translation.x = transform.translation.x\n    .clamp(-WINDOW_WIDTH / 2.0 + 25.0, WINDOW_WIDTH / 2.0 - 25.0);\n\n\n這行程式碼就是用來「把你擋在畫面裡」。我一開始還忘了加，結果飛機直接飛出視窗消失XD\n\n射擊\n\n只要按空白鍵，玩家就能發射一顆黃色小子彈往上飛。\n\ncommands.spawn((\n    Sprite {\n        color: Color::srgb(1.0, 1.0, 0.0),\n        custom_size: Some(Vec2::new(5.0, 10.0)),\n        ..default()\n    },\n    Transform::from_xyz(player_x, player_y + 30.0, 0.0),\n    Bullet,\n    Velocity(Vec3::new(0.0, BULLET_SPEED, 0.0)),\n));\n\n\n子彈就是一個矩形精靈，加上 Velocity，剩下交給移動系統就好。\n第一次按下空白鍵，看到畫面裡飛出黃色子彈的瞬間，彷彿夢回童年。\n\n產生敵人\n\n敵人每隔兩秒會在隨機位置生成，然後慢慢往下移動：\n\nlet x = (rand::random::\u0026lt;f32\u0026gt;() - 0.5) * (WINDOW_WIDTH - 100.0);\ncommands.spawn((\n    Sprite::from_image(asset_server.load(\"player2.png\")),\n    Transform::from_xyz(x, WINDOW_HEIGHT / 2.0 + 50.0, 0.0),\n    Enemy,\n    Velocity(Vec3::new(0.0, -ENEMY_SPEED, 0.0)),\n));\n\n\n當我第一次看到敵人真的「一架一架掉下來」時，瞬間覺得好像真的可以玩了 😎。\n\n碰撞檢測\n\n子彈跟敵人碰到就同歸於盡，這裡我用了最直白的寫法：算距離。\n\nif bullet_transform.translation.distance(enemy_transform.translation) \u0026lt; 30.0 {\n    commands.entity(bullet_entity).despawn();\n    commands.entity(enemy_entity).despawn();\n}\n\n\n完全沒有物理引擎，單純距離小於 30 就消失。但就算這麼陽春，打掉第一架敵機的瞬間還是很讚。\n\n自動清理\n\n最後一件必須要處理的是，子彈飛出畫面、敵人掉下去，都要刪掉。不然遊戲跑久了會 lag。\n\nif transform.translation.y \u0026gt; WINDOW_HEIGHT / 2.0 + 100.0\n    || transform.translation.y \u0026lt; -WINDOW_HEIGHT / 2.0 - 100.0 {\n    commands.entity(entity).despawn();\n}\n\n\n記得把這段加上去，不然最後會卡QQ\n\n小結\n\n總之，這是一個運用 Bevy 就能寫出來的一個遊戲，雖然很簡單，但是應該可以有很多可能性，例如可以再加上特效、聲音，可能還可以加上計分系統。\n\n這篇文章只是我用 Bevy 寫遊戲的一個小實驗。其實我還在寫一個完整的 Bevy 系列文，會一步一步帶大家從 ECS 入門，到做出一個 Rogue-lite 小遊戲。\n如果你對 Rust 遊戲開發有興趣，歡迎看一下鐵人賽系列\n","wordCount":190,"timeRequired":"PT1M","image":{"@type":"ImageObject","url":"https://github.com/bucky0112/blog-images/blob/main/images/ferris_plane.webp?raw=true","caption":"用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲"}}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/debug-test-post-1757247452.html">
+    <link rel="canonical" href="https://railquill.vercel.app/rust-bevy-Raiden.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -894,27 +888,133 @@ Some content here">
     <!-- Article Header -->
     <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
       <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
-        Debug Test Post 1757247452
+        用 Rust + Bevy 打造一個簡化版「雷電」射擊遊戲
       </h1>
       <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
-        <span style="color: var(--gray-600);">September 07, 2025</span>
+        <span style="color: var(--gray-600);">September 20, 2025</span>
           <span class="post-meta-divider"></span>
           <span style="color: var(--gray-600);">1 min read</span>
       </div>
         <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
-          Test Header
+          小時候在大型機台玩《雷電》時，總覺得能自己做出一個射擊遊戲一定很酷。
 
-Some content here
+現在算是實現了，而且還是用 Rust
+...
         </p>
     </header>
     
     <!-- Featured Image -->
+      <div class="featured-image animate-slide-up" style="animation-delay: 0.2s; margin-bottom: var(--space-12);">
+        <figure style="margin: 0; position: relative; overflow: hidden; border-radius: 0.75rem; box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.15);">
+          <img src="https://github.com/bucky0112/blog-images/blob/main/images/ferris_plane.webp?raw=true" alt="Bevy version Raiden" style="width: 100%; height: auto; max-height: 600px; object-fit: cover; transition: transform 0.5s var(--ease-out);" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.05) 100%);"></div>
+        </figure>
+      </div>
     
     <!-- Article Content -->
     <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
-      <h2 id="test-header">Test Header</h2>
+      <p>小時候在大型機台玩《雷電》時，總覺得能自己做出一個射擊遊戲一定很酷。最近我正好在研究 Rust 的遊戲引擎 <a href="https://bevy.org/">Bevy</a>，挑戰做出一個簡化版的經典射擊遊戲 <strong>雷電 (Raiden)</strong>。</p>
 
-<p>Some content here</p>
+<p>這個 Demo 包含以下功能：</p>
+
+<ul>
+<li><p>玩家可以用 WASD / 方向鍵 移動飛機</p></li>
+<li><p>按 空白鍵 發射子彈</p></li>
+<li><p>敵人會自動生成並從上方往下移動</p></li>
+<li><p>子彈擊中敵人 → 敵人與子彈同時消失</p></li>
+<li><p>超出畫面的物件會自動清理</p></li>
+</ul>
+
+<p>最終效果大概是這樣：</p>
+
+<p><img src="https://raw.githubusercontent.com/bucky0112/blog-images/main/images/img_20250919_000255.gif" alt="demo"></p>
+
+<h2 id="bevy">Bevy 為什麼適合這個題材？</h2>
+
+<p>Bevy 採用 ECS（Entity Component System） 架構，把遊戲物件拆成三個元素：</p>
+
+<ul>
+<li><p>Entity（實體）：玩家、敵人、子彈</p></li>
+<li><p>Component（元件）：位置、速度、角色類型</p></li>
+<li><p>System（系統）：移動、生成、碰撞、清理</p></li>
+</ul>
+
+<p>對「射擊遊戲」來說，這個架構超直觀：敵人就是一個 entity，子彈也是，給它一個 velocity component，它們就會自己動起來。</p>
+
+<h2 id="part-2d1a51ebcd84e3ca">玩家控制</h2>
+
+<p>玩家飛機的操作就是 方向鍵 / WASD。這裡我加了一個小細節：玩家不能飛出螢幕邊界。</p>
+
+<pre><code class="rust">transform.translation.x = transform.translation.x
+    .clamp(-WINDOW_WIDTH / 2.0 + 25.0, WINDOW_WIDTH / 2.0 - 25.0);
+</code></pre>
+
+<p>這行程式碼就是用來「把你擋在畫面裡」。我一開始還忘了加，結果飛機直接飛出視窗消失XD</p>
+
+<h2 id="part-6542ac97d61">射擊</h2>
+
+<p>只要按空白鍵，玩家就能發射一顆黃色小子彈往上飛。</p>
+
+<pre><code class="rust">commands.spawn((
+    Sprite {
+        color: Color::srgb(1.0, 1.0, 0.0),
+        custom_size: Some(Vec2::new(5.0, 10.0)),
+        ..default()
+    },
+    Transform::from_xyz(player_x, player_y + 30.0, 0.0),
+    Bullet,
+    Velocity(Vec3::new(0.0, BULLET_SPEED, 0.0)),
+));
+</code></pre>
+
+<p>子彈就是一個矩形精靈，加上 Velocity，剩下交給移動系統就好。
+第一次按下空白鍵，看到畫面裡飛出黃色子彈的瞬間，彷彿夢回童年。</p>
+
+<h2 id="part-2d39d1bed1bb5444">產生敵人</h2>
+
+<p>敵人每隔兩秒會在隨機位置生成，然後慢慢往下移動：</p>
+
+<pre><code class="rust">let x = (rand::random::&lt;f32&gt;() - 0.5) * (WINDOW_WIDTH - 100.0);
+commands.spawn((
+    Sprite::from_image(asset_server.load("player2.png")),
+    Transform::from_xyz(x, WINDOW_HEIGHT / 2.0 + 50.0, 0.0),
+    Enemy,
+    Velocity(Vec3::new(0.0, -ENEMY_SPEED, 0.0)),
+));
+</code></pre>
+
+<p>當我第一次看到敵人真的「一架一架掉下來」時，瞬間覺得好像真的可以玩了 😎。</p>
+
+<h2 id="part-2d884cd2bcd875b0">碰撞檢測</h2>
+
+<p>子彈跟敵人碰到就同歸於盡，這裡我用了最直白的寫法：算距離。</p>
+
+<pre><code class="rust">if bullet_transform.translation.distance(enemy_transform.translation) &lt; 30.0 {
+    commands.entity(bullet_entity).despawn();
+    commands.entity(enemy_entity).despawn();
+}
+</code></pre>
+
+<p>完全沒有物理引擎，單純距離小於 30 就消失。但就算這麼陽春，打掉第一架敵機的瞬間還是很讚。</p>
+
+<h2 id="part-2da7f3c6269d5783">自動清理</h2>
+
+<p>最後一件必須要處理的是，子彈飛出畫面、敵人掉下去，都要刪掉。不然遊戲跑久了會 lag。</p>
+
+<pre><code class="rust">if transform.translation.y &gt; WINDOW_HEIGHT / 2.0 + 100.0
+    || transform.translation.y &lt; -WINDOW_HEIGHT / 2.0 - 100.0 {
+    commands.entity(entity).despawn();
+}
+</code></pre>
+
+<p>記得把這段加上去，不然最後會卡QQ</p>
+
+<h2 id="part-6542acf8e35">小結</h2>
+
+<p>總之，這是一個運用 Bevy 就能寫出來的一個遊戲，雖然很簡單，但是應該可以有很多可能性，例如可以再加上特效、聲音，可能還可以加上計分系統。</p>
+
+<p>這篇文章只是我用 Bevy 寫遊戲的一個小實驗。其實我還在寫一個完整的 Bevy 系列文，會一步一步帶大家從 ECS 入門，到做出一個 Rogue-lite 小遊戲。
+如果你對 Rust 遊戲開發有興趣，歡迎看一下<a href="https://ithelp.ithome.com.tw/users/20120293/ironman/8770">鐵人賽系列</a></p>
 
     </div>
     
@@ -924,7 +1024,7 @@ Some content here
         <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
         <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
         <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="https://twitter.com/intent/tweet?text=Debug+Test+Post+1757247452&url=https%3A%2F%2Frailquill.vercel.app%2Fdebug-test-post-1757247452.html" 
+          <a href="https://twitter.com/intent/tweet?text=%E7%94%A8+Rust+%2B+Bevy+%E6%89%93%E9%80%A0%E4%B8%80%E5%80%8B%E7%B0%A1%E5%8C%96%E7%89%88%E3%80%8C%E9%9B%B7%E9%9B%BB%E3%80%8D%E5%B0%84%E6%93%8A%E9%81%8A%E6%88%B2&url=https%3A%2F%2Frailquill.vercel.app%2Frust-bevy-Raiden.html" 
              target="_blank" 
              rel="noopener" 
              class="btn"
@@ -937,7 +1037,7 @@ Some content here
             </svg>
             Share on Twitter
           </a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fdebug-test-post-1757247452.html" 
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Frust-bevy-Raiden.html" 
              target="_blank" 
              rel="noopener" 
              class="btn"
@@ -959,8 +1059,8 @@ Some content here
   <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
       <div class="post-nav-item prev">
         <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
-        <a href="/test-post.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: Test Post">
-          Test Post
+        <a href="/drizzle-v-s-prisma.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: Drizzle v.s Prisma">
+          Drizzle v.s Prisma
         </a>
       </div>
     

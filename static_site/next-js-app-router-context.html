@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>Next.js 如何在 App Router 中使用 Context？ - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="介紹如何在 Next.js 中使用 Context。">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/next-js-app-router-context.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="Next.js 如何在 App Router 中使用 Context？">
+      <meta property="og:description" content="介紹如何在 Next.js 中使用 Context。">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="Next.js 如何在 App Router 中使用 Context？">
+      <meta property="twitter:description" content="介紹如何在 Next.js 中使用 Context。">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2024-07-14T15:57:00Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Next.js 如何在 App Router 中使用 Context？","description":"介紹如何在 Next.js 中使用 Context。","url":"https://railquill.vercel.app/next-js-app-router-context.html","datePublished":"2024-07-14T15:57:00Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/next-js-app-router-context.html"},"articleBody":"自從 Next.js 推出 App Router 後，讓開發者可以輕鬆使用強大的路由功能，但是同時也帶來一些在使用 React Hooks 的限制。本篇文章將探討如何在 App Router 中有效使用 useContext 等 hooks 來傳遞 props，並解釋為什麼在某些情況下不能在 Server Component 中使用 hooks。\n\n什麼是 App Router？\n\nApp Router 是 Next.js 13.4 版本引入的一項重大更新，它徹底改變了我們使用 React 的方式。這個新的路由系統是基於 React Server Components，為開發者提供了更強大、更靈活的工具來建立高效能的網頁應用。\n\nApp Router 的核心特性：\n\n\nReact Server Components：這是 App Router 的基礎。Server Components 在 Server 端運作，而不是在 Client 端。這代表著它們可以直接使用伺服器資源（如 DataBase），而不用將這些資源暴露給 Client 端或通過網絡傳輸不必要的數據。\n巢狀路由和 Layout：你可以輕鬆人性化地建立複雜的路由結構，如 /news/[id]/page，並為多個頁面定義共享的 layout，不用再設定複雜的路由設定。\n簡化的資料取得：通過使用 React Server Components 中或從 API 取得資料，不用寫複雜的邏輯或管理狀態。\nStreaming 渲染：App Router 可以將資料從 Server Components 以 JSON chunk response 的形式傳輸到 Client 端，而不是一次性傳輸全部數據。這可以明顯升級效能和用戶體驗，特別是在網路較慢的情況下。\n內建 SEO 支持：App Router 自動產生 meta 標籤、sitemaps 和 robots.txt 文件，可以讓搜索引擎更好地找到你的網站。\n更靈活的靜態和動態渲染：開發者可以選擇最適合的渲染策略，實現更精準的效能優化。\n\n\n為什麼使用 App Router？\n\n總的來說，App Router 不僅是 Next.js 的一個新功能，它為開發者提供了建立更快、更容易維護的 Web App 的工具。\n然而，正如本文接下來將討論的，這種新的開發模式也帶來了一些挑戰，特別是在使用 React Hooks 時。理解如何在 App Router 環境中正確使用 Context 等功能，對於充分利用這個強大的新工具非常重要。\n\n為什麼不能在 Server Component 中使用 Hooks？\n\n在討論具體的使用情境之前,我們需要了解為什麼不能在 Server Components 中使用 hooks。\n\nServer Components 是在 Server 端渲染的，而 React hooks 的生命週期和狀態管理，這些在 Server 端是不存在的。因此，在 Server Components 中使用 hooks 會導致錯誤。\n\n解決這個問題的方法是將需要使用 hooks 的部分拆分為 Client Components。只要在該 component 最上方加上 'use client'，這個作法就會把一個 component 標記為 Client Component，Next.js 就會知道這個 component 是在 Client 端運行的，而不是在 Server 端，所以在這裡可以安全地使用 hooks。\n\n情境： 在頁面中將 Props 傳遞到 Child Component\n\n讓我們來看一個非常常見的情況，展示如何在一個 Next.js 頁面中使用 Context 將 props 傳遞到 child component，甚至是更深層的 child component。\n\n\n\n第一步，我們先建立一個 Context：\n\n'use client'\nimport { createContext, useContext, useState, ReactNode } from 'react'\n\ntype ThemeContextType = {\n  theme: string\n  setTheme: (theme: string) =\u0026gt; void\n}\n\nconst ThemeContext = createContext\u0026lt;ThemeContextType | undefined\u0026gt;(undefined)\n\nexport const ThemeProvider: React.FC\u0026lt;{ children: ReactNode }\u0026gt; = ({\n  children\n}) =\u0026gt; {\n  const [theme, setTheme] = useState('light')\n\n  return (\n    \u0026lt;ThemeContext.Provider value={{ theme, setTheme }}\u0026gt;\n      {children}\n    \u0026lt;/ThemeContext.Provider\u0026gt;\n  )\n}\n\nexport const useTheme = () =\u0026gt; {\n  const context = useContext(ThemeContext)\n  if (context === undefined) {\n    throw new Error('useTheme must be used within a ThemeProvider')\n  }\n  return context\n}\n\n\n稍微介紹一下這個 Context。一開始最重要的就是 use client，這樣就可以在 Client Components 中使用 hooks。接著我們建立了一個 ThemeContext，並且建立了一個 ThemeProvider 來提供 theme 的值，最後我們建立了一個 useTheme hook 來使用這個 Context。\n\n接下來，在 Page 中使用這個 Context：\n\nimport { ThemeProvider } from '@/context/themeContext'\n\nexport default function Home() {\n  return (\n    \u0026lt;ThemeProvider\u0026gt;\n      \u0026lt;main\u0026gt;\u0026lt;/main\u0026gt;\n    \u0026lt;/ThemeProvider\u0026gt;\n  )\n}\n\n\n到這一步，不管是在畫面中的哪個地方，只要是在 ThemeProvider 的子元素中，都可以使用 useTheme 來取得 theme 的值。\n\n然後可以測試一下如果把 Context 的 'use client' 拿掉，會發生什麼事情。\n\n畫面上就會出現這個錯誤：\n\n\n\n錯誤訊息會跟你說，你要使用 React 的 hook，就必須要在 Client Component 中使用，因為你不宣告 'use client'，所以這個 component 預設就會被認為是 Server Component。\n\n接下來我們建立兩個 child component，分別是 ParentComponent 跟 ChildComponent：\n\n'use client'\nimport { useTheme } from '@/context/themeContext'\nimport ChildComponent from './Child'\n\nexport default function ParentComponent() {\n  const { theme } = useTheme()\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;p\u0026gt;Current theme: {theme}\u0026lt;/p\u0026gt;\n      \u0026lt;ChildComponent /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n\n'use client'\nimport { useTheme } from '@/context/themeContext'\n\nexport default function ChildComponent() {\n  const { theme, setTheme } = useTheme()\n\n  return (\n    \u0026lt;button\n      type='button'\n      onClick={() =\u0026gt; setTheme(theme === 'light' ? 'dark' : 'light')}\n    \u0026gt;\n      Toggle Theme\n    \u0026lt;/button\u0026gt;\n  )\n}\n\n\n然後在 Home Page 中 import ParentComponent：\n\nimport ParentComponent from '@/components/Parent'\n\nexport default function Home() {\n  return (\n    \u0026lt;ThemeProvider\u0026gt;\n      \u0026lt;main\u0026gt;\n        \u0026lt;ParentComponent /\u0026gt;\n      \u0026lt;/main\u0026gt;\n    \u0026lt;/ThemeProvider\u0026gt;\n  )\n}\n\n\n透過以上的方法，我們就可以做到不管在哪個 component 中，只要是在 ThemeProvider 的子元素中，都可以使用 useTheme 來取得 theme 的值，並且可以透過 setTheme 來改變 theme 的值，這樣就可以在 Next.js 中使用 Context 來傳遞 props。\n\n下面提供給大家一個 CodeSandbox 試玩：\n\n\n","wordCount":504,"timeRequired":"PT3M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/next-js-app-router-context.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,246 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        Next.js 如何在 App Router 中使用 Context？
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">July 14, 2024</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">3 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          介紹如何在 Next.js 中使用 Context。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>自從 Next.js 推出 App Router 後，讓開發者可以輕鬆使用強大的路由功能，但是同時也帶來一些在使用 React Hooks 的限制。本篇文章將探討如何在 App Router 中有效使用 <code>useContext</code> 等 hooks 來傳遞 props，並解釋為什麼在某些情況下不能在 Server Component 中使用 hooks。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<h2 id="app-router">什麼是 App Router？</h2>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
+<p>App Router 是 Next.js 13.4 版本引入的一項重大更新，它徹底改變了我們使用 React 的方式。這個新的路由系統是基於 React Server Components，為開發者提供了更強大、更靈活的工具來建立高效能的網頁應用。</p>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
-
-<h2 id="key-features">Key Features</h2>
-
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
-
-<h2 id="technology-stack">Technology Stack</h2>
+<h3 id="app-router">App Router 的核心特性：</h3>
 
 <ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
+<li><p>React Server Components：這是 App Router 的基礎。Server Components 在 Server 端運作，而不是在 Client 端。這代表著它們可以直接使用伺服器資源（如 DataBase），而不用將這些資源暴露給 Client 端或通過網絡傳輸不必要的數據。</p></li>
+<li><p>巢狀路由和 Layout：你可以輕鬆人性化地建立複雜的路由結構，如 <code>/news/[id]/page</code>，並為多個頁面定義共享的 layout，不用再設定複雜的路由設定。</p></li>
+<li><p>簡化的資料取得：通過使用 React Server Components 中或從 API 取得資料，不用寫複雜的邏輯或管理狀態。</p></li>
+<li><p>Streaming 渲染：App Router 可以將資料從 Server Components 以 JSON chunk response 的形式傳輸到 Client 端，而不是一次性傳輸全部數據。這可以明顯升級效能和用戶體驗，特別是在網路較慢的情況下。</p></li>
+<li><p>內建 SEO 支持：App Router 自動產生 meta 標籤、sitemaps 和 robots.txt 文件，可以讓搜索引擎更好地找到你的網站。</p></li>
+<li><p>更靈活的靜態和動態渲染：開發者可以選擇最適合的渲染策略，實現更精準的效能優化。</p></li>
 </ul>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<h3 id="app-router">為什麼使用 App Router？</h3>
 
-<p>Railquill is built with a focus on:</p>
+<p>總的來說，App Router 不僅是 Next.js 的一個新功能，它為開發者提供了建立更快、更容易維護的 Web App 的工具。
+然而，正如本文接下來將討論的，這種新的開發模式也帶來了一些挑戰，特別是在使用 React Hooks 時。理解如何在 App Router 環境中正確使用 Context 等功能，對於充分利用這個強大的新工具非常重要。</p>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<h2 id="server-component-hooks">為什麼不能在 Server Component 中使用 Hooks？</h2>
 
-<h2 id="contact">Contact</h2>
+<p>在討論具體的使用情境之前,我們需要了解為什麼不能在 Server Components 中使用 hooks。</p>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<p>Server Components 是在 Server 端渲染的，而 React hooks 的生命週期和狀態管理，這些在 Server 端是不存在的。因此，在 Server Components 中使用 hooks 會導致錯誤。</p>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<p>解決這個問題的方法是將需要使用 hooks 的部分拆分為 Client Components。只要在該 component 最上方加上 <code>'use client'</code>，這個作法就會把一個 component 標記為 Client Component，Next.js 就會知道這個 component 是在 Client 端運行的，而不是在 Server 端，所以在這裡可以安全地使用 hooks。</p>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<h2 id="props-child-component">情境： 在頁面中將 Props 傳遞到 Child Component</h2>
+
+<p>讓我們來看一個非常常見的情況，展示如何在一個 Next.js 頁面中使用 Context 將 props 傳遞到 child component，甚至是更深層的 child component。</p>
+
+<p><img src="https://i.imgur.com/Vrv5oXr.png" alt="20240714183523"></p>
+
+<p>第一步，我們先建立一個 Context：</p>
+
+<pre><code class="jsx">'use client'
+import { createContext, useContext, useState, ReactNode } from 'react'
+
+type ThemeContextType = {
+  theme: string
+  setTheme: (theme: string) =&gt; void
+}
+
+const ThemeContext = createContext&lt;ThemeContextType | undefined&gt;(undefined)
+
+export const ThemeProvider: React.FC&lt;{ children: ReactNode }&gt; = ({
+  children
+}) =&gt; {
+  const [theme, setTheme] = useState('light')
+
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      {children}
+    &lt;/ThemeContext.Provider&gt;
+  )
+}
+
+export const useTheme = () =&gt; {
+  const context = useContext(ThemeContext)
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider')
+  }
+  return context
+}
+</code></pre>
+
+<p>稍微介紹一下這個 Context。一開始最重要的就是 <code>use client</code>，這樣就可以在 Client Components 中使用 hooks。接著我們建立了一個 <code>ThemeContext</code>，並且建立了一個 <code>ThemeProvider</code> 來提供 theme 的值，最後我們建立了一個 <code>useTheme</code> hook 來使用這個 Context。</p>
+
+<p>接下來，在 Page 中使用這個 Context：</p>
+
+<pre><code class="jsx">import { ThemeProvider } from '@/context/themeContext'
+
+export default function Home() {
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;main&gt;&lt;/main&gt;
+    &lt;/ThemeProvider&gt;
+  )
+}
+</code></pre>
+
+<p>到這一步，不管是在畫面中的哪個地方，只要是在 <code>ThemeProvider</code> 的子元素中，都可以使用 <code>useTheme</code> 來取得 theme 的值。</p>
+
+<p>然後可以測試一下如果把 Context 的 <code>'use client'</code> 拿掉，會發生什麼事情。</p>
+
+<p>畫面上就會出現這個錯誤：</p>
+
+<p><img src="https://i.imgur.com/r08TNFR.png" alt="20240714170606"></p>
+
+<p>錯誤訊息會跟你說，你要使用 React 的 hook，就必須要在 Client Component 中使用，因為你不宣告 <code>'use client'</code>，所以這個 component 預設就會被認為是 Server Component。</p>
+
+<p>接下來我們建立兩個 child component，分別是 <code>ParentComponent</code> 跟 <code>ChildComponent</code>：</p>
+
+<pre><code class="jsx">'use client'
+import { useTheme } from '@/context/themeContext'
+import ChildComponent from './Child'
+
+export default function ParentComponent() {
+  const { theme } = useTheme()
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Current theme: {theme}&lt;/p&gt;
+      &lt;ChildComponent /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+
+<pre><code class="jsx">'use client'
+import { useTheme } from '@/context/themeContext'
+
+export default function ChildComponent() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    &lt;button
+      type='button'
+      onClick={() =&gt; setTheme(theme === 'light' ? 'dark' : 'light')}
+    &gt;
+      Toggle Theme
+    &lt;/button&gt;
+  )
+}
+</code></pre>
+
+<p>然後在 Home Page 中 import <code>ParentComponent</code>：</p>
+
+<pre><code class="jsx">import ParentComponent from '@/components/Parent'
+
+export default function Home() {
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;main&gt;
+        &lt;ParentComponent /&gt;
+      &lt;/main&gt;
+    &lt;/ThemeProvider&gt;
+  )
+}
+</code></pre>
+
+<p>透過以上的方法，我們就可以做到不管在哪個 component 中，只要是在 <code>ThemeProvider</code> 的子元素中，都可以使用 <code>useTheme</code> 來取得 theme 的值，並且可以透過 <code>setTheme</code> 來改變 theme 的值，這樣就可以在 Next.js 中使用 Context 來傳遞 props。</p>
+
+<p>下面提供給大家一個 CodeSandbox 試玩：</p>
+
+
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=Next.js+%E5%A6%82%E4%BD%95%E5%9C%A8+App+Router+%E4%B8%AD%E4%BD%BF%E7%94%A8+Context%EF%BC%9F&url=https%3A%2F%2Frailquill.vercel.app%2Fnext-js-app-router-context.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fnext-js-app-router-context.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/react-19-beta.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: React 19 Beta 新武器解鎖體驗">
+          React 19 Beta 新武器解鎖體驗
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/type-or-interface.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: Type or Interface?">
+          Type or Interface?
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

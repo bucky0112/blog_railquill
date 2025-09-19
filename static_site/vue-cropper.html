@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>圖片剪裁套件的使用 - Vue-Cropper - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="圖片剪裁套件的使用 - Vue-Cropper">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/vue-cropper.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="圖片剪裁套件的使用 - Vue-Cropper">
+      <meta property="og:description" content="圖片剪裁套件的使用 - Vue-Cropper">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="圖片剪裁套件的使用 - Vue-Cropper">
+      <meta property="twitter:description" content="圖片剪裁套件的使用 - Vue-Cropper">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2021-01-24T17:23:27Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"圖片剪裁套件的使用 - Vue-Cropper","description":"圖片剪裁套件的使用 - Vue-Cropper","url":"https://railquill.vercel.app/vue-cropper.html","datePublished":"2021-01-24T17:23:27Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-cropper.html"},"articleBody":"Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。\n\n\n\n前言\n\n當主管告知需要在後台將前台的圖片做剪裁修改後，並且能夠即時預覽結果，最後再將圖片存成新檔案。找了一下有沒有前人造的輪子，發現還真的有，所以設置了一下後就可以達到我要的效果了。\n\nVue Cropper\n\n\n安裝\n\n\n   npm install vue-cropper\n\n   yarn add vue-cropper\n\n\n\n在 component 裡使用\n\n\n   import { VueCropper } from \"vue-cropper\";\n\n   components: {\n    VueCropper,\n   },\n\n\n\ndata 跟 methods 的設定：\n\n\ndata() {\n    return {\n      modelSrc: \"\",\n      option: {\n        img: \"https://fakeimg.pl/450x300/\", // 圖片來源\n        outputType: \"png\", // 產生圖片的格式\n        autoCrop: true, // 是否要有截圖框\n        autoCropWidth: 350, // 截圖框寬\n        autoCropHeight: 220, //截圖框高\n      },\n    };\n  },\n  methods: {\n  // *********預覽目前截圖結果************\n    preview() {\n      this.$refs.cropper.getCropData((data) =\u0026gt; {\n        // console.log(data);\n        this.modelSrc = data;\n      });\n    },\n  // *********即時預覽函數************\n    realTime(data) {\n      this.previews = data;\n      // console.log(data);\n    },\n    // *********得到截圖的 base64 數據************\n    demo() {\n      this.$refs.cropper.getCropData((data) =\u0026gt; {\n        console.log(data);\n      });\n    },\n  },\n\n\n\n最後在 component 的綁定\n\n\n   \u0026lt;vueCropper\n    ref=\"cropper\"\n     :img=\"option.img\"\n     :outputType=\"option.outputType\"\n     :autoCrop=\"option.autoCrop\"\n     :autoCropWidth=\"option.autoCropWidth\"\n     :autoCropHeight=\"option.autoCropHeight\"\n     @realTime=\"realTime\"\n    \u0026gt;\n    \u0026lt;/vueCropper\u0026gt;\n\n\n這樣就會產生一個可以自由切割並且截圖的區塊，可以試著玩看看我建立的 CodeSandBox：\n\n\n\n最後要記得給這個 component 一個高度，不然會顯示不出來。\n\n資料來源：vue-cropper\n","wordCount":163,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/vue-cropper.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,188 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        圖片剪裁套件的使用 - Vue-Cropper
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">January 24, 2021</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">1 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>Vue Cropper 這個套件使用起來非常方便，而且剛好符合我的需求，只需要看著文件設置一些設定就可以做出變化了。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<h2 id="part-654280cbc50">前言</h2>
 
-<h2 id="key-features">Key Features</h2>
+<p>當主管告知需要在後台將前台的圖片做剪裁修改後，並且能夠即時預覽結果，最後再將圖片存成新檔案。找了一下有沒有前人造的輪子，發現還真的有，所以設置了一下後就可以達到我要的效果了。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<h2 id="vue-cropper">Vue Cropper</h2>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<ol>
+<li>安裝</li>
+</ol>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<pre><code class="js">   npm install vue-cropper
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+   yarn add vue-cropper
+</code></pre>
 
-<p>Railquill is built with a focus on:</p>
+<ol>
+<li>在 component 裡使用</li>
+</ol>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<pre><code class="vue">   import { VueCropper } from "vue-cropper";
 
-<h2 id="contact">Contact</h2>
+   components: {
+    VueCropper,
+   },
+</code></pre>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<ol>
+<li>data 跟 methods 的設定：</li>
+</ol>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code class="vue">data() {
+    return {
+      modelSrc: "",
+      option: {
+        img: "https://fakeimg.pl/450x300/", // 圖片來源
+        outputType: "png", // 產生圖片的格式
+        autoCrop: true, // 是否要有截圖框
+        autoCropWidth: 350, // 截圖框寬
+        autoCropHeight: 220, //截圖框高
+      },
+    };
+  },
+  methods: {
+  // *********預覽目前截圖結果************
+    preview() {
+      this.$refs.cropper.getCropData((data) =&gt; {
+        // console.log(data);
+        this.modelSrc = data;
+      });
+    },
+  // *********即時預覽函數************
+    realTime(data) {
+      this.previews = data;
+      // console.log(data);
+    },
+    // *********得到截圖的 base64 數據************
+    demo() {
+      this.$refs.cropper.getCropData((data) =&gt; {
+        console.log(data);
+      });
+    },
+  },
+</code></pre>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<ol>
+<li>最後在 component 的綁定</li>
+</ol>
+
+<pre><code class="vue">   &lt;vueCropper
+    ref="cropper"
+     :img="option.img"
+     :outputType="option.outputType"
+     :autoCrop="option.autoCrop"
+     :autoCropWidth="option.autoCropWidth"
+     :autoCropHeight="option.autoCropHeight"
+     @realTime="realTime"
+    &gt;
+    &lt;/vueCropper&gt;
+</code></pre>
+
+<p>這樣就會產生一個可以自由切割並且截圖的區塊，可以試著玩看看我建立的 CodeSandBox：</p>
+
+
+
+<p>最後要記得給這個 component 一個高度，不然會顯示不出來。</p>
+
+<p><strong>資料來源：<a href="https://github.com/xyxiao001/vue-cropper">vue-cropper</a></strong></p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E5%9C%96%E7%89%87%E5%89%AA%E8%A3%81%E5%A5%97%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8+-+Vue-Cropper&url=https%3A%2F%2Frailquill.vercel.app%2Fvue-cropper.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fvue-cropper.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/vue.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 讓 Vue 每次換頁都能在最上方的方法">
+          讓 Vue 每次換頁都能在最上方的方法
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/vue-3.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: 開始我的 Vue 3">
+          開始我的 Vue 3
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

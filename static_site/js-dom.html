@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>JS 基礎回顧 - DOM - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="如何使用 DOM，最後做出一個 BMI 計算機。">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/js-dom.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="JS 基礎回顧 - DOM">
+      <meta property="og:description" content="如何使用 DOM，最後做出一個 BMI 計算機。">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="JS 基礎回顧 - DOM">
+      <meta property="twitter:description" content="如何使用 DOM，最後做出一個 BMI 計算機。">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-05-20T17:09:33Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"JS 基礎回顧 - DOM","description":"如何使用 DOM，最後做出一個 BMI 計算機。","url":"https://railquill.vercel.app/js-dom.html","datePublished":"2020-05-20T17:09:33Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/js-dom.html"},"articleBody":"想像一下在夾娃娃機中，我們操作著爪子，在機台中抓取我們想要的東西。\n而這樣的概念，有點像是我們要怎麼樣來藉由 JavaScript 操作網頁畫面的 HTML 元素，文件物件模型（Document Object Model, DOM）就可以幫助我們來做這件事。\n\n\n\n那麼我們有哪些爪子可以使用呢？\n一般常使用的有：\n\n\ngetElementById()\ngetElmentsByClassName()\nquerySelector()\nquerySelectorAll()\n\n\n下方有兩塊 div，如果想改變它們的文字內容的話，就可以透過 DOM 來操作。\n\n\u0026lt;div class = \"doll\" id = \"doll-1\"\u0026gt;娃娃1\u0026lt;/div\u0026gt;\n\u0026lt;div class = \"doll\" id = \"doll-2\"\u0026gt;娃娃2\u0026lt;/div\u0026gt;\n\n\n來看看個別使用的方法：\n\ngetElementById()\n\n\n\ndocument.getElementById('doll-1').textContent = '彌豆子';\n\nvar tanjiro = document.getElementById('doll-2');\ntanjiro.innerHTML = '炭治郎'\n\n\n可以透過 document.getElementById('ID名稱') 再接 textContent 或是 innerHTML 去變更文字。\n或是宣告一個變數，指定為 document.getElementById('ID名稱')，再使用變數接 textContent 或是 innerHTML 去變更文字。\n\ngetElmentsByClassName()\n\n\n\nvar allDolls = document.getElementsByClassName('doll');\nvar length = allDolls.length;\nfor (var i = 0; i \u0026lt; length; i++) {\n  allDolls[i].textContent = '炭治郎'\n}\n\n\ngetElmentsByClassName() 的用法就不太一樣，是用在一次改變全部相同的元素。\n\n上面的是比較早期的作法，接下來的兩種方法是比較現代大部分在使用的。\n\nquerySelector()\n\n\n\n跟 getElementById() 方法類似，只是選取的方式不太一樣，querySelector() 在選擇 ID 的時候比較像 CSS 的類別選取器的方式，例如：\n\nvar nezuko = document.querySelector('#doll-1');\nnezuko.textContent = '彌豆子'\n\n\n像這樣就可以將原本的內容改為想要的文字。\n\nquerySelectorAll()\n\n\n\n跟 getElmentsByClassName() 差不多的用法，這次把 \u0026lt;span\u0026gt; 中改成想要的文字：\n\n\u0026lt;div class = \"doll\" id = \"doll-1\"\u0026gt;\n  \u0026lt;span\u0026gt;\u0026lt;/span\u0026gt;\n\u0026lt;/div\u0026gt;\n\u0026lt;div class = \"doll\" id = \"doll-2\"\u0026gt;\n  \u0026lt;span\u0026gt;\u0026lt;/span\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\nvar tanjiro = document.querySelectorAll('.doll span');\n\nfor (var i=0; i\u0026lt;tanjiro.length; i++) {\n  tanjiro[i].textContent = '炭治郎'\n}\n\n\n就可以把全部同名的 class 改成想要的文字。\n\n如果想透過 getElmentsByClassName() 把兩個不同的 class 改成個別不同的內容的話，也是辦得到的，但先來看一下是怎麼做到的。\n\n用 console.log(tanjiro) 看一下用 getElmentsByClassName() 控制的 DOM 會是什麼內容？\n\n\n\n結果會出現陣列，所以這樣就可以用控制陣列的方式來改變該筆內容：\n\nvar tanjiro = document.querySelectorAll('.doll span');\n\ntanjiro[0].textContent = '竈門';\ntanjiro[1].textContent = '炭治郎'\n\n\n練習用 DOM 來做一個 BMI 計算機\n\n\n\n目前已經知道如何使用 DOM 來操作網頁的元素了，那麼就試著做出一個 BMI 計算機。\n下方是做出來的成品：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/xxwBxKV'\u0026gt;BMI 計算機 (DOM 練習)\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\nHTML 部份：\n\n\u0026lt;h1\u0026gt;BMI 計算機\u0026lt;/h1\u0026gt;\n\u0026lt;div class=\"inputData\"\u0026gt;\n  \u0026lt;label for=\"bodyHeight\"\u0026gt;身高\u0026lt;/label\u0026gt;\n  \u0026lt;input type=\"number\" id=\"bodyHeight\" min=\"0\"\u0026gt;公分\n  \u0026lt;label for=\"bodyWeight\"\u0026gt;體重\u0026lt;/label\u0026gt;\n  \u0026lt;input type=\"number\" id=\"bodyWeight\" min=\"0\"\u0026gt;公斤\n\u0026lt;/div\u0026gt;\n\n\u0026lt;input type=\"submit\" value=\"計算\"\u0026gt;\n\n\u0026lt;h2\u0026gt;BMI值：\u0026lt;/h2\u0026gt;\n\u0026lt;p id=\"calResult\"\u0026gt;\u0026lt;/p\u0026gt;\n\u0026lt;span id=\"bmiResult\"\u0026gt;\u0026lt;/span\u0026gt;\n\n\n綁定輸入欄位\n\n首先思考如何做出當按下計算按鈕時，能夠將輸入的資料給顯示出來。\n\n先在按鈕部份加上一個事件（事件部份之後會再提到），這裏用到的是 onclick，並綁定一個 function，可以做呼叫並做裡面的動作：\n\n\u0026lt;input type=\"submit\" value=\"計算\" onclick=\"getBody()\"\u0026gt;\n\n\n接著要讓輸入的資料能夠顯示，先試著讓輸入的資料用 alert 顯示看看：\n\nfunction getBody() {\n  var height = document.querySelector(\"#bodyHeight\").value;\n  var weight = document.querySelector(\"#bodyWeight\").value;\n  alert(height + weight)\n}\n\n\n有顯示資料，但是變成字串相加，所以要讓資料變成數字。\n\n個別函式處理資料\n\n再用一個 function 去處理資料，並帶入 BMI 計算公式：\n\nfunction bmiCal(height, weight) {\n  var h = parseInt(height) / 100;  // parseInt() 資料轉成數字\n  var w = parseInt(weight);\n  return (w / (h * h)).toFixed(1); // toFixed(1) 算到小數點第 1 位\n}\n\n\n接著再 alert 一次：\n\nfunction getBody() {\n  var height = document.querySelector(\"#bodyHeight\").value;\n  var weight = document.querySelector(\"#bodyWeight\").value;\n  alert(bmiCal(height, weight))\n}\n\n\n這次就可以顯示算出的數字了。\n\n讓 BMI 值顯示在網頁上\n\n既然可以算出資料，接著就讓資料顯示出來。\n在 getBody() 中綁定 DOM，並讓資料透過 textContent 顯示：\n\nvar calResult = document.querySelector(\"#calResult\");\ncalResult.textContent = bmiCal(height, weight);\n\n\n加入條件顯示是否正常\n\n都有計算結果就可以在上面做出其他的效果，這邊讓計算結果符合以下條件：\n如果超過 24 就顯示過胖，低於 18.5 顯示過瘦，其他就正常，就可以這樣寫：\n\nvar bmiResult = document.querySelector(\"#bmiResult\");\nif (bmiCal(height, weight) \u0026gt; 24) {\n    bmiResult.textContent = \"過胖\";\n  } else if (bmiCal(height, weight) \u0026lt; 18.5) {\n    bmiResult.textContent = \"過瘦\";\n  } else {\n    bmiResult.textContent = \"正常\";\n  }\n\n\n判斷是否輸入資料\n\n如果沒有輸入資料的話，在這樣計算結果會出錯，所以要加入判斷式，判斷是否有輸入資料：\n\nif (height !== \"\" \u0026amp;\u0026amp; weight !== \"\") {\n    calResult.textContent = bmiCal(height, weight);\n  } else {\n    alert(\"請輸入資料\");\n}\n\n","wordCount":443,"timeRequired":"PT3M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/js-dom.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,303 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        JS 基礎回顧 - DOM
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">May 20, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">3 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          想像一下在夾娃娃機中，我們操作著爪子，在機台中抓取我們想要的東西。
+而這樣的概念，有點像是我們要怎麼樣來藉由 JavaScript 操作網頁畫面的 HTML 元素，文件物件模型（Document Object Model, DOM）就可以幫助我們來做這件事。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>想像一下在夾娃娃機中，我們操作著爪子，在機台中抓取我們想要的東西。
+而這樣的概念，有點像是我們要怎麼樣來藉由 JavaScript 操作網頁畫面的 HTML 元素，文件物件模型（Document Object Model, DOM）就可以幫助我們來做這件事。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
-
-<h2 id="key-features">Key Features</h2>
-
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
-
-<h2 id="technology-stack">Technology Stack</h2>
+<p>那麼我們有哪些爪子可以使用呢？
+一般常使用的有：</p>
 
 <ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
+<li><code>getElementById()</code></li>
+<li><code>getElmentsByClassName()</code></li>
+<li><code>querySelector()</code></li>
+<li><code>querySelectorAll()</code></li>
 </ul>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<p>下方有兩塊 div，如果想改變它們的文字內容的話，就可以透過 DOM 來操作。</p>
 
-<p>Railquill is built with a focus on:</p>
+<pre><code>&lt;div class = "doll" id = "doll-1"&gt;娃娃1&lt;/div&gt;
+&lt;div class = "doll" id = "doll-2"&gt;娃娃2&lt;/div&gt;
+</code></pre>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<p>來看看個別使用的方法：</p>
 
-<h2 id="contact">Contact</h2>
+<h2 id="getelementbyid">getElementById()</h2>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<hr>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code>document.getElementById('doll-1').textContent = '彌豆子';
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+var tanjiro = document.getElementById('doll-2');
+tanjiro.innerHTML = '炭治郎'
+</code></pre>
+
+<p>可以透過 <code>document.getElementById('ID名稱')</code> 再接 <code>textContent</code> 或是 <code>innerHTML</code> 去變更文字。
+或是宣告一個變數，指定為 <code>document.getElementById('ID名稱')</code>，再使用變數接 <code>textContent</code> 或是 <code>innerHTML</code> 去變更文字。</p>
+
+<h2 id="getelmentsbyclassname">getElmentsByClassName()</h2>
+
+<hr>
+
+<pre><code>var allDolls = document.getElementsByClassName('doll');
+var length = allDolls.length;
+for (var i = 0; i &lt; length; i++) {
+  allDolls[i].textContent = '炭治郎'
+}
+</code></pre>
+
+<p><code>getElmentsByClassName()</code> 的用法就不太一樣，是用在一次改變全部相同的元素。</p>
+
+<p>上面的是比較早期的作法，接下來的兩種方法是比較現代大部分在使用的。</p>
+
+<h2 id="queryselector">querySelector()</h2>
+
+<hr>
+
+<p>跟 <code>getElementById()</code> 方法類似，只是選取的方式不太一樣，<code>querySelector()</code> 在選擇 ID 的時候比較像 CSS 的類別選取器的方式，例如：</p>
+
+<pre><code>var nezuko = document.querySelector('#doll-1');
+nezuko.textContent = '彌豆子'
+</code></pre>
+
+<p>像這樣就可以將原本的內容改為想要的文字。</p>
+
+<h2 id="queryselectorall">querySelectorAll()</h2>
+
+<hr>
+
+<p>跟 <code>getElmentsByClassName()</code> 差不多的用法，這次把 <code>&lt;span&gt;</code> 中改成想要的文字：</p>
+
+<pre><code>&lt;div class = "doll" id = "doll-1"&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class = "doll" id = "doll-2"&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+
+<pre><code>var tanjiro = document.querySelectorAll('.doll span');
+
+for (var i=0; i&lt;tanjiro.length; i++) {
+  tanjiro[i].textContent = '炭治郎'
+}
+</code></pre>
+
+<p>就可以把全部同名的 class 改成想要的文字。</p>
+
+<p>如果想透過 <code>getElmentsByClassName()</code> 把兩個不同的 class 改成個別不同的內容的話，也是辦得到的，但先來看一下是怎麼做到的。</p>
+
+<p>用 <code>console.log(tanjiro)</code> 看一下用 <code>getElmentsByClassName()</code> 控制的 DOM 會是什麼內容？</p>
+
+<p><img src="https://i.imgur.com/lK7RzsV.png" alt="Image"></p>
+
+<p>結果會出現陣列，所以這樣就可以用控制陣列的方式來改變該筆內容：</p>
+
+<pre><code>var tanjiro = document.querySelectorAll('.doll span');
+
+tanjiro[0].textContent = '竈門';
+tanjiro[1].textContent = '炭治郎'
+</code></pre>
+
+<h2 id="dom-bmi">練習用 DOM 來做一個 BMI 計算機</h2>
+
+<hr>
+
+<p>目前已經知道如何使用 DOM 來操作網頁的元素了，那麼就試著做出一個 BMI 計算機。
+下方是做出來的成品：</p>
+
+
+  See the Pen &lt;a href='https://codepen.io/bucky0112/pen/xxwBxKV'&gt;BMI 計算機 (DOM 練習)&lt;/a&gt; by Bucky Chu
+  (&lt;a href='https://codepen.io/bucky0112'&gt;@bucky0112&lt;/a&gt;) on &lt;a href='https://codepen.io'&gt;CodePen&lt;/a&gt;.
+
+
+<p>HTML 部份：</p>
+
+<pre><code>&lt;h1&gt;BMI 計算機&lt;/h1&gt;
+&lt;div class="inputData"&gt;
+  &lt;label for="bodyHeight"&gt;身高&lt;/label&gt;
+  &lt;input type="number" id="bodyHeight" min="0"&gt;公分
+  &lt;label for="bodyWeight"&gt;體重&lt;/label&gt;
+  &lt;input type="number" id="bodyWeight" min="0"&gt;公斤
+&lt;/div&gt;
+
+&lt;input type="submit" value="計算"&gt;
+
+&lt;h2&gt;BMI值：&lt;/h2&gt;
+&lt;p id="calResult"&gt;&lt;/p&gt;
+&lt;span id="bmiResult"&gt;&lt;/span&gt;
+</code></pre>
+
+<h3 id="part-7d73d3efbe06127f">綁定輸入欄位</h3>
+
+<p>首先思考如何做出當按下計算按鈕時，能夠將輸入的資料給顯示出來。</p>
+
+<p>先在按鈕部份加上一個事件（事件部份之後會再提到），這裏用到的是 <code>onclick</code>，並綁定一個 function，可以做呼叫並做裡面的動作：</p>
+
+<pre><code>&lt;input type="submit" value="計算" onclick="getBody()"&gt;
+</code></pre>
+
+<p>接著要讓輸入的資料能夠顯示，先試著讓輸入的資料用 <code>alert</code> 顯示看看：</p>
+
+<pre><code>function getBody() {
+  var height = document.querySelector("#bodyHeight").value;
+  var weight = document.querySelector("#bodyWeight").value;
+  alert(height + weight)
+}
+</code></pre>
+
+<p>有顯示資料，但是變成字串相加，所以要讓資料變成數字。</p>
+
+<h3 id="part-ee28b6f0fa4cdf2a">個別函式處理資料</h3>
+
+<p>再用一個 function 去處理資料，並帶入 BMI 計算公式：</p>
+
+<pre><code>function bmiCal(height, weight) {
+  var h = parseInt(height) / 100;  // parseInt() 資料轉成數字
+  var w = parseInt(weight);
+  return (w / (h * h)).toFixed(1); // toFixed(1) 算到小數點第 1 位
+}
+</code></pre>
+
+<p>接著再 <code>alert</code> 一次：</p>
+
+<pre><code>function getBody() {
+  var height = document.querySelector("#bodyHeight").value;
+  var weight = document.querySelector("#bodyWeight").value;
+  alert(bmiCal(height, weight))
+}
+</code></pre>
+
+<p>這次就可以顯示算出的數字了。</p>
+
+<h3 id="bmi">讓 BMI 值顯示在網頁上</h3>
+
+<p>既然可以算出資料，接著就讓資料顯示出來。
+在 <code>getBody()</code> 中綁定 DOM，並讓資料透過 <code>textContent</code> 顯示：</p>
+
+<pre><code>var calResult = document.querySelector("#calResult");
+calResult.textContent = bmiCal(height, weight);
+</code></pre>
+
+<h3 id="part-7ad60a9cd238bd6e">加入條件顯示是否正常</h3>
+
+<p>都有計算結果就可以在上面做出其他的效果，這邊讓計算結果符合以下條件：
+如果超過 24 就顯示過胖，低於 18.5 顯示過瘦，其他就正常，就可以這樣寫：</p>
+
+<pre><code>var bmiResult = document.querySelector("#bmiResult");
+if (bmiCal(height, weight) &gt; 24) {
+    bmiResult.textContent = "過胖";
+  } else if (bmiCal(height, weight) &lt; 18.5) {
+    bmiResult.textContent = "過瘦";
+  } else {
+    bmiResult.textContent = "正常";
+  }
+</code></pre>
+
+<h3 id="part-39bf48a25b1ecb33">判斷是否輸入資料</h3>
+
+<p>如果沒有輸入資料的話，在這樣計算結果會出錯，所以要加入判斷式，判斷是否有輸入資料：</p>
+
+<pre><code>if (height !== "" &amp;&amp; weight !== "") {
+    calResult.textContent = bmiCal(height, weight);
+  } else {
+    alert("請輸入資料");
+}
+</code></pre>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=JS+%E5%9F%BA%E7%A4%8E%E5%9B%9E%E9%A1%A7+-+DOM&url=https%3A%2F%2Frailquill.vercel.app%2Fjs-dom.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fjs-dom.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/vue-cli.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 如何使用 Vue CLI 建置專案">
+          如何使用 Vue CLI 建置專案
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/vue-js-component.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: Vue.js 的 component 是什麼？">
+          Vue.js 的 component 是什麼？
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>Think first, code later - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="先別急著寫 leetcode 課程心得">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/think-first-code-later.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="Think first, code later">
+      <meta property="og:description" content="先別急著寫 leetcode 課程心得">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="Think first, code later">
+      <meta property="twitter:description" content="先別急著寫 leetcode 課程心得">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-04-03T22:45:39Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Think first, code later","description":"先別急著寫 leetcode 課程心得","url":"https://railquill.vercel.app/think-first-code-later.html","datePublished":"2020-04-03T22:45:39Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/think-first-code-later.html"},"articleBody":"以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -\u0026gt; 從拉麵店的販賣機理解什麼是 API\n\n最近作者開了一系列的課 -\u0026gt; 先別急著寫 leetcode。因為我不是本科系出身，所以確實在解題時很容易遇上困難，不然就是會想很久。剛好看到這個課程就覺得蠻需要培養如何寫程式的思維，而且重點是免費喔！免費喔！免費喔！（很重要要說 3 次）所以這個系列會記載一些對我有幫助的筆記，希望能讓自己更進步一些。\n\n\n\n會寫程式的人與初學者差別在哪？\n\n\n\n會寫程式的人\n\n\n先想解法\n如果是有做過或是簡單的，就會直接構思出方法\n如果比較困難或是複雜的問題，就把解法轉換成程式碼\n\n\n初學者\n\n\n邊寫邊想怎麼解\n試著套用自己以前學過的語法\n\n\n這個我自己蠻有感覺的，確實一開始會邊寫邊想，然後如果卡住了，就翻筆記看有什麼語法可以拿來套用，不過通常都沒什麼好下場就是了，哈。\n\n在解題會有兩種情況\n\n\n\n看題目覺得自己解得開\n\n\n有效率的解開\n有解開但是時間花較久\n最後解不開\n\n\n看題目就覺得看不懂\n\n撇開第二種看不懂的情況，在看得懂的情形下，以我自己比較常遇到解不開的狀況是，一開始覺得應該可以怎麼做，可是最後不知道怎麼將想法轉換成程式碼，而講者推薦了一些做法。\n\n推薦初學者寫程式的作法\n\n\n\n首先看一道題目，然後按照以下的作法，題目是：\n\n如何印出 1-100 之間的偶數？\n\n想一下解法，不寫任何程式碼\n\n先不要急著想寫 code，想如何一步一步解決的方法。\n\n\n如何印出 1-100\n如何判斷偶數\n\n\n把解法寫成 pseudo code\n\n虛擬碼（pseudo code）在維基百科的解釋： \n\n\n更類似自然語言。它是半形式化、不標準的語言。我們可以將整個演算法執行過程的結構用接近自然語言的形式（這裡可以使用任何一種作者熟悉的文字，例如中文、英文，重點是將程式的意思表達出來）描述出來。使用虛擬碼，可以幫助我們更好的表述演算法，不用拘泥於具體的實現。\n\n\n主要是讓自己看得懂的方法，首先要讓如何印出 1-100：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n然後題目是要印出偶數，所以把第 3 步改成判斷式：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n如果 i 是偶數，印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n雖然 pseudo code 沒有一定的形式，但是可以練習寫成比較像是程式碼的 pseudo code：\n\nlet i = 1\nif i \u0026gt; 100 then exit\nif i % 2 === 0, print i\ni = i + 1\njump to line 2\n\n\n寫到這邊還可以進一步寫成：\n\nfor (i from 1 to 100) do\n    if (i % 2 === 0)\n    print i\nend for\n\n\n把 pseudo code 翻譯成程式碼\n\n到了這個步驟，如果有學過程式的話，應該就可以把程式碼寫出來，這邊使用 JavaScript 來寫，就可以印出從 1-100 的偶數：\n\nfor ( let i = 1; i \u0026lt; 100; i ++) {\n    if(i % 2 === 0) {\n        console.log(i)\n    }\n}\n\n","wordCount":200,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/think-first-code-later.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,212 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        Think first, code later
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">April 03, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">1 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -&gt; 從拉麵店的販賣機理解什麼是 APIhttps://medium.com/@hulitw/ramen-and-api-6238437dc544
+
+最近作者開了...
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -&gt; <a href="https://medium.com/@hulitw/ramen-and-api-6238437dc544">從拉麵店的販賣機理解什麼是 API</a></p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<p>最近作者開了一系列的課 -&gt; <a href="https://lidemy.com/p/alg101-leetcode">先別急著寫 leetcode</a>。因為我不是本科系出身，所以確實在解題時很容易遇上困難，不然就是會想很久。剛好看到這個課程就覺得蠻需要培養如何寫程式的思維，而且重點是免費喔！免費喔！免費喔！（很重要要說 3 次）所以這個系列會記載一些對我有幫助的筆記，希望能讓自己更進步一些。</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
 
-<h2 id="key-features">Key Features</h2>
+<h2 id="part-767aabe5a2337339">會寫程式的人與初學者差別在哪？</h2>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<hr>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<h3 id="part-d5b37fa4526f0d10">會寫程式的人</h3>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<ol>
+<li>先想解法</li>
+<li>如果是有做過或是簡單的，就會直接構思出方法</li>
+<li>如果比較困難或是複雜的問題，就把解法轉換成程式碼</li>
+</ol>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
-
-<p>Railquill is built with a focus on:</p>
+<h3 id="part-3786bc500aeb346">初學者</h3>
 
 <ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
+<li>邊寫邊想怎麼解</li>
+<li>試著套用自己以前學過的語法</li>
 </ul>
 
-<h2 id="contact">Contact</h2>
+<p>這個我自己蠻有感覺的，確實一開始會邊寫邊想，然後如果卡住了，就翻筆記看有什麼語法可以拿來套用，不過通常都沒什麼好下場就是了，哈。</p>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<h2 id="part-5278cf09b514351e">在解題會有兩種情況</h2>
+
+<hr>
+
+<h3 id="part-fb988bd4a83eeb37">看題目覺得自己解得開</h3>
 
 <ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
+<li>有效率的解開</li>
+<li>有解開但是時間花較久</li>
+<li>最後解不開</li>
 </ul>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<h3 id="part-7050f80492dfcea7">看題目就覺得看不懂</h3>
+
+<p>撇開第二種看不懂的情況，在看得懂的情形下，以我自己比較常遇到解不開的狀況是，一開始覺得應該可以怎麼做，可是最後不知道怎麼將想法轉換成程式碼，而講者推薦了一些做法。</p>
+
+<h2 id="part-1f46348b91dc921f">推薦初學者寫程式的作法</h2>
+
+<hr>
+
+<p>首先看一道題目，然後按照以下的作法，題目是：</p>
+
+<p>如何印出 1-100 之間的偶數？</p>
+
+<h3 id="part-68590da72a1ec5e2">想一下解法，不寫任何程式碼</h3>
+
+<p>先不要急著想寫 code，想如何一步一步解決的方法。</p>
+
+<ol>
+<li>如何印出 1-100</li>
+<li>如何判斷偶數</li>
+</ol>
+
+<h3 id="pseudo-code">把解法寫成 pseudo code</h3>
+
+<p>虛擬碼（pseudo code）在維基百科的解釋： </p>
+
+<blockquote>
+<p>更類似自然語言。它是半形式化、不標準的語言。我們可以將整個演算法執行過程的結構用接近自然語言的形式（這裡可以使用任何一種作者熟悉的文字，例如中文、英文，重點是將程式的意思表達出來）描述出來。使用虛擬碼，可以幫助我們更好的表述演算法，不用拘泥於具體的實現。</p>
+</blockquote>
+
+<p>主要是讓自己看得懂的方法，首先要讓如何印出 1-100：</p>
+
+<pre><code>讓 i = 1
+如果 i &gt; 100，結束
+印出 i
+讓 i 可以一直累加
+然後再跳回第 2 步
+</code></pre>
+
+<p>然後題目是要印出偶數，所以把第 3 步改成判斷式：</p>
+
+<pre><code>讓 i = 1
+如果 i &gt; 100，結束
+如果 i 是偶數，印出 i
+讓 i 可以一直累加
+然後再跳回第 2 步
+</code></pre>
+
+<p>雖然 pseudo code 沒有一定的形式，但是可以練習寫成比較像是程式碼的 pseudo code：</p>
+
+<pre><code>let i = 1
+if i &gt; 100 then exit
+if i % 2 === 0, print i
+i = i + 1
+jump to line 2
+</code></pre>
+
+<p>寫到這邊還可以進一步寫成：</p>
+
+<pre><code>for (i from 1 to 100) do
+    if (i % 2 === 0)
+    print i
+end for
+</code></pre>
+
+<h3 id="pseudo-code">把 pseudo code 翻譯成程式碼</h3>
+
+<p>到了這個步驟，如果有學過程式的話，應該就可以把程式碼寫出來，這邊使用 JavaScript 來寫，就可以印出從 1-100 的偶數：</p>
+
+<pre><code>for ( let i = 1; i &lt; 100; i ++) {
+    if(i % 2 === 0) {
+        console.log(i)
+    }
+}
+</code></pre>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=Think+first%2C+code+later&url=https%3A%2F%2Frailquill.vercel.app%2Fthink-first-code-later.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fthink-first-code-later.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/vue-js.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 基礎 Vue.js(上)">
+          基礎 Vue.js(上)
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/js-function.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: JS 基礎回顧 - function">
+          JS 基礎回顧 - function
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

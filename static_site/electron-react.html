@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>使用 Electron 搭配 React 建置桌面程式 - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="使用 Electron 搭配 React 建立桌面程式">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/electron-react.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="使用 Electron 搭配 React 建置桌面程式">
+      <meta property="og:description" content="使用 Electron 搭配 React 建立桌面程式">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="使用 Electron 搭配 React 建置桌面程式">
+      <meta property="twitter:description" content="使用 Electron 搭配 React 建立桌面程式">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2022-02-24T16:42:51Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Electron 搭配 React 建置桌面程式","description":"使用 Electron 搭配 React 建立桌面程式","url":"https://railquill.vercel.app/electron-react.html","datePublished":"2022-02-24T16:42:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/electron-react.html"},"articleBody":"這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。\n\n\n\n什麼是 Electron\n\nElectron 原本是 GitHub 開發的一個開源框架，使用 Node.js (後段) 與 Chromium (前端)，可以讓開發者透過 JavaScript、HTML 和 CSS 就可以來製作跨平台的桌面 GUI 應用程式，現在開發者常用的 Visual Studio Code 就是使用 Electron 建置的。\n\n簡介\n\n本次計畫是要將我之前練習的作品，打包成桌面程式。\n\n專案初始\n\n如果是新專案的話，可以使用 Create React App 來建立專案，並且要加上 TypeScript。\n\n$ yarn create react-app my-app --template typescript\n\n\n如果是像我這次要做的，在原有專案加上 TypeScript，就執行以下：\n\n$ yarn add typescript @types/node @types/react @types/react-dom @types/jest\n\n\n安裝插件\n\n$ yarn add cross-env electron-is-dev\n\n$ yarn add --dev concurrently electron electron-builder wait-on\n\n\n新增檔案\n\n安裝完以上兩個步驟之後，接著在 public 資料夾中新增一個檔案，並命名為 electron.js，並貼上以下內容：\n\nconst electron = require(\"electron\");\nconst app = electron.app;\nconst BrowserWindow = electron.BrowserWindow;\nconst path = require(\"path\");\nconst isDev = require(\"electron-is-dev\");\nlet mainWindow;\nfunction createWindow() {\nmainWindow = new BrowserWindow({ width: 900, height: 680 });\nmainWindow.loadURL(\nisDev\n? \"http://localhost:3000\"\n: `file://${path.join(__dirname, \"../build/index.html\")}`\n);\nmainWindow.on(\"closed\", () =\u0026gt; (mainWindow = null));\n}\napp.on(\"ready\", createWindow);\napp.on(\"window-all-closed\", () =\u0026gt; {\nif (process.platform !== \"darwin\") {\napp.quit();\n}\n});\napp.on(\"activate\", () =\u0026gt; {\nif (mainWindow === null) {\ncreateWindow();\n}\n});\n\n\npackage.json 新增內容\n\n\"name\": \"程式檔案名稱\",\n\"description\": \"描述你的程式\",\n\"author\": \"作者名\",\n\"build\": {\n\"appId\": \"\u0026lt;com.your_app\u0026gt;\"\n},\n\"main\": \"public/electron.js\",\n\"homepage\": \"./\",\n\"scripts\": {\n    \"react-start\": \"react-scripts start\",\n    \"react-build\": \"react-scripts build\",\n    \"react-test\": \"react-scripts test --env=jsdom\",\n    \"react-eject\": \"react-scripts eject\",\n    \"electron-build\": \"electron-builder\",\n    \"release\": \"yarn react-build \u0026amp;\u0026amp; electron-builder --publish=always\",\n    \"build\": \"yarn react-build \u0026amp;\u0026amp; yarn electron-build\",\n    \"start\": \"concurrently \\\"cross-env BROWSER=none yarn react-start\\\" \\\"wait-on http://localhost:3000 \u0026amp;\u0026amp; electron .\\\"\"\n},\n\n\n到這裡基本上就設定的差不多了，接著先來測試看看\n\n$ yarn start\n\n\n沒問題的話，會出現一個視窗，並且顯示內容\n\n\n\n\n\n將內容打包成程式檔\n\n如果以上都沒問題的話，就可以來打包成可以在電腦執行的一般程式了。\n\nyarn build\n\n\n成功的話，就會在資料夾 dist 中新增一個資料夾\n\n\n\n這裡會按照你的電腦是什麼系統來編譯成什麼檔案，舉例來說，在 Mac 編譯的最後結果就會是 dmg 檔，如果是 Windows 的話，就會是 exe 檔。\n\n\n\n執行該檔案就會安裝檔案\n\n\n\n如果是 Mac 的話，會在應用程式看得到剛剛安裝的檔案；如果是 Windows 的話，則會在桌面顯示檔案捷徑。\n\n遇到的雷點\n\n首先這次專案一開始就說要安裝 TypeScript，一開始曾試過沒安裝 TypeScript，後面就有遇到一些錯誤，所以在專案的一開始要記得安裝 TypeScript。\n","wordCount":264,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/electron-react.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,217 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        使用 Electron 搭配 React 建置桌面程式
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">February 24, 2022</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">2 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<h2 id="electron">什麼是 Electron</h2>
 
-<h2 id="key-features">Key Features</h2>
+<p><a href="https://www.electronjs.org/">Electron</a> 原本是 GitHub 開發的一個開源框架，使用 Node.js (後段) 與 Chromium (前端)，可以讓開發者透過 JavaScript、HTML 和 CSS 就可以來製作跨平台的桌面 GUI 應用程式，現在開發者常用的 Visual Studio Code 就是使用 Electron 建置的。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<h2 id="part-6542f83b247">簡介</h2>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<p>本次計畫是要將我之前練習的<a href="https://github.com/bucky0112/weather-app-react">作品</a>，打包成桌面程式。</p>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<h2 id="part-2c66c2dd39f809b2">專案初始</h2>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<p>如果是新專案的話，可以使用 Create React App 來建立專案，並且要加上 TypeScript。</p>
 
-<p>Railquill is built with a focus on:</p>
+<pre><code class="bash">$ yarn create react-app my-app --template typescript
+</code></pre>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<p>如果是像我這次要做的，在原有專案加上 TypeScript，就執行以下：</p>
 
-<h2 id="contact">Contact</h2>
+<pre><code class="bash">$ yarn add typescript @types/node @types/react @types/react-dom @types/jest
+</code></pre>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<h2 id="part-2c5c0dcf481a8265">安裝插件</h2>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code class="bash">$ yarn add cross-env electron-is-dev
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+$ yarn add --dev concurrently electron electron-builder wait-on
+</code></pre>
+
+<h2 id="part-2c9370d49b25c5e9">新增檔案</h2>
+
+<p>安裝完以上兩個步驟之後，接著在 public 資料夾中新增一個檔案，並命名為 electron.js，並貼上以下內容：</p>
+
+<pre><code class="js">const electron = require("electron");
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const path = require("path");
+const isDev = require("electron-is-dev");
+let mainWindow;
+function createWindow() {
+mainWindow = new BrowserWindow({ width: 900, height: 680 });
+mainWindow.loadURL(
+isDev
+? "http://localhost:3000"
+: `file://${path.join(__dirname, "../build/index.html")}`
+);
+mainWindow.on("closed", () =&gt; (mainWindow = null));
+}
+app.on("ready", createWindow);
+app.on("window-all-closed", () =&gt; {
+if (process.platform !== "darwin") {
+app.quit();
+}
+});
+app.on("activate", () =&gt; {
+if (mainWindow === null) {
+createWindow();
+}
+});
+</code></pre>
+
+<h2 id="package-json">package.json 新增內容</h2>
+
+<pre><code class="json">"name": "程式檔案名稱",
+"description": "描述你的程式",
+"author": "作者名",
+"build": {
+"appId": "&lt;com.your_app&gt;"
+},
+"main": "public/electron.js",
+"homepage": "./",
+"scripts": {
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test --env=jsdom",
+    "react-eject": "react-scripts eject",
+    "electron-build": "electron-builder",
+    "release": "yarn react-build &amp;&amp; electron-builder --publish=always",
+    "build": "yarn react-build &amp;&amp; yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 &amp;&amp; electron .\""
+},
+</code></pre>
+
+<p>到這裡基本上就設定的差不多了，接著先來測試看看</p>
+
+<pre><code class="bash">$ yarn start
+</code></pre>
+
+<p>沒問題的話，會出現一個視窗，並且顯示內容</p>
+
+<p><img src="https://i.imgur.com/Z7cX99N.png" alt="Image"></p>
+
+<p><img src="https://i.imgur.com/nSuIgXm.png" alt="Image"></p>
+
+<h2 id="part-3896e78c4b8ccea2">將內容打包成程式檔</h2>
+
+<p>如果以上都沒問題的話，就可以來打包成可以在電腦執行的一般程式了。</p>
+
+<pre><code class="bash">yarn build
+</code></pre>
+
+<p>成功的話，就會在資料夾 dist 中新增一個資料夾</p>
+
+<p><img src="https://i.imgur.com/WaYaoOa.png" alt="Image"></p>
+
+<p>這裡會按照你的電腦是什麼系統來編譯成什麼檔案，舉例來說，在 Mac 編譯的最後結果就會是 dmg 檔，如果是 Windows 的話，就會是 exe 檔。</p>
+
+<p><img src="https://i.imgur.com/t7RYplX.png" alt="Image"></p>
+
+<p>執行該檔案就會安裝檔案</p>
+
+<p><img src="https://i.imgur.com/RUYll6x.png" alt="Image"></p>
+
+<p>如果是 Mac 的話，會在應用程式看得到剛剛安裝的檔案；如果是 Windows 的話，則會在桌面顯示檔案捷徑。</p>
+
+<h2 id="part-8b68dfa06da439d5">遇到的雷點</h2>
+
+<p>首先這次專案一開始就說要安裝 TypeScript，一開始曾試過沒安裝 TypeScript，後面就有遇到一些錯誤，所以在專案的一開始要記得安裝 TypeScript。</p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8+Electron+%E6%90%AD%E9%85%8D+React+%E5%BB%BA%E7%BD%AE%E6%A1%8C%E9%9D%A2%E7%A8%8B%E5%BC%8F&url=https%3A%2F%2Frailquill.vercel.app%2Felectron-react.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Felectron-react.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/react-search-photo-demo.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: React Search Photo Demo">
+          React Search Photo Demo
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/usecontext.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: 使用 useContext 處理跨元件狀態">
+          使用 useContext 處理跨元件狀態
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

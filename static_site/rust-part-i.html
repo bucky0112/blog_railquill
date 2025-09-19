@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>來用 Rust 建立一個伺服器吧！Part I - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="用 Rust 建立一個伺服器">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/rust-part-i.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="來用 Rust 建立一個伺服器吧！Part I">
+      <meta property="og:description" content="用 Rust 建立一個伺服器">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="來用 Rust 建立一個伺服器吧！Part I">
+      <meta property="twitter:description" content="用 Rust 建立一個伺服器">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2022-10-07T01:26:21Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"來用 Rust 建立一個伺服器吧！Part I","description":"用 Rust 建立一個伺服器","url":"https://railquill.vercel.app/rust-part-i.html","datePublished":"2022-10-07T01:26:21Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust-part-i.html"},"articleBody":"從今天開始，我們要開始實作一個簡單的 HTTP 伺服器，並且複習一下並且運用我們之前學到 Rust 的知識，然後視情況加入一些需要了解的部分，到時候再加入解說，那麼就開始吧！\n\n建立一個新專案\n\n首先，我們要建立一個新的專案，這邊我們使用 cargo 來建立一個新的專案，使用 cargo new 指令，並且指定專案名稱為 server：\n\n$ cargo new server\n\n\n監聽 TCP 連線\n\n接著，我們要開始實作一個 TCP 伺服器，並且監聽 TCP 連線。\nRust 的標準函式庫中有一個 std::net 模組，裡面有一個 TcpListener 型態，可以用來監聽 TCP 連線，所以我們可以先在 src/main.rs 中 使用 TcpListener：\n\nuse std::net::TcpListener;\n\nconst PORT: i32 = 3000;\n\nfn main() {\n    let listener = TcpListener::bind(format!(\"127.0.0.1:{}\", PORT)).unwrap();\n\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        println!(\"連線建立!\");\n    }\n}\n\n\n上面的程式碼的意思是，我們從 std::net::TcpListener 中 import TcpListener，然後我們建立一個 PORT 常數，並且指定為 3000，接著我們在 main 函式中，我們建立一個 listener 變數，並且使用 TcpListener::bind 方法。這個方法會傳回一個 Result 型態，所以我們使用 unwrap 方法來解包，如果有錯誤發生，程式就會 panic，然後我們使用 for 迴圈來監聽 TCP 連線，並且將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n我們先試著執行一下，在終端機中執行 cargo run，然後打開瀏覽器，輸入 http://127.0.0.1:3000。\n\n雖然瀏覽器會顯示以下畫面：\n\n\n\n不過，我們可以在終端機中看到 連線建立! 的訊息，這代表我們的 TCP 伺服器已經成功的監聽到了 TCP 連線。\n\n但是可能有人會好奇，為什麼我們才開啟一次 http://127.0.0.1:3000，卻可以看到好幾個訊息出來呢？這是因為瀏覽器除了請求頁面內容之外，也會試著請求其他資源，像是瀏覽器分頁上的 favicon.ico 網站圖示等等的資源，所以我們會看到好幾個訊息出來。\n\n然後我們也可以試著重新整理網頁，雖然一樣是完全沒有畫面。但是在終端機會多出幾行訊息，這也就是說我們剛剛寫的 listener.incoming() 方法會持續監聽 TCP 連線，直到我們關閉程式。\n\n讀取請求\n\n接下來要來讀取請求，然後避免 main 的程式碼太長，我們先把讀取請求的程式碼放到 handle_connection 函式中：\n\nuse std::net::TcpStream;\n\n// ...省略\nfn handle_connection(stream: TcpStream) {\n    println!(\"建立連線!\");\n}\n\n\n這裡可以使用 TcpStream 型態，因為我們在 main 函式中，已經將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n然後我們在 main 函式中，將 handle_connection 函式綁定到 for 迴圈中：\n\n// ...省略\nfn main() {\n    // ...省略\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        handle_connection(stream);\n    }\n}\n\n\n接著我們在 handle_connection 函式中，使用 stream.read 方法來讀取請求。\n這個 read 方法會需要從參數中傳入一個 \u0026amp;mut [u8] 型態的變數，所以我們先建立一個 buffer 變數，並且指定為一個 u8 型態的陣列，用來當作緩衝區使用。\n而緩衝區的大小，沒有特別規定。不過，這裡設定為 512 bytes，也就是 512 個 u8 型態的元素，也已經非常足夠了。\n\n這裡也將 std::io::prelude::* 引入，來實作 I/O 相關讀寫的方法。\n\nuse std::io::prelude::*;\n\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n}\n\n\n接著我們可以使用 println! 來印出 buffer 變數的內容，這樣我們就可以看到請求的內容了：\n\n// ...省略\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n\n    println!(\"請求內容: {}\", String::from_utf8_lossy(\u0026amp;buffer[..c]));\n}\n\n\n這裡使用 String::from_utf8_lossy 方法，來將 buffer 變數轉換成 String 型態，並且使用 \u0026amp;buffer[..c] 來指定要轉換的範圍。\n\n然後我們重新執行程式，並且把瀏覽器打開。雖然這時候瀏覽器一樣沒有畫面，但是我們可以在終端機看到請求的內容了：\n\n\n\n今天我們已經先做了讀取請求的步驟，明天將會做發送 response 的部分。\n","wordCount":276,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/rust-part-i.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,201 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        來用 Rust 建立一個伺服器吧！Part I
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">October 07, 2022</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">2 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          用 Rust 建立一個伺服器
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>從今天開始，我們要開始實作一個簡單的 HTTP 伺服器，並且複習一下並且運用我們之前學到 Rust 的知識，然後視情況加入一些需要了解的部分，到時候再加入解說，那麼就開始吧！</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<h2 id="part-3c6ef4a28e30d3e0">建立一個新專案</h2>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
+<p>首先，我們要建立一個新的專案，這邊我們使用 <code>cargo</code> 來建立一個新的專案，使用 <code>cargo new</code> 指令，並且指定專案名稱為 <code>server</code>：</p>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<pre><code class="bash">$ cargo new server
+</code></pre>
 
-<h2 id="key-features">Key Features</h2>
+<h2 id="tcp">監聽 TCP 連線</h2>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p>接著，我們要開始實作一個 TCP 伺服器，並且監聽 TCP 連線。
+Rust 的標準函式庫中有一個 <code>std::net</code> 模組，裡面有一個 <code>TcpListener</code> 型態，可以用來監聽 TCP 連線，所以我們可以先在 <code>src/main.rs</code> 中 使用 <code>TcpListener</code>：</p>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<pre><code class="rust">use std::net::TcpListener;
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+const PORT: i32 = 3000;
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+fn main() {
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", PORT)).unwrap();
 
-<p>Railquill is built with a focus on:</p>
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+        println!("連線建立!");
+    }
+}
+</code></pre>
 
-<h2 id="contact">Contact</h2>
+<p>上面的程式碼的意思是，我們從 <code>std::net::TcpListener</code> 中 import <code>TcpListener</code>，然後我們建立一個 <code>PORT</code> 常數，並且指定為 <code>3000</code>，接著我們在 <code>main</code> 函式中，我們建立一個 <code>listener</code> 變數，並且使用 <code>TcpListener::bind</code> 方法。這個方法會傳回一個 <code>Result</code> 型態，所以我們使用 <code>unwrap</code> 方法來解包，如果有錯誤發生，程式就會 panic，然後我們使用 <code>for</code> 迴圈來監聽 TCP 連線，並且將 <code>stream</code> 變數綁定到 <code>listener.incoming()</code> 方法，這個方法會傳回一個 <code>TcpStream</code> 型態。</p>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<p>我們先試著執行一下，在終端機中執行 <code>cargo run</code>，然後打開瀏覽器，輸入 <code>http://127.0.0.1:3000</code>。</p>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<p>雖然瀏覽器會顯示以下畫面：</p>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<p><img src="https://i.imgur.com/2NOn8qD.png" alt="CleanShot 2022-10-04 at 01.08.36@2x"></p>
+
+<p>不過，我們可以在終端機中看到 <code>連線建立!</code> 的訊息，這代表我們的 TCP 伺服器已經成功的監聽到了 TCP 連線。</p>
+
+<p>但是可能有人會好奇，為什麼我們才開啟一次 <code>http://127.0.0.1:3000</code>，卻可以看到好幾個訊息出來呢？這是因為瀏覽器除了請求頁面內容之外，也會試著請求其他資源，像是瀏覽器分頁上的 favicon.ico 網站圖示等等的資源，所以我們會看到好幾個訊息出來。</p>
+
+<p>然後我們也可以試著重新整理網頁，雖然一樣是完全沒有畫面。但是在終端機會多出幾行訊息，這也就是說我們剛剛寫的 <code>listener.incoming()</code> 方法會持續監聽 TCP 連線，直到我們關閉程式。</p>
+
+<h2 id="part-2e753c9fcfc5123c">讀取請求</h2>
+
+<p>接下來要來讀取請求，然後避免 <code>main</code> 的程式碼太長，我們先把讀取請求的程式碼放到 <code>handle_connection</code> 函式中：</p>
+
+<pre><code class="rust">use std::net::TcpStream;
+
+// ...省略
+fn handle_connection(stream: TcpStream) {
+    println!("建立連線!");
+}
+</code></pre>
+
+<p>這裡可以使用 <code>TcpStream</code> 型態，因為我們在 <code>main</code> 函式中，已經將 <code>stream</code> 變數綁定到 <code>listener.incoming()</code> 方法，這個方法會傳回一個 <code>TcpStream</code> 型態。</p>
+
+<p>然後我們在 <code>main</code> 函式中，將 <code>handle_connection</code> 函式綁定到 <code>for</code> 迴圈中：</p>
+
+<pre><code class="rust">// ...省略
+fn main() {
+    // ...省略
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+
+        handle_connection(stream);
+    }
+}
+</code></pre>
+
+<p>接著我們在 <code>handle_connection</code> 函式中，使用 <code>stream.read</code> 方法來讀取請求。
+這個 <code>read</code> 方法會需要從參數中傳入一個 <code>&amp;mut [u8]</code> 型態的變數，所以我們先建立一個 <code>buffer</code> 變數，並且指定為一個 <code>u8</code> 型態的陣列，用來當作緩衝區使用。
+而緩衝區的大小，沒有特別規定。不過，這裡設定為 512 bytes，也就是 512 個 <code>u8</code> 型態的元素，也已經非常足夠了。</p>
+
+<p>這裡也將 <code>std::io::prelude::*</code> 引入，來實作 I/O 相關讀寫的方法。</p>
+
+<pre><code class="rust">use std::io::prelude::*;
+
+fn handle_connection(mut stream: TcpStream) {
+    let mut buffer = [0; 512];
+
+    let c = stream.read(&amp;mut buffer).unwrap();
+}
+</code></pre>
+
+<p>接著我們可以使用 <code>println!</code> 來印出 <code>buffer</code> 變數的內容，這樣我們就可以看到請求的內容了：</p>
+
+<pre><code class="rust">// ...省略
+fn handle_connection(mut stream: TcpStream) {
+    let mut buffer = [0; 512];
+
+    let c = stream.read(&amp;mut buffer).unwrap();
+
+    println!("請求內容: {}", String::from_utf8_lossy(&amp;buffer[..c]));
+}
+</code></pre>
+
+<p>這裡使用 <code>String::from_utf8_lossy</code> 方法，來將 <code>buffer</code> 變數轉換成 <code>String</code> 型態，並且使用 <code>&amp;buffer[..c]</code> 來指定要轉換的範圍。</p>
+
+<p>然後我們重新執行程式，並且把瀏覽器打開。雖然這時候瀏覽器一樣沒有畫面，但是我們可以在終端機看到請求的內容了：</p>
+
+<p><img src="https://i.imgur.com/FddM6uI.png" alt="CleanShot 2022-10-04 at 02.33.56@2x"></p>
+
+<p>今天我們已經先做了讀取請求的步驟，明天將會做發送 response 的部分。</p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E4%BE%86%E7%94%A8+Rust+%E5%BB%BA%E7%AB%8B%E4%B8%80%E5%80%8B%E4%BC%BA%E6%9C%8D%E5%99%A8%E5%90%A7%EF%BC%81Part+I&url=https%3A%2F%2Frailquill.vercel.app%2Frust-part-i.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Frust-part-i.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/rust.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: Rust 的閉包">
+          Rust 的閉包
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/rust-part-ii.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: 來用 Rust 建立一個伺服器吧！Part II">
+          來用 Rust 建立一個伺服器吧！Part II
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

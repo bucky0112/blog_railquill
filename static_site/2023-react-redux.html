@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>淺談在 2023 年的 React 還需要 Redux 嗎？ - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="淺談在 2023 年的 React 還需要 Redux 嗎？">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/2023-react-redux.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="淺談在 2023 年的 React 還需要 Redux 嗎？">
+      <meta property="og:description" content="淺談在 2023 年的 React 還需要 Redux 嗎？">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="淺談在 2023 年的 React 還需要 Redux 嗎？">
+      <meta property="twitter:description" content="淺談在 2023 年的 React 還需要 Redux 嗎？">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2023-05-20T11:27:10Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"淺談在 2023 年的 React 還需要 Redux 嗎？","description":"淺談在 2023 年的 React 還需要 Redux 嗎？","url":"https://railquill.vercel.app/2023-react-redux.html","datePublished":"2023-05-20T11:27:10Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/2023-react-redux.html"},"articleBody":"淺談在 2023 年的 React 還需要 Redux 嗎？\n\n前幾天在推特上看到有人提問標題這個問題，有些網友回覆 Redux 太複雜，建議改用其他的狀態管理套件。也有網友提出 React 都有 context API 來處理跨元件狀態了，根本不需要 Redux。\n\n在這個問題上，許多開發者可能會有不同的觀點，但讓我們先從最基本的 React context 開始比較，然後再探討 Redux。\n\n首先，我們來看看 React 的 context API。React context 提供了一種方式來共享值，例如這些值是全域的，例如主題、語言偏好等等，而不需要手動將 props 傳遞過多層。然而，當我們使用 useContext 並搭配 useReducer 來作為全域狀態管理時，所有使用該 context 的元件將會在 state 變更時重新 render，不論他們使用的 state 部分是否有改變。如果你有一個沒有被 useCallback 包裹的處理器，那麼虛擬 DOM 比對將會失敗，這些元件將會導致 DOM 更新。當然你可以有多個小的 contexts，但這樣你就會有多個狀態的來源，這可能還是得根據你的需求和實作方式來判別這樣是好是壞。\n\n另一方面，Redux 提供了一個集中式和預測性的 state 容器，讓你可以在整個應用程式中管理狀態。儘管在引入 hooks 和 context API 之後，React 提供了一種方式來在組件之間共享狀態，但 Redux 仍然有其價值。Redux 的主要優勢在於它的嚴謹的更新邏輯：所有的狀態更新都被集中處理並通過 actions 和 reducers 來描述。這種方法提供了很高的可預測性和一致性，這在複雜的應用程式中是很有價值的。\n\n不過 Redux 出了名困難的學習曲線，對於開發者來說也是一個望而卻步的門檻。我之前也寫了一篇介紹 Redux 的文章，有興趣的朋友可以看我之前的這篇文章去看看。\n\n為了解決這個問題，Redux 也推出了 Redux Toolkit(RTK) 來進一步簡化 Redux 的使用。RTK 是 Redux 的官方工具集，其主要目標是解決 Redux 過於複雜的問題，並且提供了一組工具來協助你更簡單地寫 Redux，所以開發者可以寫出更精簡、更可讀的 Redux 代碼，並且有更好的開發者體驗。\n\nRTK 提供了 configureStore() 函數來建立 store，這比過去的 createStore() 提供了更多的好處。configureStore() 會自動添加非同步的能力，並且支援 Redux Devtools Extension，這可以讓開發者在瀏覽器開發者工具輕鬆看到狀態的變更，當然還有其他的好處，例如我們不再需要 combineReducers()，以下是用 RTK 所做的一個簡單的範例：\n\n\n\n因此，儘管 React 的 context 提供了簡易的方式來處理跨元件的狀態，但從上面的 RTK 的範例來看，在不失去原本 Redux 強大的狀態管理之下，卻簡化了很多繁複的設定。\n\n結論\n\nReact Context API 是一種非常有效的工具，它可以處理許多跨元件的狀態共享問題。然而，對於大型或複雜的應用程式來說，Redux 提供的集中式狀態管理能力可能會更適合。尤其是當你需要更嚴謹的狀態更新邏輯，或是與其他工具（例如 Redux DevTools）的搭配時。\n\n而 Redux Toolkit 是 Redux 的現代化版本，它簡化了 Redux 的許多繁複部分，並加入了許多有用的功能，例如自動處理 action 和 reducer 的創建、處理異步邏輯和狀態的不可變性。因此，對於需要複雜狀態管理且尋求簡化開發體驗的專案，Redux Toolkit 是一個很好的選擇。\n\n總的來說，選擇使用 Redux 或是 React Context，或是其他的狀態管理工具，應該基於你的專案需求，並考慮到每種工具的優缺點。在某些情況下，Redux 提供的嚴謹的狀態管理和健全的開發者工具可能是必要的；而在其他情況下，React Context 的輕量級和靈活性可能就足夠了。所以，在你選擇工具的時候，最重要的是理解你的專案需求和這些工具的適用情境。\n","wordCount":169,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/2023-react-redux.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,124 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        淺談在 2023 年的 React 還需要 Redux 嗎？
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">May 20, 2023</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">1 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          淺談在 2023 年的 React 還需要 Redux 嗎？
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <h1 id="2023-react-redux">淺談在 2023 年的 React 還需要 Redux 嗎？</h1>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<p>前幾天在推特上看到有人提問標題這個問題，有些網友回覆 Redux 太複雜，建議改用其他的狀態管理套件。也有網友提出 React 都有 context API 來處理跨元件狀態了，根本不需要 Redux。</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
+<p>在這個問題上，許多開發者可能會有不同的觀點，但讓我們先從最基本的 React context 開始比較，然後再探討 Redux。</p>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<p>首先，我們來看看 React 的 context API。React context 提供了一種方式來共享值，例如這些值是全域的，例如主題、語言偏好等等，而不需要手動將 <code>props</code> 傳遞過多層。然而，當我們使用 <code>useContext</code> 並搭配 <code>useReducer</code> 來作為全域狀態管理時，所有使用該 context 的元件將會在 state 變更時重新 render，不論他們使用的 state 部分是否有改變。如果你有一個沒有被 <code>useCallback</code> 包裹的處理器，那麼虛擬 DOM 比對將會失敗，這些元件將會導致 DOM 更新。當然你可以有多個小的 contexts，但這樣你就會有多個狀態的來源，這可能還是得根據你的需求和實作方式來判別這樣是好是壞。</p>
 
-<h2 id="key-features">Key Features</h2>
+<p>另一方面，Redux 提供了一個集中式和預測性的 state 容器，讓你可以在整個應用程式中管理狀態。儘管在引入 hooks 和 context API 之後，React 提供了一種方式來在組件之間共享狀態，但 Redux 仍然有其價值。Redux 的主要優勢在於它的嚴謹的更新邏輯：所有的狀態更新都被集中處理並通過 actions 和 reducers 來描述。這種方法提供了很高的可預測性和一致性，這在複雜的應用程式中是很有價值的。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p>不過 Redux 出了名困難的學習曲線，對於開發者來說也是一個望而卻步的門檻。我之前也寫了一篇介紹 Redux 的文章，有興趣的朋友可以看我之前的<a href="https://bucky0112.github.io/2022/03/10/libraries-redux/">這篇文章</a>去看看。</p>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<p>為了解決這個問題，Redux 也推出了 Redux Toolkit(RTK) 來進一步簡化 Redux 的使用。RTK 是 Redux 的官方工具集，其主要目標是解決 Redux 過於複雜的問題，並且提供了一組工具來協助你更簡單地寫 Redux，所以開發者可以寫出更精簡、更可讀的 Redux 代碼，並且有更好的開發者體驗。</p>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<p>RTK 提供了 <code>configureStore()</code> 函數來建立 store，這比過去的 <code>createStore()</code> 提供了更多的好處。<code>configureStore()</code> 會自動添加非同步的能力，並且支援 <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Redux Devtools Extension</a>，這可以讓開發者在瀏覽器開發者工具輕鬆看到狀態的變更，當然還有其他的好處，例如我們不再需要 <code>combineReducers()</code>，以下是用 RTK 所做的一個簡單的範例：</p>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
 
-<p>Railquill is built with a focus on:</p>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<p>因此，儘管 React 的 context 提供了簡易的方式來處理跨元件的狀態，但從上面的 RTK 的範例來看，在不失去原本 Redux 強大的狀態管理之下，卻簡化了很多繁複的設定。</p>
 
-<h2 id="contact">Contact</h2>
+<h2 id="part-6542fd4e95a">結論</h2>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<p>React Context API 是一種非常有效的工具，它可以處理許多跨元件的狀態共享問題。然而，對於大型或複雜的應用程式來說，Redux 提供的集中式狀態管理能力可能會更適合。尤其是當你需要更嚴謹的狀態更新邏輯，或是與其他工具（例如 Redux DevTools）的搭配時。</p>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<p>而 Redux Toolkit 是 Redux 的現代化版本，它簡化了 Redux 的許多繁複部分，並加入了許多有用的功能，例如自動處理 action 和 reducer 的創建、處理異步邏輯和狀態的不可變性。因此，對於需要複雜狀態管理且尋求簡化開發體驗的專案，Redux Toolkit 是一個很好的選擇。</p>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<p>總的來說，選擇使用 Redux 或是 React Context，或是其他的狀態管理工具，應該基於你的專案需求，並考慮到每種工具的優缺點。在某些情況下，Redux 提供的嚴謹的狀態管理和健全的開發者工具可能是必要的；而在其他情況下，React Context 的輕量級和靈活性可能就足夠了。所以，在你選擇工具的時候，最重要的是理解你的專案需求和這些工具的適用情境。</p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E6%B7%BA%E8%AB%87%E5%9C%A8+2023+%E5%B9%B4%E7%9A%84+React+%E9%82%84%E9%9C%80%E8%A6%81+Redux+%E5%97%8E%EF%BC%9F&url=https%3A%2F%2Frailquill.vercel.app%2F2023-react-redux.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2F2023-react-redux.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/react-native-x-expo-x-typescript.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: React Native x Expo x TypeScript 實作計算機">
+          React Native x Expo x TypeScript 實作計算機
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/rust-web.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: Rust Web 之旅：新時代的後端開發">
+          Rust Web 之旅：新時代的後端開發
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

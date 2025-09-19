@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>使用 Actions 跟 Mutations 來改變資料狀態 - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="使用 Actions 跟 Mutations 來改變資料狀態">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/actions-mutations.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="使用 Actions 跟 Mutations 來改變資料狀態">
+      <meta property="og:description" content="使用 Actions 跟 Mutations 來改變資料狀態">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="使用 Actions 跟 Mutations 來改變資料狀態">
+      <meta property="twitter:description" content="使用 Actions 跟 Mutations 來改變資料狀態">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-10-12T00:02:47Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:23Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Actions 跟 Mutations 來改變資料狀態","description":"使用 Actions 跟 Mutations 來改變資料狀態","url":"https://railquill.vercel.app/actions-mutations.html","datePublished":"2020-10-12T00:02:47Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/actions-mutations.html"},"articleBody":"上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。\n\n\n\nActions 跟 Mutations 如何改變資料\n\n先看官網的 Vuex 的週期介紹圖，如果 Component 要改變 State 的話，就要透過 Actions 發出 Commit 去呼叫 Mutations，藉由 Mutations 去改變 State。\n\n\n\n如何使用\n\n我在 CodeSandbox 建立了一個 Vuex 來模擬變更資料，當按下 Click Me 按鈕，原本顯示在頁面上的 Hello Vuex 會變更為 Good Job，在過 5 秒後則會再變更為 Try Again，就可以繼續按，觀察資料如何變更。\n\n\n\n首先在 State 中設立一筆資料\n\nstate: {\n  testWord: \"Hello Vuex\"\n}\n\n\n接著就可以透過 Actions 跟 Mutations 來改變資料：\n\n\n在 Actions 及 Mutations 加入：\n\n\nmutations: {\n  CHANGE(state, word) {\n    state.testWord = word;\n  }\n},\nactions: {\n  changeStateWord(context, word) {\n    context.commit(\"CHANGE\", word);\n  }\n},\n\n\n\n在 actions 建立一個函式，並帶入 context 為第一個參數，第二個參數則是 payload，可以自定義名稱，而 context 則是有下列屬性：\n\n\n{\n  state,      // 等同于 `store.state`，若在模块中则为局部状态\n  rootState,  // 等同于 `store.state`，只存在于模块中\n  commit,     // 等同于 `store.commit`\n  dispatch,   // 等同于 `store.dispatch`\n  getters,    // 等同于 `store.getters`\n  rootGetters // 等同于 `store.getters`，只存在于模块中\n}\n\n\n\n接著在函式中使用 commit 屬性，呼叫 mutations。\n在 mutations 也建立一個函式，建議使用常數來命名方便區分，並帶入 state 為第一個參數，第二個參數則是 payload 。\n因為要藉由 mutations 來改變 state，所以在函式中加入動作。\n最後在 component 中加入 Actions，使用 this.$store.dispatch('actions', 欲變更資料)\n\n\n使用嚴格模式\n\n在使用 Actions 跟 Mutations 時，還需要特別注意的是，當使用非同步處理時，要在 Actions 處理，而不要在 Mutations。\n這時候可以開啟嚴格模式，幫助追蹤所有的狀態變更，使用方法很簡單，在 Vuex 中加入 strict，並開啟即可：\n\nexport default new Vuex.Store({\n  strict: true\n})\n\n","wordCount":205,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/actions-mutations.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,168 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        使用 Actions 跟 Mutations 來改變資料狀態
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">October 12, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">2 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<h2 id="actions-mutations">Actions 跟 Mutations 如何改變資料</h2>
 
-<h2 id="key-features">Key Features</h2>
+<p>先看官網的 Vuex 的週期介紹圖，如果 Component 要改變 State 的話，就要透過 Actions 發出 Commit 去呼叫 Mutations，藉由 Mutations 去改變 State。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p><img src="https://i.imgur.com/J10wJPU.png" alt="vuex"></p>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<h3 id="part-2c2f5a82c4859feb">如何使用</h3>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<p>我在 CodeSandbox 建立了一個 Vuex 來模擬變更資料，當按下 Click Me 按鈕，原本顯示在頁面上的 Hello Vuex 會變更為 Good Job，在過 5 秒後則會再變更為 Try Again，就可以繼續按，觀察資料如何變更。</p>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
 
-<p>Railquill is built with a focus on:</p>
+
+<p>首先在 State 中設立一筆資料</p>
+
+<pre><code class="js">state: {
+  testWord: "Hello Vuex"
+}
+</code></pre>
+
+<p>接著就可以透過 Actions 跟 Mutations 來改變資料：</p>
 
 <ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
+<li>在 Actions 及 Mutations 加入：</li>
 </ul>
 
-<h2 id="contact">Contact</h2>
+<pre><code class="js">mutations: {
+  CHANGE(state, word) {
+    state.testWord = word;
+  }
+},
+actions: {
+  changeStateWord(context, word) {
+    context.commit("CHANGE", word);
+  }
+},
+</code></pre>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<ol>
+<li>在 actions 建立一個函式，並帶入 <code>context</code> 為第一個參數，第二個參數則是 <code>payload</code>，可以自定義名稱，而 <code>context</code> 則是有下列屬性：</li>
+</ol>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code class="js">{
+  state,      // 等同于 `store.state`，若在模块中则为局部状态
+  rootState,  // 等同于 `store.state`，只存在于模块中
+  commit,     // 等同于 `store.commit`
+  dispatch,   // 等同于 `store.dispatch`
+  getters,    // 等同于 `store.getters`
+  rootGetters // 等同于 `store.getters`，只存在于模块中
+}
+</code></pre>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<ol>
+<li>接著在函式中使用 <code>commit</code> 屬性，呼叫 <code>mutations</code>。</li>
+<li>在 <code>mutations</code> 也建立一個函式，建議使用常數來命名方便區分，並帶入 <code>state</code> 為第一個參數，第二個參數則是 <code>payload</code> 。</li>
+<li>因為要藉由 <code>mutations</code> 來改變 <code>state</code>，所以在函式中加入動作。</li>
+<li>最後在 component 中加入 Actions，使用 <code>this.$store.dispatch('actions', 欲變更資料)</code></li>
+</ol>
+
+<h2 id="part-922e5932763000bc">使用嚴格模式</h2>
+
+<p>在使用 Actions 跟 Mutations 時，還需要特別注意的是，當使用非同步處理時，要在 Actions 處理，而不要在 Mutations。
+這時候可以開啟嚴格模式，幫助追蹤所有的狀態變更，使用方法很簡單，在 Vuex 中加入 strict，並開啟即可：</p>
+
+<pre><code class="js">export default new Vuex.Store({
+  strict: true
+})
+</code></pre>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8+Actions+%E8%B7%9F+Mutations+%E4%BE%86%E6%94%B9%E8%AE%8A%E8%B3%87%E6%96%99%E7%8B%80%E6%85%8B&url=https%3A%2F%2Frailquill.vercel.app%2Factions-mutations.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Factions-mutations.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/vuex-state.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 用 Vuex 來管理 State 資料狀態">
+          用 Vuex 來管理 State 資料狀態
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/react-fragment.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: React Fragment 的標籤好適合懶人工程師啊～">
+          React Fragment 的標籤好適合懶人工程師啊～
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

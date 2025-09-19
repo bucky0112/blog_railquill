@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>Rust x React - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="Rust x React 夢幻共演">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/rust-x-react.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="Rust x React">
+      <meta property="og:description" content="Rust x React 夢幻共演">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="Rust x React">
+      <meta property="twitter:description" content="Rust x React 夢幻共演">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2022-10-15T01:50:59Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Rust x React","description":"Rust x React 夢幻共演","url":"https://railquill.vercel.app/rust-x-react.html","datePublished":"2022-10-15T01:50:59Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust-x-react.html"},"articleBody":"終於到最後一天了，看到這篇文章覺得很有趣，所以今天我們來玩一下 Rust 跟 React 的結合吧！\n\n開始專案\n\n首先我們先建立一個新的專案，這邊我們使用 create-react-app 來建立一個新的專案，並且使用 yarn 來安裝相依套件。\n\n$ yarn create react-app rust-react\n$ cd rust-react\n$ yarn\n\n\n建立 Rust\n\n接下來我們在專案中建立一個 Rust 的 library：\n\n$ cargo new wasm-lib --lib\n\n\n然後會在專案中看到一個 wasm-lib 的資料夾，裡面會有一個 src 資料夾，裡面會有一個 lib.rs 的檔案，這個檔案就是我們的 Rust library。\n\n\n\n因為我們預計想要做一個可以點擊加減的按鈕，然後回傳計算結果，所以我們可以在 lib.rs 中加入：\n\npub fn calculator(a: i32, b: i32) -\u0026gt; i32 {\n    a + b\n}\n\n#[test]\nfn cal_test() {\n    assert_eq!(1 + 1, calculator(1, 1));\n}\n\n\n然後 cd 到 wasm-lib 資料夾，並且測試一下：\n\n$ cd wasm-lib\n$ cargo test\n\n\n沒什麼問題的話，就會出現以下的結果：\n\n\n\n接下來到 Cargo.toml 中加入以下的設定：\n\n[lib]\ncrate-type = [\"cdylib\"]\n\n[dependencies]\nwasm-bindgen = \"0.2.78\"\n\n\n這一段的意思是，我們要把這個 library 轉換成 WebAssembly 的格式，並且使用 wasm-bindgen 來幫我們轉換。\n\n然後還要在 src/lib.rs 中加入設定：\n\nuse wasm_bindgen::prelude::*;\n\n#[wasm_bindgen]\npub fn calculator(a: i32, b: i32) -\u0026gt; i32 {\n    a + b\n}\n\n\n這樣可以讓 calculator 這個函式可以在 wasm 中被使用。\n\n接下來我們要安裝 wasm-pack：\n\n$ cargo install wasm-pack\n\n\n然後我們還需要讓 Rust 可以在這個專案中可以運作。\n所以在 package.json 中加入 script:\n\n\"scripts\": {\n  \"start\": \"react-scripts start\",\n  \"build\": \"react-scripts build\",\n  \"test\": \"react-scripts test\",\n  \"eject\": \"react-scripts eject\",\n  \"build:wasm\": \"cd wasm-lib \u0026amp;\u0026amp; wasm-pack build --target web --out-dir pkg\"\n},\n\n\n接著執行：\n\n$ yarn build:wasm\n\n\n然後就會生成一個 pkg 的資料夾，裡面會有一個 wasm_lib_bg.wasm 的檔案，這就是我們的 WebAssembly 檔案。\n\n\n\n並且我們可以看到我們剛剛建立的 calculator 函式已經生成在 wasm_lib.d.ts 中了。\n\n\n\n然後我們還需要把他加進 node_modules 中，所以我們要在終端機中執行：\n\n$ yarn add ./wasm-lib/pkg\n\n\n這樣就可以在 node_modules 中看到 wasm-lib 這個資料夾了，並且我們可以引入來使用他。\n\n最後我們來 React 中使用他：\n\nimport { useState } from 'react'\nimport init, { calculator } from 'wasm-lib'\nimport logo from './logo.svg'\nimport './App.css'\n\nfunction App() {\n  const [num, setNum] = useState(0)\n\n  const handlePlus = () =\u0026gt; {\n    init().then(() =\u0026gt; {\n      setNum(calculator(num, 1))\n    })\n  }\n\n  const handleMinus = () =\u0026gt; {\n    if (num \u0026gt; 0) {\n      init().then(() =\u0026gt; {\n        setNum(calculator(num, -1))\n      })\n    }\n  }\n\n  return (\n    \u0026lt;div className='App'\u0026gt;\n      \u0026lt;header className='App-header'\u0026gt;\n        \u0026lt;img src={logo} className='App-logo' alt='logo' /\u0026gt;\n        \u0026lt;p\u0026gt;{num}\u0026lt;/p\u0026gt;\n        \u0026lt;div\u0026gt;\n          \u0026lt;button onClick={handlePlus}\u0026gt;+\u0026lt;/button\u0026gt;\n          \u0026lt;button onClick={handleMinus}\u0026gt;-\u0026lt;/button\u0026gt;\n        \u0026lt;/div\u0026gt;\n      \u0026lt;/header\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\nexport default App\n\n\n然後執行 yarn start，就可以執行我們的專案，並且讓 Rust 運行在 React 中了。\n\n同場加映\n\n前面只是單純的使用 Rust 來做加減的動作，但是這樣看不出 Rust 的效能優勢，所以我們來做一些稍微複雜的運算玩玩看。\n\n我們來做一個費氏數列的函式，並且使用 Rust 來做運算。\n\n首先在 wasm-lib/src/lib.rs 中加入新的方法，並且寫一下測試：\n\n#[wasm_bindgen]\npub fn fibonacci(n: i32) -\u0026gt; i32 {\n    if n \u0026lt;= 1 {\n        return n;\n    } else {\n        return fibonacci(n - 1) + fibonacci(n - 2);\n    }\n}\n\n#[test]\nfn fib_test() {\n    assert_eq!(1, fibonacci(1));\n    assert_eq!(1, fibonacci(2));\n    assert_eq!(2, fibonacci(3));\n    assert_eq!(3, fibonacci(4));\n    assert_eq!(5, fibonacci(5));\n    assert_eq!(8, fibonacci(6));\n}\n\n\n跑一下測試，執行：\n\n// 在 wasm-lib 資料夾中\n$ cargo test\n\n\n\n\n然後記得要重新 build：\n\n// 要在根目錄中執行\n$ yarn build:wasm\n$ yarn add ./wasm-lib/pkg\n\n\n然後在 App.js 加進我們的 fibonacci 函式：\n\nimport init, { calculator, fibonacci } from 'wasm-lib'\n\nfunction App() {\n  // 省略...\n  const handleFibonacci = () =\u0026gt; {\n    let start = new Date().getTime()\n    init().then(() =\u0026gt; {\n      setFibonacciNum(fibonacci(inputNum))\n    })\n    let end = new Date().getTime()\n    console.log(`Rust: 時間： ${end - start} ms`)\n  }\n  // 省略...\n}\n\n\n然後另外寫一個 JS 的費氏數列函式：\n\nconst calFibonacci = (n) =\u0026gt; {\n  if (n \u0026lt;= 1) {\n    return n\n  } else {\n    return calFibonacci(n - 1) + calFibonacci(n - 2)\n  }\n}\n\nfunction App() {\n  // 省略...\n  const handleFibonacciJS = () =\u0026gt; {\n    let start = new Date().getTime()\n    let result = calFibonacci(inputNum)\n    setFibonacciNumJS(result)\n    let end = new Date().getTime()\n    console.log(`JS: 時間： ${end - start} ms`)\n  }\n  // 省略...\n}\n\n\n最後執行一下結果：\n\n\n\n相信看到畫面，不用多說你應該也能感受到 Rust 的效能優勢了。\n\n如果有興趣的話，可以直接參考我的 GitHub Repo。\n\n心得\n\n這 30 天真的滿辛苦的，每天都要硬擠出時間來寫文章，本來有跟朋友一起寫 side project 的行程，但因為時間不夠的關係，只好先跟朋友暫緩，真的是對他們非常抱歉。\n\n但是自己也覺得這 30 天真的學到很多東西，雖然寫到一半的時候，有點想要放棄，但是想到自己已經開始了，就不想要放棄，所以就繼續寫下去，最後也完成了。完賽的成就感真的是很棒，也讓我對自己的信心有了一點點的提升。\n\n然後 Rust 真的是一個很棒的語言，雖然我還沒有寫到很複雜的東西，但是我相信未來會有更多的機會可以使用 Rust，也希望自己能夠繼續學習下去。\n\n\n","wordCount":553,"timeRequired":"PT3M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/rust-x-react.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,345 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        Rust x React
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">October 15, 2022</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">3 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          Rust x React 夢幻共演
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>終於到最後一天了，看到<a href="https://www.cnblogs.com/yjmyzz/p/how-to-create-a-react-app-with-rust-and-wasm.html">這篇文章</a>覺得很有趣，所以今天我們來玩一下 Rust 跟 React 的結合吧！</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<h2 id="part-2ea806877d406032">開始專案</h2>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
+<p>首先我們先建立一個新的專案，這邊我們使用 create-react-app 來建立一個新的專案，並且使用 yarn 來安裝相依套件。</p>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<pre><code class="bash">$ yarn create react-app rust-react
+$ cd rust-react
+$ yarn
+</code></pre>
 
-<h2 id="key-features">Key Features</h2>
+<h2 id="rust">建立 Rust</h2>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p>接下來我們在專案中建立一個 Rust 的 library：</p>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<pre><code class="bash">$ cargo new wasm-lib --lib
+</code></pre>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<p>然後會在專案中看到一個 wasm-lib 的資料夾，裡面會有一個 <code>src</code> 資料夾，裡面會有一個 <code>lib.rs</code> 的檔案，這個檔案就是我們的 Rust library。</p>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<p><img src="https://i.imgur.com/AUNRQuP.png" alt="CleanShot 2022-10-11 at 17.18.51"></p>
 
-<p>Railquill is built with a focus on:</p>
+<p>因為我們預計想要做一個可以點擊加減的按鈕，然後回傳計算結果，所以我們可以在 <code>lib.rs</code> 中加入：</p>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<pre><code class="rust">pub fn calculator(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
 
-<h2 id="contact">Contact</h2>
+#[test]
+fn cal_test() {
+    assert_eq!(1 + 1, calculator(1, 1));
+}
+</code></pre>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<p>然後 cd 到 <code>wasm-lib</code> 資料夾，並且測試一下：</p>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code class="bash">$ cd wasm-lib
+$ cargo test
+</code></pre>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<p>沒什麼問題的話，就會出現以下的結果：</p>
+
+<p><img src="https://i.imgur.com/CdjJOch.png" alt="CleanShot 2022-10-11 at 17.25.42"></p>
+
+<p>接下來到 <code>Cargo.toml</code> 中加入以下的設定：</p>
+
+<pre><code class="toml">[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.78"
+</code></pre>
+
+<p>這一段的意思是，我們要把這個 library 轉換成 WebAssembly 的格式，並且使用 wasm-bindgen 來幫我們轉換。</p>
+
+<p>然後還要在 <code>src/lib.rs</code> 中加入設定：</p>
+
+<pre><code class="rust">use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn calculator(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
+</code></pre>
+
+<p>這樣可以讓 <code>calculator</code> 這個函式可以在 wasm 中被使用。</p>
+
+<p>接下來我們要安裝 wasm-pack：</p>
+
+<pre><code class="bash">$ cargo install wasm-pack
+</code></pre>
+
+<p>然後我們還需要讓 Rust 可以在這個專案中可以運作。
+所以在 <code>package.json</code> 中加入 script:</p>
+
+<pre><code class="json">"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "build:wasm": "cd wasm-lib &amp;&amp; wasm-pack build --target web --out-dir pkg"
+},
+</code></pre>
+
+<p>接著執行：</p>
+
+<pre><code class="bash">$ yarn build:wasm
+</code></pre>
+
+<p>然後就會生成一個 <code>pkg</code> 的資料夾，裡面會有一個 <code>wasm_lib_bg.wasm</code> 的檔案，這就是我們的 WebAssembly 檔案。</p>
+
+<p><img src="https://i.imgur.com/O6rvmyB.png" alt="CleanShot 2022-10-11 at 17.50.36@2x"></p>
+
+<p>並且我們可以看到我們剛剛建立的 <code>calculator</code> 函式已經生成在 <code>wasm_lib.d.ts</code> 中了。</p>
+
+<p><img src="https://i.imgur.com/TbRxl8D.png" alt="CleanShot 2022-10-11 at 18.00.17@2x"></p>
+
+<p>然後我們還需要把他加進 <code>node_modules</code> 中，所以我們要在終端機中執行：</p>
+
+<pre><code class="bash">$ yarn add ./wasm-lib/pkg
+</code></pre>
+
+<p>這樣就可以在 <code>node_modules</code> 中看到 <code>wasm-lib</code> 這個資料夾了，並且我們可以引入來使用他。</p>
+
+<p>最後我們來 React 中使用他：</p>
+
+<pre><code class="jsx">import { useState } from 'react'
+import init, { calculator } from 'wasm-lib'
+import logo from './logo.svg'
+import './App.css'
+
+function App() {
+  const [num, setNum] = useState(0)
+
+  const handlePlus = () =&gt; {
+    init().then(() =&gt; {
+      setNum(calculator(num, 1))
+    })
+  }
+
+  const handleMinus = () =&gt; {
+    if (num &gt; 0) {
+      init().then(() =&gt; {
+        setNum(calculator(num, -1))
+      })
+    }
+  }
+
+  return (
+    &lt;div className='App'&gt;
+      &lt;header className='App-header'&gt;
+        &lt;img src={logo} className='App-logo' alt='logo' /&gt;
+        &lt;p&gt;{num}&lt;/p&gt;
+        &lt;div&gt;
+          &lt;button onClick={handlePlus}&gt;+&lt;/button&gt;
+          &lt;button onClick={handleMinus}&gt;-&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/header&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default App
+</code></pre>
+
+<p>然後執行 <code>yarn start</code>，就可以執行我們的專案，並且讓 Rust 運行在 React 中了。</p>
+
+<h2 id="part-2bb94ba078f5a9ec">同場加映</h2>
+
+<p>前面只是單純的使用 Rust 來做加減的動作，但是這樣看不出 Rust 的效能優勢，所以我們來做一些稍微複雜的運算玩玩看。</p>
+
+<p>我們來做一個費氏數列的函式，並且使用 Rust 來做運算。</p>
+
+<p>首先在 <code>wasm-lib/src/lib.rs</code> 中加入新的方法，並且寫一下測試：</p>
+
+<pre><code class="rust">#[wasm_bindgen]
+pub fn fibonacci(n: i32) -&gt; i32 {
+    if n &lt;= 1 {
+        return n;
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
+
+#[test]
+fn fib_test() {
+    assert_eq!(1, fibonacci(1));
+    assert_eq!(1, fibonacci(2));
+    assert_eq!(2, fibonacci(3));
+    assert_eq!(3, fibonacci(4));
+    assert_eq!(5, fibonacci(5));
+    assert_eq!(8, fibonacci(6));
+}
+</code></pre>
+
+<p>跑一下測試，執行：</p>
+
+<pre><code class="bash">// 在 wasm-lib 資料夾中
+$ cargo test
+</code></pre>
+
+<p><img src="https://i.imgur.com/E6huTQ5.png" alt="CleanShot 2022-10-14 at 17.50.57@2x"></p>
+
+<p>然後記得要重新 build：</p>
+
+<pre><code class="bash">// 要在根目錄中執行
+$ yarn build:wasm
+$ yarn add ./wasm-lib/pkg
+</code></pre>
+
+<p>然後在 <code>App.js</code> 加進我們的 <code>fibonacci</code> 函式：</p>
+
+<pre><code class="js">import init, { calculator, fibonacci } from 'wasm-lib'
+
+function App() {
+  // 省略...
+  const handleFibonacci = () =&gt; {
+    let start = new Date().getTime()
+    init().then(() =&gt; {
+      setFibonacciNum(fibonacci(inputNum))
+    })
+    let end = new Date().getTime()
+    console.log(`Rust: 時間： ${end - start} ms`)
+  }
+  // 省略...
+}
+</code></pre>
+
+<p>然後另外寫一個 JS 的費氏數列函式：</p>
+
+<pre><code class="js">const calFibonacci = (n) =&gt; {
+  if (n &lt;= 1) {
+    return n
+  } else {
+    return calFibonacci(n - 1) + calFibonacci(n - 2)
+  }
+}
+
+function App() {
+  // 省略...
+  const handleFibonacciJS = () =&gt; {
+    let start = new Date().getTime()
+    let result = calFibonacci(inputNum)
+    setFibonacciNumJS(result)
+    let end = new Date().getTime()
+    console.log(`JS: 時間： ${end - start} ms`)
+  }
+  // 省略...
+}
+</code></pre>
+
+<p>最後執行一下結果：</p>
+
+<p><img src="https://i.imgur.com/gFcFkIx.gif" alt="CleanShot 2022-10-15 at 01.02.46"></p>
+
+<p>相信看到畫面，不用多說你應該也能感受到 Rust 的效能優勢了。</p>
+
+<p>如果有興趣的話，可以直接參考我的 <a href="https://github.com/bucky0112/rust_x_react">GitHub Repo</a>。</p>
+
+<h2 id="part-6542bd861e6">心得</h2>
+
+<p>這 30 天真的滿辛苦的，每天都要硬擠出時間來寫文章，本來有跟朋友一起寫 side project 的行程，但因為時間不夠的關係，只好先跟朋友暫緩，真的是對他們非常抱歉。</p>
+
+<p>但是自己也覺得這 30 天真的學到很多東西，雖然寫到一半的時候，有點想要放棄，但是想到自己已經開始了，就不想要放棄，所以就繼續寫下去，最後也完成了。完賽的成就感真的是很棒，也讓我對自己的信心有了一點點的提升。</p>
+
+<p>然後 Rust 真的是一個很棒的語言，雖然我還沒有寫到很複雜的東西，但是我相信未來會有更多的機會可以使用 Rust，也希望自己能夠繼續學習下去。</p>
+
+<p><img src="https://i.imgur.com/gCQstja.gif" alt="ferris"></p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=Rust+x+React&url=https%3A%2F%2Frailquill.vercel.app%2Frust-x-react.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Frust-x-react.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/rust-yew.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 用 Rust 來寫前端 - Yew">
+          用 Rust 來寫前端 - Yew
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/jest-react-testing-library.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: 使用 Jest 和 React Testing Library 進行測試的方法 - 測試列表">
+          使用 Jest 和 React Testing Library 進行測試的方法 - 測試列表
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

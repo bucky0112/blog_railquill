@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>ES6 好用語法 - 箭頭函式 - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="ES6 中好用語法，箭頭函式的使用。">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/es6.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="ES6 好用語法 - 箭頭函式">
+      <meta property="og:description" content="ES6 中好用語法，箭頭函式的使用。">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="ES6 好用語法 - 箭頭函式">
+      <meta property="twitter:description" content="ES6 中好用語法，箭頭函式的使用。">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-09-19T17:40:54Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"ES6 好用語法 - 箭頭函式","description":"ES6 中好用語法，箭頭函式的使用。","url":"https://railquill.vercel.app/es6.html","datePublished":"2020-09-19T17:40:54Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/es6.html"},"articleBody":"在 ES6 中，有許多好用的語法可以使用，這篇就來介紹箭頭函式。\n\n\n\n前言\n\n最近買了一本書，書名是「從 Hooks 開始讓你的網頁 React 起來」。其實我本來就一直對 React 很有興趣，雖然後來跑去學了 Vue.js，不過我內心對 React 還是有一份憧憬，而且也想要了解這兩者有什麼不同之處，所以就開始來試著學看看吧。\n\nReact 是目前 JavaScript 三大框架中之一，雖然它比較像是一個用來渲染 UI 組件的函式庫而不是一個框架 (Framwork)，不過在其生態圈下有許多好用的函式庫，所以要說它是框架也是可以的。\n\nReact 雖然很強大，但是要入門的門檻還是有的，至少你的 ES6 語法要夠熟悉，所以想要寫一些文章來熟悉一下我的 ES6，那麼就開始吧！\n\n箭頭函式 (Arrow Function)\n\n一般函式的寫法\n\n函式一般在 JavaScript 中的寫法可能會是這樣:\n\nfunction callName(name) {\n  return `my name is ${name}`;\n}\n\ncallName('Bucky');\n\n\n箭頭函式的寫法\n\n\n而箭頭函式的用法寫法如下:\n\n\nconst callName = (name) =\u0026gt; {\n  return `my name is ${name}`;\n}\n\ncallName('Bucky');\n\n\n\n如果只有一個參數的話，則可省略小括號:\n\n\nconst callName = name =\u0026gt; {\n  return `my name is ${name}`;\n}\n\ncallName('Bucky');\n\n\n\n如果只是要直接回傳一個值的話，就可以更精簡了，可以把大括號跟 return 去掉:\n\n\nconst calName = name =\u0026gt; `my name is ${name}`;\n\ncallName('Bucky');\n\n\n箭頭函式特別注意的地方\n\n\n回傳物件\n\n\n如果是要回傳一個物件的話，就要注意一下用法，在物件的大括號外面包一個小括號就可以了:\n\nconst myInfo = () =\u0026gt; ({\n  name: 'Bucky',\n  age: 18,\n  skill: 'JavaScript',\n});\n\nmyInfo();\n\n\n\n箭頭函式沒有 arguments\n\n\n看一下一般函式在 arguments 的使用：\n\nfunction testScore() {\n  console.log(arguments);\n}\n\ntestScore(60, 59, 68, 44, 92, 85); // 得到 // [60, 59, 68, 44, 92, 85]\n\n\n如果用箭頭函式的話，則是會報錯：\n\nconst testScore = () =\u0026gt; {\n  console.log(arguments);\n}\n\ntestScore(60, 59, 68, 44, 92, 85); // arguments is not defined\n\n// 如果要使用的話，可以使用其餘參數：\nconst testScore = (...arg) =\u0026gt; {\n  console.log(arg);\n}\n\ntestScore(60, 59, 68, 44, 92, 85); // [60, 59, 68, 44, 92, 85]\n\n\n\n沒有自己的 this\n\n\n一般函式的操作：\n\nvar name = 'Cris';\nvar data = {\n  name: 'Bucky',\n  callName() {\n    console.log(`1st this is ${this.name}`);\n    setTimeout(function(){\n      console.log(`2nd this is ${this.name}`);\n    }, 50);\n  }\n}\ndata.callName();\n// 得到 \"1st this is Bucky\" \"2nd this is Cris\"\n\n\n使用箭頭函式：\n\nvar name = 'Cris';\nvar data = {\n  name: 'Bucky',\n  callName: () =\u0026gt; {\n    console.log(`1st this is ${this.name}`);\n    setTimeout(() =\u0026gt; {\n      console.log(`2nd this is ${this.name}`);\n    }, 50);\n  }\n}\ndata.callName(); // 兩個都會指向 Cris\n\n// 解決方法是，在 method 不要使用 arrow function\nvar data = {\n  name: 'Bucky',\n  callName() {\n    const self = this;\n    console.log(`1st this is ${this.name}`);\n    setTimeout(() =\u0026gt; {\n      console.log(`2nd this is ${self.name}`);\n    }, 50);\n  }\n}\ndata.callName(); // 兩個都會指向 Bucky\n\n\n\n可以使用箭頭函式的時機\n\n\n前面提到的雷都是關於 this，那麼有沒有適合箭頭函式的時機呢？\n是有的，如果是在 立即函式 (IIFE) 的話，就可以正常運作，也不用另外宣告變數來代替 this，例如：\n\nconst data = {\n  name: 'Bucky',\n  callName() {\n    console.log(`1st this is ${this.name}`);\n    (() =\u0026gt; { console.log(`2nd this is ${this.name}`); })()\n  }\n}\ndata.callName(); // 兩個都會指向 Bucky\n\n\n練習\n\n學了一點皮毛後，那麼來練習一下吧～\n把以下的所有函式都改成箭頭函式看看：\n\n// 題目：1\nfunction sum(a, b) {\n  var c = a + b;\n  return c;\n}\nconsole.log(sum(5, 6));\n\n// 題目：2\nfunction square(num) {\n  return num * num;\n}1\nvar d = square(5);\nconsole.log(d);\n\n// 題目：3\nsetTimeout(function() {\n  console.log('延遲 10 毫秒');\n}, 10);\n\n// 題目：4\nvar arr = [1, 2, 3];\nvar arr2 = arr.map(function(item, i) {\n  return item * 2;\n});\nconsole.log(arr2);\n\n// 題目：5\nvar obj = {\n  fn: function fn2(a) {\n    return a * a;\n  }\n}\nconsole.log(obj.fn(10));\n\n\n以下是我的答案：\n\n// 1. Ans:\nconst sum = (a, b) =\u0026gt; a + b;\n\nconsole.log(sum(5, 6));\n\n// 2. Ans:\nconst square = num =\u0026gt; num * num;\nconst d = square(5);\nconsole.log(d);\n\n// 3. Ans:\nsetTimeout(() =\u0026gt; console.log('延遲 10 毫秒'), 10);\n\n// 4. Ans:\nconst arr = [1, 2, 3];\nconst arr2 = arr.map((item, i) =\u0026gt; item * 2);\nconsole.log(arr2);\n\n// 5. Ans:\nconst obj = {\n  fn: (a) =\u0026gt; a * a,\n}\n\nconsole.log(obj.fn(10));\n\n","wordCount":507,"timeRequired":"PT3M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/es6.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,333 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        ES6 好用語法 - 箭頭函式
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">September 19, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">3 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          在 ES6 中，有許多好用的語法可以使用，這篇就來介紹箭頭函式。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>在 ES6 中，有許多好用的語法可以使用，這篇就來介紹箭頭函式。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<h2 id="part-654280cbc50">前言</h2>
 
-<h2 id="key-features">Key Features</h2>
+<p>最近買了一本書，書名是「<strong>從 Hooks 開始讓你的網頁 React 起來</strong>」。其實我本來就一直對 React 很有興趣，雖然後來跑去學了 Vue.js，不過我內心對 React 還是有一份憧憬，而且也想要了解這兩者有什麼不同之處，所以就開始來試著學看看吧。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p>React 是目前 JavaScript 三大框架中之一，雖然它比較像是一個用來渲染 UI 組件的函式庫而不是一個框架 (Framwork)，不過在其生態圈下有許多好用的函式庫，所以要說它是框架也是可以的。</p>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<p>React 雖然很強大，但是要入門的門檻還是有的，至少你的 ES6 語法要夠熟悉，所以想要寫一些文章來熟悉一下我的 ES6，那麼就開始吧！</p>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+<h2 id="arrow-function">箭頭函式 (Arrow Function)</h2>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<h3 id="part-603abbf2a6621968">一般函式的寫法</h3>
 
-<p>Railquill is built with a focus on:</p>
+<p>函式一般在 JavaScript 中的寫法可能會是這樣:</p>
+
+<pre><code class="js">function callName(name) {
+  return `my name is ${name}`;
+}
+
+callName('Bucky');
+</code></pre>
+
+<h3 id="part-a1335de751daaa8">箭頭函式的寫法</h3>
 
 <ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
+<li>而箭頭函式的用法寫法如下:</li>
 </ul>
 
-<h2 id="contact">Contact</h2>
+<pre><code class="js">const callName = (name) =&gt; {
+  return `my name is ${name}`;
+}
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+callName('Bucky');
+</code></pre>
 
 <ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
+<li>如果只有一個參數的話，則可省略小括號:</li>
 </ul>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<pre><code class="js">const callName = name =&gt; {
+  return `my name is ${name}`;
+}
+
+callName('Bucky');
+</code></pre>
+
+<ul>
+<li>如果只是要直接回傳一個值的話，就可以更精簡了，可以把大括號跟 return 去掉:</li>
+</ul>
+
+<pre><code class="js">const calName = name =&gt; `my name is ${name}`;
+
+callName('Bucky');
+</code></pre>
+
+<h4 id="part-6c188ccb1d8cb573"><strong>箭頭函式特別注意的地方</strong></h4>
+
+<ul>
+<li>回傳物件</li>
+</ul>
+
+<p>如果是要回傳一個物件的話，就要注意一下用法，在物件的大括號外面包一個小括號就可以了:</p>
+
+<pre><code class="js">const myInfo = () =&gt; ({
+  name: 'Bucky',
+  age: 18,
+  skill: 'JavaScript',
+});
+
+myInfo();
+</code></pre>
+
+<ul>
+<li>箭頭函式<strong>沒有 arguments</strong></li>
+</ul>
+
+<p>看一下一般函式在 arguments 的使用：</p>
+
+<pre><code class="js">function testScore() {
+  console.log(arguments);
+}
+
+testScore(60, 59, 68, 44, 92, 85); // 得到 // [60, 59, 68, 44, 92, 85]
+</code></pre>
+
+<p>如果用箭頭函式的話，則是會報錯：</p>
+
+<pre><code class="js">const testScore = () =&gt; {
+  console.log(arguments);
+}
+
+testScore(60, 59, 68, 44, 92, 85); // arguments is not defined
+
+// 如果要使用的話，可以使用其餘參數：
+const testScore = (...arg) =&gt; {
+  console.log(arg);
+}
+
+testScore(60, 59, 68, 44, 92, 85); // [60, 59, 68, 44, 92, 85]
+</code></pre>
+
+<ul>
+<li>沒有自己的 this</li>
+</ul>
+
+<p>一般函式的操作：</p>
+
+<pre><code class="js">var name = 'Cris';
+var data = {
+  name: 'Bucky',
+  callName() {
+    console.log(`1st this is ${this.name}`);
+    setTimeout(function(){
+      console.log(`2nd this is ${this.name}`);
+    }, 50);
+  }
+}
+data.callName();
+// 得到 "1st this is Bucky" "2nd this is Cris"
+</code></pre>
+
+<p>使用箭頭函式：</p>
+
+<pre><code class="js">var name = 'Cris';
+var data = {
+  name: 'Bucky',
+  callName: () =&gt; {
+    console.log(`1st this is ${this.name}`);
+    setTimeout(() =&gt; {
+      console.log(`2nd this is ${this.name}`);
+    }, 50);
+  }
+}
+data.callName(); // 兩個都會指向 Cris
+
+// 解決方法是，在 method 不要使用 arrow function
+var data = {
+  name: 'Bucky',
+  callName() {
+    const self = this;
+    console.log(`1st this is ${this.name}`);
+    setTimeout(() =&gt; {
+      console.log(`2nd this is ${self.name}`);
+    }, 50);
+  }
+}
+data.callName(); // 兩個都會指向 Bucky
+</code></pre>
+
+<ul>
+<li>可以使用箭頭函式的時機</li>
+</ul>
+
+<p>前面提到的雷都是關於 this，那麼有沒有適合箭頭函式的時機呢？
+是有的，如果是在 立即函式 (IIFE) 的話，就可以正常運作，也不用另外宣告變數來代替 this，例如：</p>
+
+<pre><code class="js">const data = {
+  name: 'Bucky',
+  callName() {
+    console.log(`1st this is ${this.name}`);
+    (() =&gt; { console.log(`2nd this is ${this.name}`); })()
+  }
+}
+data.callName(); // 兩個都會指向 Bucky
+</code></pre>
+
+<h3 id="part-654300cd64f">練習</h3>
+
+<p>學了一點皮毛後，那麼來練習一下吧～
+把以下的所有函式都改成箭頭函式看看：</p>
+
+<pre><code class="js">// 題目：1
+function sum(a, b) {
+  var c = a + b;
+  return c;
+}
+console.log(sum(5, 6));
+
+// 題目：2
+function square(num) {
+  return num * num;
+}1
+var d = square(5);
+console.log(d);
+
+// 題目：3
+setTimeout(function() {
+  console.log('延遲 10 毫秒');
+}, 10);
+
+// 題目：4
+var arr = [1, 2, 3];
+var arr2 = arr.map(function(item, i) {
+  return item * 2;
+});
+console.log(arr2);
+
+// 題目：5
+var obj = {
+  fn: function fn2(a) {
+    return a * a;
+  }
+}
+console.log(obj.fn(10));
+</code></pre>
+
+<p>以下是我的答案：</p>
+
+<pre><code class="js">// 1. Ans:
+const sum = (a, b) =&gt; a + b;
+
+console.log(sum(5, 6));
+
+// 2. Ans:
+const square = num =&gt; num * num;
+const d = square(5);
+console.log(d);
+
+// 3. Ans:
+setTimeout(() =&gt; console.log('延遲 10 毫秒'), 10);
+
+// 4. Ans:
+const arr = [1, 2, 3];
+const arr2 = arr.map((item, i) =&gt; item * 2);
+console.log(arr2);
+
+// 5. Ans:
+const obj = {
+  fn: (a) =&gt; a * a,
+}
+
+console.log(obj.fn(10));
+</code></pre>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=ES6+%E5%A5%BD%E7%94%A8%E8%AA%9E%E6%B3%95+-+%E7%AE%AD%E9%A0%AD%E5%87%BD%E5%BC%8F&url=https%3A%2F%2Frailquill.vercel.app%2Fes6.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fes6.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/javascript.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: JavaScript 作品實戰班之課程心得">
+          JavaScript 作品實戰班之課程心得
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/scss.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: SCSS 變數運用">
+          SCSS 變數運用
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

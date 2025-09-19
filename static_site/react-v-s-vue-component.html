@@ -1,37 +1,42 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>React v.s Vue 之 Component 比較心得 - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="比較 React 跟 Vue 的心得">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/react-v-s-vue-component.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="React v.s Vue 之 Component 比較心得">
+      <meta property="og:description" content="比較 React 跟 Vue 的心得">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="React v.s Vue 之 Component 比較心得">
+      <meta property="twitter:description" content="比較 React 跟 Vue 的心得">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-09-30T15:59:50Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:22Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React v.s Vue 之 Component 比較心得","description":"比較 React 跟 Vue 的心得","url":"https://railquill.vercel.app/react-v-s-vue-component.html","datePublished":"2020-09-30T15:59:50Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-v-s-vue-component.html"},"articleBody":"目前學 React 學了一點皮毛，而 Vue 也使用了一陣子，想寫一篇來比較一下兩者對於我這個小碼農有什麼不一樣。\n\n\n\nVue 的 Component\n\n我用 Vue 寫了一個簡單的 counter，預設數字是 0，當點擊 + 時，數字增加 1；而點擊 — 時，數字減 1，數字等於 0 時，就不能減，並且用 3 個 component 放在一起。\n\n直接看完成品：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/MWydQgY'\u0026gt;Vue Counter Demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\nReact 的 Component\n\nReact 的部份也是一樣的功能，一樣也是放 3 個 component。\n\n直接玩玩看：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/KKzLZJL'\u0026gt;React count demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n兩者比較\n\n先說這只是我自己的心得，可能有某些個人喜好影響。\n\n\nVue：\n我覺得 Vue 的寫法還滿直觀的，而且 HTML、CSS 跟 JavaScript 三者分離的寫法滿乾淨，可能是我先學 Vue，所以一些語法的部份已經滿習慣的，寫出來也蠻快的，我個人是蠻喜歡的。\n真要說缺點的話，可能在 CodePen 有些限制，所以 CSS 的部份要另外寫，沒辦法直接像在 Vue CLI 裡寫在 .vue 中。如果要寫在 template 裡面也是可以，寫成 inline-style 也是一個方法，不過當樣式一多的話，就會看起來很亂，我自己是不太喜歡。\nReact：\n什麼都可以寫進 JavaScript 裡面還蠻爽的，這點跟 Vue 差非常多，連 CSS 樣式都可以寫進 React 裡，如果要 code review 的話就蠻快的，不用分開來看（也有可能我寫的功能不多）。語法部份目前因為還不熟，所以可能就不像 Vue 那樣直觀，不過這部分還需要時間驗證。\n缺點的部份，因為我還沒學得很深，只會使用 useState 而已，所以目前覺得好像沒有什麼不方便的地方。\n\n\n總結\n\n好像寫了一篇廢文，不過還是想紀錄一下目前的心得。總之 Vue 還是我目前的主力開發工具，然後 React 純粹是個人興趣在學習，未來我希望還是能把技能繼續點在這兩項上面，然後可能看工作需求再做決定，這兩個框架我都蠻喜歡的，就繼續加強觀念，多加練習，希望能練成 React \u0026amp; Vue 雙刀流吧～\n","wordCount":153,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/react-v-s-vue-component.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +883,139 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        React v.s Vue 之 Component 比較心得
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">September 30, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">1 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          目前學 React 學了一點皮毛，而 Vue 也使用了一陣子，想寫一篇來比較一下兩者對於我這個小碼農有什麼不一樣。
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>目前學 React 學了一點皮毛，而 Vue 也使用了一陣子，想寫一篇來比較一下兩者對於我這個小碼農有什麼不一樣。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
+<h2 id="vue-component">Vue 的 Component</h2>
 
-<h2 id="key-features">Key Features</h2>
+<p>我用 Vue 寫了一個簡單的 counter，預設數字是 0，當點擊 + 時，數字增加 1；而點擊 — 時，數字減 1，數字等於 0 時，就不能減，並且用 3 個 component 放在一起。</p>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<p>直接看完成品：</p>
 
-<h2 id="technology-stack">Technology Stack</h2>
 
-<ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
-</ul>
+  See the Pen &lt;a href='https://codepen.io/bucky0112/pen/MWydQgY'&gt;Vue Counter Demo&lt;/a&gt; by Bucky Chu
+  (&lt;a href='https://codepen.io/bucky0112'&gt;@bucky0112&lt;/a&gt;) on &lt;a href='https://codepen.io'&gt;CodePen&lt;/a&gt;.
 
-<h2 id="design-philosophy">Design Philosophy</h2>
 
-<p>Railquill is built with a focus on:</p>
+<h2 id="react-component">React 的 Component</h2>
+
+<p>React 的部份也是一樣的功能，一樣也是放 3 個 component。</p>
+
+<p>直接玩玩看：</p>
+
+
+  See the Pen &lt;a href='https://codepen.io/bucky0112/pen/KKzLZJL'&gt;React count demo&lt;/a&gt; by Bucky Chu
+  (&lt;a href='https://codepen.io/bucky0112'&gt;@bucky0112&lt;/a&gt;) on &lt;a href='https://codepen.io'&gt;CodePen&lt;/a&gt;.
+
+
+<h2 id="part-2b823bb1eb620c15">兩者比較</h2>
+
+<p>先說這只是我自己的心得，可能有某些個人喜好影響。</p>
 
 <ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
+<li><p>Vue：
+我覺得 Vue 的寫法還滿直觀的，而且 HTML、CSS 跟 JavaScript 三者分離的寫法滿乾淨，可能是我先學 Vue，所以一些語法的部份已經滿習慣的，寫出來也蠻快的，我個人是蠻喜歡的。
+真要說缺點的話，可能在 CodePen 有些限制，所以 CSS 的部份要另外寫，沒辦法直接像在 Vue CLI 裡寫在 .vue 中。如果要寫在 template 裡面也是可以，寫成 inline-style 也是一個方法，不過當樣式一多的話，就會看起來很亂，我自己是不太喜歡。</p></li>
+<li><p>React：
+什麼都可以寫進 JavaScript 裡面還蠻爽的，這點跟 Vue 差非常多，連 CSS 樣式都可以寫進 React 裡，如果要 code review 的話就蠻快的，不用分開來看（也有可能我寫的功能不多）。語法部份目前因為還不熟，所以可能就不像 Vue 那樣直觀，不過這部分還需要時間驗證。
+缺點的部份，因為我還沒學得很深，只會使用 <code>useState</code> 而已，所以目前覺得好像沒有什麼不方便的地方。</p></li>
 </ul>
 
-<h2 id="contact">Contact</h2>
+<h2 id="part-6543023dced">總結</h2>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
-
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
-
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<p>好像寫了一篇廢文，不過還是想紀錄一下目前的心得。總之 Vue 還是我目前的主力開發工具，然後 React 純粹是個人興趣在學習，未來我希望還是能把技能繼續點在這兩項上面，然後可能看工作需求再做決定，這兩個框架我都蠻喜歡的，就繼續加強觀念，多加練習，希望能練成 React &amp; Vue 雙刀流吧～</p>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=React+v.s+Vue+%E4%B9%8B+Component+%E6%AF%94%E8%BC%83%E5%BF%83%E5%BE%97&url=https%3A%2F%2Frailquill.vercel.app%2Freact-v-s-vue-component.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Freact-v-s-vue-component.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div class="post-nav-item prev">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">← Previous Post</span>
+        <a href="/usestate.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Previous post: 使用 useState 來管理狀態">
+          使用 useState 來管理狀態
+        </a>
+      </div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/react-jsx.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: React 運用邏輯運算子解決 JSX 問題">
+          React 運用邏輯運算子解決 JSX 問題
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>

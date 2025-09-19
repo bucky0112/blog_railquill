@@ -1,37 +1,48 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>About Railquill</title>
+    <title>使用 Hexo 在 GitHub 部署 Blog - Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
     <!-- SEO: Allow search engine indexing -->
     <meta name="robots" content="index, follow">
     
-      <meta name="description" content="Learn more about Railquill and the story behind this blog.">
+      <meta name="description" content="本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Railquill">
-    <meta property="og:url" content="https://railquill.vercel.app/about">
-      <!-- Default page Open Graph -->
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="About Railquill">
-      <meta property="og:description" content="Learn more about Railquill and the story behind this blog.">
+    <meta property="og:url" content="https://railquill.vercel.app/hexo-github-blog.html">
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="使用 Hexo 在 GitHub 部署 Blog">
+      <meta property="og:description" content="本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！">
       <meta property="og:image" content="/og-image.png">
       
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:title" content="About Railquill">
-      <meta property="twitter:description" content="Learn more about Railquill and the story behind this blog.">
+      <meta property="twitter:title" content="使用 Hexo 在 GitHub 部署 Blog">
+      <meta property="twitter:description" content="本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！">
       <meta property="twitter:image" content="/og-image.png">
+      
+      <!-- Article specific meta tags -->
+      <meta property="article:published_time" content="2020-03-28T14:55:52Z">
+      <meta property="article:modified_time" content="2025-09-19T17:23:23Z">
+      <meta property="article:author" content="Bucky Chu">
+      <meta name="author" content="Bucky Chu">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":["WebSite","AboutPage"],"name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":null},{"@type":"ListItem","position":2,"name":"About","item":"/about"}]}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Hexo 在 GitHub 部署 Blog","description":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！","url":"https://railquill.vercel.app/hexo-github-blog.html","datePublished":"2020-03-28T14:55:52Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/hexo-github-blog.html"},"articleBody":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！\n\n\n\n前置作業\n\n\n\n安裝需求\n\n需要安裝：\n\n\nNode.js\nGit\n\n\n\n以下方式為 Mac 使用者方法，其他作業系統請詳閱官網\n\n\n\n安裝 Xcode\n\n\n首先到 App Store 安裝 Xcode，安裝完成後，\n開啟它並前往 Preferences -\u0026gt; Download -\u0026gt; Command Line Tools -\u0026gt; Install 安裝命令列工具。\n\n\n安裝 node.js\n\n\n使用 NVM，或是直接用 HomeBrew 安裝：\n\n$ brew install node\n\n\n\n安裝 Hexo：\n\n\n$ npm install -g hexo-cli\n\n\n\n完成後可以輸入指令，看看有無安裝成功，成功的話會顯示版本：\n\n\n$ hexo version\n\n\n我的版本是：\n\nhexo: 4.2.0\nhexo-cli: 3.1.0\n\n建立專案\n\n\n\n在指定資料夾建立檔案：\n\n$ hexo init \u0026lt;folder\u0026gt;\n$ cd \u0026lt;folder\u0026gt;\n$ npm install\n\n\n完成後會建立以下資料：\n\n\n\n更改主題與其他設定\n\n\n\n主題選用的是 Next，更改步驟如下：\n\n\n把 next 這個主題 clone 下來：\n\n\n   $ git clone https://github.com/theme-next/hexo-theme-next themes/next\n\n\n\n找到 /_config.yml，打開修改：\n\n\n# Extensions\n## Plugins: https://hexo.io/plugins/\n## Themes: https://hexo.io/themes/\ntheme: next    // 改為 next\n\n\n\n網站設定：\n\n\n# Site\ntitle: 標題\nsubtitle: 副標題\ndescription: 網站描述\nkeywords: 網站關鍵字\nauthor: 作者名\nlanguage: zh-TW\ntimezone: 時區\n\n\n其他一些細部設定就可以自己慢慢摸索。\n\n如果要先看看網站的樣式，可以啟動本地端的 server：\n\n$ hexo server\n\n\n寫作\n\n\n\n接下來，大概設定完就可以開始建立文章了。\n\n指令是：\n\n$ hexo new [layout] \u0026lt;title\u0026gt;\n\n\nLayout 有 3 種，分別是：post、page(頁面)、draft(草稿)，\n\n假設要發一篇檔名為 Hello-World 草稿的話：hexo new draft Hello-World\n\n如果要將 draft 發布為 post 的話，就鍵入：\n\n$ hexo publish [layout] \u0026lt;title\u0026gt;\n\n\n把網站部署到 GitHub\n\n\n\n既然都做的差不多了，就可以開始把網站部署到 GitHub Pages。\n\n\n新增名為 \u0026lt;username\u0026gt;.github.io 的 repo，例如：bucky0112.github.io\n安裝 hexo-deployer-git 這個插件：\n\n\n$ npm install hexo-deployer-git --save\n\n\n\n修改 /_config.yml：\n\n\nurl: https://username.github.io\nroot: /repo.github.io/\n\ndeploy:\n  type: git\n  repo: \u0026lt;repository url\u0026gt; #新增repo的網址\n  branch: master\n\n\n\n上傳網站，執行：\n\n\n$ hexo deploy\n\n\n\n接著需要等待一些時間，讓子彈飛一會，就可以去你的網站看看成果了。\n\n\nhttps://username.github.io/repo.github.io\n\n\nHexo 常用指令\n\n\n\n以下是之後再使用 Hexo 發佈文章時常用的指令：\n\n$ hexo generate      #產生靜態檔案 / hexo g\n$ hexo deploy        #部署網站 \n$ hexo server        #啟動本地端伺服器 / hexo s\n$ hexo new \u0026lt;post\u0026gt;    #新增文章\n$ hexo clean         #清除快取檔案和已產生的靜態檔案\n\n","wordCount":283,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://railquill.vercel.app/about">
+    <link rel="canonical" href="https://railquill.vercel.app/hexo-github-blog.html">
     
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -859,7 +870,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <h1><a href="/">Railquill</a></h1>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -878,73 +889,284 @@
     </header>
     
     <main>
-      <!-- BEGIN app/views/static/about.html.erb --><div class="container-narrow">
-  <article>
-    <header>
-      <h1>About Railquill</h1>
-      <div class="post-meta">
-        <span>Learn more about this blog</span>
+      <!-- BEGIN app/views/static/post.html.erb --><div class="container-narrow">
+  <article class="animate-fade-in">
+    <!-- Article Header -->
+    <header style="text-align: center; margin-bottom: var(--space-12); padding-top: var(--space-8);">
+      <h1 style="font-size: var(--text-5xl); font-weight: 800; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--gray-900); max-width: 800px; margin-left: auto; margin-right: auto;">
+        使用 Hexo 在 GitHub 部署 Blog
+      </h1>
+      <div class="post-meta" style="justify-content: center; margin-bottom: var(--space-4);">
+        <span style="color: var(--gray-600);">March 28, 2020</span>
+          <span class="post-meta-divider"></span>
+          <span style="color: var(--gray-600);">2 min read</span>
       </div>
+        <p style="font-size: var(--text-xl); color: var(--gray-600); line-height: var(--leading-relaxed); font-style: italic; max-width: 600px; margin: 0 auto; font-family: var(--font-serif);">
+          本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。
+
+剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！
+        </p>
     </header>
+    
+    <!-- Featured Image -->
+    
+    <!-- Article Content -->
+    <div class="post-content animate-slide-up" style="animation-delay: 0.4s; font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-loose); color: var(--gray-800);">
+      <p>本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。</p>
 
-    <div class="post-content">
-      <p>Welcome to <strong>Railquill</strong>, a modern blog platform built with Ruby on Rails, designed for developers who appreciate clean code and beautiful typography.</p>
+<p>剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！</p>
 
-<h2 id="what-is-railquill">What is Railquill?</h2>
 
-<p>Railquill is a full-featured blog application that combines the power of Ruby on Rails with modern web technologies. It features a dual admin interface system, static site generation capabilities, and a focus on excellent reading experience.</p>
 
-<h2 id="key-features">Key Features</h2>
+<h2 id="part-2b9362c5b74b6287">前置作業</h2>
 
-<ul>
-<li><strong>Markdown-based Writing</strong>: Write your posts in Markdown with live preview capabilities</li>
-<li><strong>Dual Admin Interface</strong>: Modern custom dashboard alongside traditional ActiveAdmin interface</li>
-<li><strong>Static Site Generation</strong>: Generate static HTML files for optimal performance and SEO</li>
-<li><strong>Preview System</strong>: Preview draft posts before publishing</li>
-<li><strong>Responsive Design</strong>: Beautiful typography and responsive layout that works on all devices</li>
-<li><strong>SEO Optimized</strong>: Built-in meta tags, structured data, and search engine optimization</li>
-</ul>
+<hr>
 
-<h2 id="technology-stack">Technology Stack</h2>
+<p><strong>安裝需求</strong></p>
+
+<p>需要安裝：</p>
 
 <ul>
-<li><strong>Framework</strong>: Ruby on Rails 8.0.2</li>
-<li><strong>Database</strong>: PostgreSQL</li>
-<li><strong>Frontend</strong>: Hotwire (Turbo + Stimulus), Tailwind CSS</li>
-<li><strong>JavaScript</strong>: Import maps for ESM modules</li>
-<li><strong>Asset Pipeline</strong>: Propshaft</li>
-<li><strong>Background Jobs</strong>: Solid Queue, Solid Cache, Solid Cable</li>
-<li><strong>Deployment</strong>: Kamal (Docker-based)</li>
-<li><strong>Admin</strong>: ActiveAdmin with Devise authentication</li>
-<li><strong>Markdown</strong>: Redcarpet renderer with Rouge syntax highlighting</li>
+<li>Node.js</li>
+<li>Git</li>
 </ul>
 
-<h2 id="design-philosophy">Design Philosophy</h2>
+<blockquote>
+<p>以下方式為 Mac 使用者方法，其他作業系統請詳閱<a href="https://hexo.io/docs/index.html">官網</a></p>
+</blockquote>
 
-<p>Railquill is built with a focus on:</p>
+<ol>
+<li>安裝 Xcode</li>
+</ol>
 
-<ul>
-<li><strong>Performance</strong>: Fast loading times through static generation and optimized assets</li>
-<li><strong>Accessibility</strong>: Semantic HTML and proper contrast ratios for all users</li>
-<li><strong>Typography</strong>: Beautiful reading experience with carefully chosen fonts and spacing</li>
-<li><strong>Developer Experience</strong>: Clean code architecture and comprehensive documentation</li>
-</ul>
+<p>首先到 App Store 安裝 Xcode，安裝完成後，
+開啟它並前往 Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install 安裝命令列工具。</p>
 
-<h2 id="contact">Contact</h2>
+<ol>
+<li>安裝 node.js</li>
+</ol>
 
-<p>Have questions or feedback about Railquill? We'd love to hear from you!</p>
+<p>使用 NVM，或是直接用 HomeBrew 安裝：</p>
 
-<ul>
-<li><strong>Email</strong>: <a href="mailto:bucky0112@gmail.com">bucky0112@gmail.com</a></li>
-<li><strong>GitHub</strong>: <a href="https://github.com/bucky0112/railquill">github.com/bucky0112/railquill</a></li>
-<li><strong>Twitter</strong>: <a href="https://x.com/bucky0112">x.com/bucky0112</a></li>
-</ul>
+<pre><code>$ brew install node
+</code></pre>
 
-<p><em>Thank you for reading and supporting open-source development!</em></p>
+<ol>
+<li>安裝 Hexo：</li>
+</ol>
+
+<pre><code>$ npm install -g hexo-cli
+</code></pre>
+
+<ol>
+<li>完成後可以輸入指令，看看有無安裝成功，成功的話會顯示版本：</li>
+</ol>
+
+<pre><code>$ hexo version
+</code></pre>
+
+<p>我的版本是：</p>
+
+<p>hexo: 4.2.0
+hexo-cli: 3.1.0</p>
+
+<h2 id="part-2caaddad57c9f7a8">建立專案</h2>
+
+<hr>
+
+<p>在指定資料夾建立檔案：</p>
+
+<pre><code>$ hexo init &lt;folder&gt;
+$ cd &lt;folder&gt;
+$ npm install
+</code></pre>
+
+<p>完成後會建立以下資料：</p>
+
+<p><img src="https://i.imgur.com/1eucaEQ.png" alt=""></p>
+
+<h2 id="part-862ac4c092f996f0">更改主題與其他設定</h2>
+
+<hr>
+
+<p>主題選用的是 <a href="https://github.com/theme-next/hexo-theme-next">Next</a>，更改步驟如下：</p>
+
+<ol>
+<li>把 next 這個主題 clone 下來：</li>
+</ol>
+
+<pre><code>   $ git clone https://github.com/theme-next/hexo-theme-next themes/next
+</code></pre>
+
+<ol>
+<li>找到 /_config.yml，打開修改：</li>
+</ol>
+
+<pre><code># Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next    // 改為 next
+</code></pre>
+
+<ol>
+<li>網站設定：</li>
+</ol>
+
+<pre><code># Site
+title: 標題
+subtitle: 副標題
+description: 網站描述
+keywords: 網站關鍵字
+author: 作者名
+language: zh-TW
+timezone: 時區
+</code></pre>
+
+<p>其他一些細部設定就可以自己慢慢摸索。</p>
+
+<p>如果要先看看網站的樣式，可以啟動本地端的 server：</p>
+
+<pre><code>$ hexo server
+</code></pre>
+
+<h2 id="part-6542accc4a1">寫作</h2>
+
+<hr>
+
+<p>接下來，大概設定完就可以開始建立文章了。</p>
+
+<p>指令是：</p>
+
+<pre><code>$ hexo new [layout] &lt;title&gt;
+</code></pre>
+
+<p>Layout 有 3 種，分別是：post、page(頁面)、draft(草稿)，</p>
+
+<p>假設要發一篇檔名為 Hello-World 草稿的話：<code>hexo new draft Hello-World</code></p>
+
+<p>如果要將 draft 發布為 post 的話，就鍵入：</p>
+
+<pre><code>$ hexo publish [layout] &lt;title&gt;
+</code></pre>
+
+<h2 id="github">把網站部署到 GitHub</h2>
+
+<hr>
+
+<p>既然都做的差不多了，就可以開始把網站部署到 GitHub Pages。</p>
+
+<ol>
+<li><p>新增名為 <code>&lt;username&gt;.github.io</code> 的 repo，例如：<code>bucky0112.github.io</code></p></li>
+<li><p>安裝 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a> 這個插件：</p></li>
+</ol>
+
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre>
+
+<ol>
+<li>修改 /_config.yml：</li>
+</ol>
+
+<pre><code>url: https://username.github.io
+root: /repo.github.io/
+
+deploy:
+  type: git
+  repo: &lt;repository url&gt; #新增repo的網址
+  branch: master
+</code></pre>
+
+<ol>
+<li>上傳網站，執行：</li>
+</ol>
+
+<pre><code>$ hexo deploy
+</code></pre>
+
+<ol>
+<li>接著需要等待一些時間，讓子彈飛一會，就可以去你的網站看看成果了。</li>
+</ol>
+
+<pre><code>https://username.github.io/repo.github.io
+</code></pre>
+
+<h2 id="hexo">Hexo 常用指令</h2>
+
+<hr>
+
+<p>以下是之後再使用 Hexo 發佈文章時常用的指令：</p>
+
+<pre><code>$ hexo generate      #產生靜態檔案 / hexo g
+$ hexo deploy        #部署網站 
+$ hexo server        #啟動本地端伺服器 / hexo s
+$ hexo new &lt;post&gt;    #新增文章
+$ hexo clean         #清除快取檔案和已產生的靜態檔案
+</code></pre>
 
     </div>
+    
+    <!-- Share Section -->
+    <div class="animate-slide-up" style="animation-delay: 0.6s; margin-top: var(--space-12); padding: var(--space-8) 0; background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border-radius: 1rem; border: 1px solid var(--gray-100);">
+      <div style="text-align: center;">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2); font-family: var(--font-sans);">Enjoyed this article?</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6); font-family: var(--font-sans);">Share it with your network and help others discover great content</p>
+        <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8+Hexo+%E5%9C%A8+GitHub+%E9%83%A8%E7%BD%B2+Blog&url=https%3A%2F%2Frailquill.vercel.app%2Fhexo-github-blog.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on Twitter"
+             style="background: #1DA1F2; color: white; border-color: #1DA1F2; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#1a91da'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#1DA1F2'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Share on Twitter
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frailquill.vercel.app%2Fhexo-github-blog.html" 
+             target="_blank" 
+             rel="noopener" 
+             class="btn"
+             aria-label="Share this article on LinkedIn"
+             style="background: #0077B5; color: white; border-color: #0077B5; transition: all 0.2s var(--ease-out);"
+             onmouseover="this.style.background='#005885'; this.style.transform='translateY(-1px)';" 
+             onmouseout="this.style.background='#0077B5'; this.style.transform='translateY(0)';">
+            <svg style="width: 1rem; height: 1rem; margin-right: var(--space-2);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
   </article>
-</div><!-- END app/views/static/about.html.erb -->
+  
+  <!-- Post Navigation -->
+  <nav class="post-navigation animate-slide-up" style="animation-delay: 0.8s; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 2px solid var(--gray-100);">
+      <div></div>
+    
+      <div class="post-nav-item next">
+        <span class="post-nav-label" style="color: var(--gray-500); font-family: var(--font-sans);">Next Post →</span>
+        <a href="/vue-js.html" class="post-nav-title" style="font-family: var(--font-sans);" aria-label="Next post: 基礎 Vue.js(上)">
+          基礎 Vue.js(上)
+        </a>
+      </div>
+  </nav>
+  
+  <!-- Back to Home -->
+  <div style="text-align: center; margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--gray-100);">
+    <a href="/" class="btn" style="background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200);" onmouseover="this.style.background='var(--gray-200)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='var(--gray-100)'; this.style.transform='translateY(0)';" aria-label="Go back to articles list">
+      <div style="width: 1rem; height: 1rem; margin-right: var(--space-2);">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd"></path>
+</svg>
+
+      </div>
+      Back to Articles
+    </a>
+  </div>
+</div><!-- END app/views/static/post.html.erb -->
     </main>
     
     <footer>
