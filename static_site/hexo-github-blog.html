@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>使用 Hexo 在 GitHub 部署 Blog - Railquill</title>
+    <title>使用 Hexo 在 GitHub 部署 Blog - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -13,7 +13,7 @@
 剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/hexo-github-blog.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="使用 Hexo 在 GitHub 部署 Blog">
@@ -38,7 +38,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Hexo 在 GitHub 部署 Blog","description":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！","url":"https://railquill.vercel.app/hexo-github-blog.html","datePublished":"2020-03-28T14:55:52Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/hexo-github-blog.html"},"articleBody":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！\n\n\n\n前置作業\n\n\n\n安裝需求\n\n需要安裝：\n\n\nNode.js\nGit\n\n\n\n以下方式為 Mac 使用者方法，其他作業系統請詳閱官網\n\n\n\n安裝 Xcode\n\n\n首先到 App Store 安裝 Xcode，安裝完成後，\n開啟它並前往 Preferences -\u0026gt; Download -\u0026gt; Command Line Tools -\u0026gt; Install 安裝命令列工具。\n\n\n安裝 node.js\n\n\n使用 NVM，或是直接用 HomeBrew 安裝：\n\n$ brew install node\n\n\n\n安裝 Hexo：\n\n\n$ npm install -g hexo-cli\n\n\n\n完成後可以輸入指令，看看有無安裝成功，成功的話會顯示版本：\n\n\n$ hexo version\n\n\n我的版本是：\n\nhexo: 4.2.0\nhexo-cli: 3.1.0\n\n建立專案\n\n\n\n在指定資料夾建立檔案：\n\n$ hexo init \u0026lt;folder\u0026gt;\n$ cd \u0026lt;folder\u0026gt;\n$ npm install\n\n\n完成後會建立以下資料：\n\n\n\n更改主題與其他設定\n\n\n\n主題選用的是 Next，更改步驟如下：\n\n\n把 next 這個主題 clone 下來：\n\n\n   $ git clone https://github.com/theme-next/hexo-theme-next themes/next\n\n\n\n找到 /_config.yml，打開修改：\n\n\n# Extensions\n## Plugins: https://hexo.io/plugins/\n## Themes: https://hexo.io/themes/\ntheme: next    // 改為 next\n\n\n\n網站設定：\n\n\n# Site\ntitle: 標題\nsubtitle: 副標題\ndescription: 網站描述\nkeywords: 網站關鍵字\nauthor: 作者名\nlanguage: zh-TW\ntimezone: 時區\n\n\n其他一些細部設定就可以自己慢慢摸索。\n\n如果要先看看網站的樣式，可以啟動本地端的 server：\n\n$ hexo server\n\n\n寫作\n\n\n\n接下來，大概設定完就可以開始建立文章了。\n\n指令是：\n\n$ hexo new [layout] \u0026lt;title\u0026gt;\n\n\nLayout 有 3 種，分別是：post、page(頁面)、draft(草稿)，\n\n假設要發一篇檔名為 Hello-World 草稿的話：hexo new draft Hello-World\n\n如果要將 draft 發布為 post 的話，就鍵入：\n\n$ hexo publish [layout] \u0026lt;title\u0026gt;\n\n\n把網站部署到 GitHub\n\n\n\n既然都做的差不多了，就可以開始把網站部署到 GitHub Pages。\n\n\n新增名為 \u0026lt;username\u0026gt;.github.io 的 repo，例如：bucky0112.github.io\n安裝 hexo-deployer-git 這個插件：\n\n\n$ npm install hexo-deployer-git --save\n\n\n\n修改 /_config.yml：\n\n\nurl: https://username.github.io\nroot: /repo.github.io/\n\ndeploy:\n  type: git\n  repo: \u0026lt;repository url\u0026gt; #新增repo的網址\n  branch: master\n\n\n\n上傳網站，執行：\n\n\n$ hexo deploy\n\n\n\n接著需要等待一些時間，讓子彈飛一會，就可以去你的網站看看成果了。\n\n\nhttps://username.github.io/repo.github.io\n\n\nHexo 常用指令\n\n\n\n以下是之後再使用 Hexo 發佈文章時常用的指令：\n\n$ hexo generate      #產生靜態檔案 / hexo g\n$ hexo deploy        #部署網站 \n$ hexo server        #啟動本地端伺服器 / hexo s\n$ hexo new \u0026lt;post\u0026gt;    #新增文章\n$ hexo clean         #清除快取檔案和已產生的靜態檔案\n\n","wordCount":283,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Hexo 在 GitHub 部署 Blog","description":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！","url":"https://railquill.vercel.app/hexo-github-blog.html","datePublished":"2020-03-28T14:55:52Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/hexo-github-blog.html"},"articleBody":"本來一直不是很想用 Hexo，因為覺得很多人使用，所以有使用另一種 Hugo 來架設 Blog，但是用完一直覺得不合口味，原本打算就將就著用。\n\n剛好看到 Hexo 最多人使用的主題 - Next，感覺還不錯，真香，就來裝裝看吧！\n\n\n\n前置作業\n\n\n\n安裝需求\n\n需要安裝：\n\n\nNode.js\nGit\n\n\n\n以下方式為 Mac 使用者方法，其他作業系統請詳閱官網\n\n\n\n安裝 Xcode\n\n\n首先到 App Store 安裝 Xcode，安裝完成後，\n開啟它並前往 Preferences -\u0026gt; Download -\u0026gt; Command Line Tools -\u0026gt; Install 安裝命令列工具。\n\n\n安裝 node.js\n\n\n使用 NVM，或是直接用 HomeBrew 安裝：\n\n$ brew install node\n\n\n\n安裝 Hexo：\n\n\n$ npm install -g hexo-cli\n\n\n\n完成後可以輸入指令，看看有無安裝成功，成功的話會顯示版本：\n\n\n$ hexo version\n\n\n我的版本是：\n\nhexo: 4.2.0\nhexo-cli: 3.1.0\n\n建立專案\n\n\n\n在指定資料夾建立檔案：\n\n$ hexo init \u0026lt;folder\u0026gt;\n$ cd \u0026lt;folder\u0026gt;\n$ npm install\n\n\n完成後會建立以下資料：\n\n\n\n更改主題與其他設定\n\n\n\n主題選用的是 Next，更改步驟如下：\n\n\n把 next 這個主題 clone 下來：\n\n\n   $ git clone https://github.com/theme-next/hexo-theme-next themes/next\n\n\n\n找到 /_config.yml，打開修改：\n\n\n# Extensions\n## Plugins: https://hexo.io/plugins/\n## Themes: https://hexo.io/themes/\ntheme: next    // 改為 next\n\n\n\n網站設定：\n\n\n# Site\ntitle: 標題\nsubtitle: 副標題\ndescription: 網站描述\nkeywords: 網站關鍵字\nauthor: 作者名\nlanguage: zh-TW\ntimezone: 時區\n\n\n其他一些細部設定就可以自己慢慢摸索。\n\n如果要先看看網站的樣式，可以啟動本地端的 server：\n\n$ hexo server\n\n\n寫作\n\n\n\n接下來，大概設定完就可以開始建立文章了。\n\n指令是：\n\n$ hexo new [layout] \u0026lt;title\u0026gt;\n\n\nLayout 有 3 種，分別是：post、page(頁面)、draft(草稿)，\n\n假設要發一篇檔名為 Hello-World 草稿的話：hexo new draft Hello-World\n\n如果要將 draft 發布為 post 的話，就鍵入：\n\n$ hexo publish [layout] \u0026lt;title\u0026gt;\n\n\n把網站部署到 GitHub\n\n\n\n既然都做的差不多了，就可以開始把網站部署到 GitHub Pages。\n\n\n新增名為 \u0026lt;username\u0026gt;.github.io 的 repo，例如：bucky0112.github.io\n安裝 hexo-deployer-git 這個插件：\n\n\n$ npm install hexo-deployer-git --save\n\n\n\n修改 /_config.yml：\n\n\nurl: https://username.github.io\nroot: /repo.github.io/\n\ndeploy:\n  type: git\n  repo: \u0026lt;repository url\u0026gt; #新增repo的網址\n  branch: master\n\n\n\n上傳網站，執行：\n\n\n$ hexo deploy\n\n\n\n接著需要等待一些時間，讓子彈飛一會，就可以去你的網站看看成果了。\n\n\nhttps://username.github.io/repo.github.io\n\n\nHexo 常用指令\n\n\n\n以下是之後再使用 Hexo 發佈文章時常用的指令：\n\n$ hexo generate      #產生靜態檔案 / hexo g\n$ hexo deploy        #部署網站 \n$ hexo server        #啟動本地端伺服器 / hexo s\n$ hexo new \u0026lt;post\u0026gt;    #新增文章\n$ hexo clean         #清除快取檔案和已產生的靜態檔案\n\n","wordCount":283,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -870,7 +870,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1173,8 +1173,9 @@ $ hexo clean         #清除快取檔案和已產生的靜態檔案
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1195,7 +1196,7 @@ $ hexo clean         #清除快取檔案和已產生的靜態檔案
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

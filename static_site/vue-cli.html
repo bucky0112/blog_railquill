@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>如何使用 Vue CLI 建置專案 - Railquill</title>
+    <title>如何使用 Vue CLI 建置專案 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Vue CLI 介紹與環境建置，以及建置專案。">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vue-cli.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="如何使用 Vue CLI 建置專案">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"如何使用 Vue CLI 建置專案","description":"Vue CLI 介紹與環境建置，以及建置專案。","url":"https://railquill.vercel.app/vue-cli.html","datePublished":"2020-05-18T22:01:47Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-cli.html"},"articleBody":"Vue CLI 介紹與環境建置，以及建置專案。\n\n\n\nVue CLI 是什麼？\n\n\n\n之前所用到的 Vue.js 都是使用 CDN 載入的模式來開發，而 Vue CLI 有什麼不同呢？\n它有以下幾點特色：\n\n\n基於 Webpack 所建置的開發工具。\n便於使用各種第三方套件 (Bootstrap, Vue Router...)。\n可運行 Sass、Bebal 等編譯工具。\n便於開發 SPA 的網頁工具。\n簡單設定，就能搭建開發常用環境。\n\n\n缺點：\n\n\n不便開發非 SPA 的網頁（改用 CDN 模式開發）。\n\n\n了解以上 Vue CLI 的優缺點後，就可以來試著安裝了，但是首先首要條件要先安裝 Node.js。\n\n安裝 nvm (Node Version Manager)\n\n由於 JavaScript 只能在瀏覽器中運行，所以為了要讓 Vue CLI 能夠在電腦本地端運行，就需要 Node.js，所以先來安裝 Node.js。\n而安裝 Node.js 最推薦的是採用 nvm 的方法，這樣之後可以方便切換不同版本。\n\n\n在終端機執行指令安裝：\n\n\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash\n\n\n安裝完後執行 nvm --version ，如果成功的話，就會顯示版本。\n因為 nvm 可以控管 Node.js 的版本，所以可以執行指令觀看版本：\n\nnvm ls\n\n\n安裝 Node.js\n\n\n\n\n\n如果沒有要安裝特定版本的話，直接安裝最新穩定版本的 Node.js：\n\nnvm install stable\n\n\n安裝完後，執行指令，確定是否安裝成功：\n\nnode -v\n\n\n安裝 Vue CLI\n\n\n\nnvm 及 Node.js 都沒問題後，接著就使用 Node.js 的 npm 繼續安裝 Vue CLI。\n\nnpm install -g @vue/cli\n\n\n安裝完後，檢查是否安裝成功，執行：\n\nvue -V\n\n\n成功的話，會顯示版本，目前最新版本為 4.3.1。\n\n使用 Vue CLI\n\n\n\n當安裝成功後，可以輸入 vue，會秀出可以輸入的指令。\n\n\n\n建製專案\n\n因為接下來要建置專案，所以先 cd 到想建置的資料夾中，然後執行 vue create \u0026lt;project name\u0026gt;\n\n專案設定\n\n建置並命名完專案後，就要接著設定，會有兩個選項可以選，分別有：\n\n\ndefault - 安裝基本套件。\nManually - 按照需求選擇所需套件。（這邊選擇 Manually）\n\n\n\n\n選擇 Manually 後，就可以選擇想要裝的套件，接著就開始安裝了。\n\n\n\n安裝一段時間後，出現以下的畫面，就代表安裝成功了。\n\n\n\n接著照著它的指示，cd 到該資料夾中，執行 npm run serve 後，連到它提供的 localhost 網址，在瀏覽器看到下面的畫面，就代表專案建置成功了。\n\n\n","wordCount":180,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"如何使用 Vue CLI 建置專案","description":"Vue CLI 介紹與環境建置，以及建置專案。","url":"https://railquill.vercel.app/vue-cli.html","datePublished":"2020-05-18T22:01:47Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-cli.html"},"articleBody":"Vue CLI 介紹與環境建置，以及建置專案。\n\n\n\nVue CLI 是什麼？\n\n\n\n之前所用到的 Vue.js 都是使用 CDN 載入的模式來開發，而 Vue CLI 有什麼不同呢？\n它有以下幾點特色：\n\n\n基於 Webpack 所建置的開發工具。\n便於使用各種第三方套件 (Bootstrap, Vue Router...)。\n可運行 Sass、Bebal 等編譯工具。\n便於開發 SPA 的網頁工具。\n簡單設定，就能搭建開發常用環境。\n\n\n缺點：\n\n\n不便開發非 SPA 的網頁（改用 CDN 模式開發）。\n\n\n了解以上 Vue CLI 的優缺點後，就可以來試著安裝了，但是首先首要條件要先安裝 Node.js。\n\n安裝 nvm (Node Version Manager)\n\n由於 JavaScript 只能在瀏覽器中運行，所以為了要讓 Vue CLI 能夠在電腦本地端運行，就需要 Node.js，所以先來安裝 Node.js。\n而安裝 Node.js 最推薦的是採用 nvm 的方法，這樣之後可以方便切換不同版本。\n\n\n在終端機執行指令安裝：\n\n\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash\n\n\n安裝完後執行 nvm --version ，如果成功的話，就會顯示版本。\n因為 nvm 可以控管 Node.js 的版本，所以可以執行指令觀看版本：\n\nnvm ls\n\n\n安裝 Node.js\n\n\n\n\n\n如果沒有要安裝特定版本的話，直接安裝最新穩定版本的 Node.js：\n\nnvm install stable\n\n\n安裝完後，執行指令，確定是否安裝成功：\n\nnode -v\n\n\n安裝 Vue CLI\n\n\n\nnvm 及 Node.js 都沒問題後，接著就使用 Node.js 的 npm 繼續安裝 Vue CLI。\n\nnpm install -g @vue/cli\n\n\n安裝完後，檢查是否安裝成功，執行：\n\nvue -V\n\n\n成功的話，會顯示版本，目前最新版本為 4.3.1。\n\n使用 Vue CLI\n\n\n\n當安裝成功後，可以輸入 vue，會秀出可以輸入的指令。\n\n\n\n建製專案\n\n因為接下來要建置專案，所以先 cd 到想建置的資料夾中，然後執行 vue create \u0026lt;project name\u0026gt;\n\n專案設定\n\n建置並命名完專案後，就要接著設定，會有兩個選項可以選，分別有：\n\n\ndefault - 安裝基本套件。\nManually - 按照需求選擇所需套件。（這邊選擇 Manually）\n\n\n\n\n選擇 Manually 後，就可以選擇想要裝的套件，接著就開始安裝了。\n\n\n\n安裝一段時間後，出現以下的畫面，就代表安裝成功了。\n\n\n\n接著照著它的指示，cd 到該資料夾中，執行 npm run serve 後，連到它提供的 localhost 網址，在瀏覽器看到下面的畫面，就代表專案建置成功了。\n\n\n","wordCount":180,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1091,8 +1091,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1113,7 +1114,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

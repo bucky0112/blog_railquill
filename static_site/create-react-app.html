@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>用 Create React App 來建立專案吧～ - Railquill</title>
+    <title>用 Create React App 來建立專案吧～ - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="使用 Terminal 指令來快速建立 React 專案。">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/create-react-app.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="用 Create React App 來建立專案吧～">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Create React App 來建立專案吧～","description":"使用 Terminal 指令來快速建立 React 專案。","url":"https://railquill.vercel.app/create-react-app.html","datePublished":"2020-10-16T23:49:13Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/create-react-app.html"},"articleBody":"在逛 GitHub 看別人的 React 專案時，似乎都是使用 Create React App 來開發居多，比較少見使用 CDN 的模式，所以本篇文章將會講解如何入門使用 Create React App 來建立一個專案，並會簡單跟 Vue CLI 做一下比較。\n\n\n\n什麼是 Create React App？\n\nCreate React App (CRA) 是一款由 React 官方開發的 CLI 工具，可以讓開發者不用再擔心建置環境，可以專心地寫 Code 就好。\n\n開始專案\n\n首先開始之前，要先確認一下電腦中是否有 Node.js 跟 NVM，還沒安裝過可以看一下我在 Vue CLI 的教學。\n\n都搞定之後，就可以來使用 Create React App 了。\n\n\n在終端機輸入指令，在 create-react-app 後面的就是要建立的專案名稱，接著就會開始建置專案：\n\n\n   $ npx create-react-app first-app\n\n\n\n完成之後就 cd 到專案資料夾中，並執行指令啟動 React 專案：\n\n\n   $ cd first-app\n   $ npm start\n\n\n沒問題的話，就會自動開啟瀏覽器，看到⬇️這個畫面就代表成功運行了。\n\n\n\n\n如果要停止伺服器運作的話，在終端機按下 Ctr + C 就可以結束了。\n\n\n檢視專案架構\n\n如果有使用過 Vue CLI 來開發專案過的話，應該就會對 CRA 的專案結構不陌生，整體感覺蠻像的，看看⬇️圖：\n\n\n\n一樣主要編輯的地方都是在 src 這個資料夾內，介紹幾個主要的檔案：\n\n\nindex.js 就是管理各種套件的檔案，並透過 ReactDOM.render 把 React 掛載到 #root 上。\n\n\n\n\n\nApp.js 則是最常編輯的檔案，把它想成是一個 Component，主要編輯區在 function App() 中，就是會 render 到畫面的 JSX 函式。\n\n\n\n\n\nApp.css 則是我們編輯 CSS 樣式的地方，這部分倒是跟 Vue CLI 不太一樣，我以為會把所有東西都寫在 App.js 中，看來好像不是全部都在寫 JavaScript，不過這樣子區分也不錯，看起來比較好整理。\n\n\n\n","wordCount":127,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Create React App 來建立專案吧～","description":"使用 Terminal 指令來快速建立 React 專案。","url":"https://railquill.vercel.app/create-react-app.html","datePublished":"2020-10-16T23:49:13Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/create-react-app.html"},"articleBody":"在逛 GitHub 看別人的 React 專案時，似乎都是使用 Create React App 來開發居多，比較少見使用 CDN 的模式，所以本篇文章將會講解如何入門使用 Create React App 來建立一個專案，並會簡單跟 Vue CLI 做一下比較。\n\n\n\n什麼是 Create React App？\n\nCreate React App (CRA) 是一款由 React 官方開發的 CLI 工具，可以讓開發者不用再擔心建置環境，可以專心地寫 Code 就好。\n\n開始專案\n\n首先開始之前，要先確認一下電腦中是否有 Node.js 跟 NVM，還沒安裝過可以看一下我在 Vue CLI 的教學。\n\n都搞定之後，就可以來使用 Create React App 了。\n\n\n在終端機輸入指令，在 create-react-app 後面的就是要建立的專案名稱，接著就會開始建置專案：\n\n\n   $ npx create-react-app first-app\n\n\n\n完成之後就 cd 到專案資料夾中，並執行指令啟動 React 專案：\n\n\n   $ cd first-app\n   $ npm start\n\n\n沒問題的話，就會自動開啟瀏覽器，看到⬇️這個畫面就代表成功運行了。\n\n\n\n\n如果要停止伺服器運作的話，在終端機按下 Ctr + C 就可以結束了。\n\n\n檢視專案架構\n\n如果有使用過 Vue CLI 來開發專案過的話，應該就會對 CRA 的專案結構不陌生，整體感覺蠻像的，看看⬇️圖：\n\n\n\n一樣主要編輯的地方都是在 src 這個資料夾內，介紹幾個主要的檔案：\n\n\nindex.js 就是管理各種套件的檔案，並透過 ReactDOM.render 把 React 掛載到 #root 上。\n\n\n\n\n\nApp.js 則是最常編輯的檔案，把它想成是一個 Component，主要編輯區在 function App() 中，就是會 render 到畫面的 JSX 函式。\n\n\n\n\n\nApp.css 則是我們編輯 CSS 樣式的地方，這部分倒是跟 Vue CLI 不太一樣，我以為會把所有東西都寫在 App.js 中，看來好像不是全部都在寫 JavaScript，不過這樣子區分也不錯，看起來比較好整理。\n\n\n\n","wordCount":127,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1042,8 +1042,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1064,7 +1065,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

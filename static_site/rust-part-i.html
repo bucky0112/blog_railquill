@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>來用 Rust 建立一個伺服器吧！Part I - Railquill</title>
+    <title>來用 Rust 建立一個伺服器吧！Part I - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="用 Rust 建立一個伺服器">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/rust-part-i.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="來用 Rust 建立一個伺服器吧！Part I">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"來用 Rust 建立一個伺服器吧！Part I","description":"用 Rust 建立一個伺服器","url":"https://railquill.vercel.app/rust-part-i.html","datePublished":"2022-10-07T01:26:21Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust-part-i.html"},"articleBody":"從今天開始，我們要開始實作一個簡單的 HTTP 伺服器，並且複習一下並且運用我們之前學到 Rust 的知識，然後視情況加入一些需要了解的部分，到時候再加入解說，那麼就開始吧！\n\n建立一個新專案\n\n首先，我們要建立一個新的專案，這邊我們使用 cargo 來建立一個新的專案，使用 cargo new 指令，並且指定專案名稱為 server：\n\n$ cargo new server\n\n\n監聽 TCP 連線\n\n接著，我們要開始實作一個 TCP 伺服器，並且監聽 TCP 連線。\nRust 的標準函式庫中有一個 std::net 模組，裡面有一個 TcpListener 型態，可以用來監聽 TCP 連線，所以我們可以先在 src/main.rs 中 使用 TcpListener：\n\nuse std::net::TcpListener;\n\nconst PORT: i32 = 3000;\n\nfn main() {\n    let listener = TcpListener::bind(format!(\"127.0.0.1:{}\", PORT)).unwrap();\n\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        println!(\"連線建立!\");\n    }\n}\n\n\n上面的程式碼的意思是，我們從 std::net::TcpListener 中 import TcpListener，然後我們建立一個 PORT 常數，並且指定為 3000，接著我們在 main 函式中，我們建立一個 listener 變數，並且使用 TcpListener::bind 方法。這個方法會傳回一個 Result 型態，所以我們使用 unwrap 方法來解包，如果有錯誤發生，程式就會 panic，然後我們使用 for 迴圈來監聽 TCP 連線，並且將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n我們先試著執行一下，在終端機中執行 cargo run，然後打開瀏覽器，輸入 http://127.0.0.1:3000。\n\n雖然瀏覽器會顯示以下畫面：\n\n\n\n不過，我們可以在終端機中看到 連線建立! 的訊息，這代表我們的 TCP 伺服器已經成功的監聽到了 TCP 連線。\n\n但是可能有人會好奇，為什麼我們才開啟一次 http://127.0.0.1:3000，卻可以看到好幾個訊息出來呢？這是因為瀏覽器除了請求頁面內容之外，也會試著請求其他資源，像是瀏覽器分頁上的 favicon.ico 網站圖示等等的資源，所以我們會看到好幾個訊息出來。\n\n然後我們也可以試著重新整理網頁，雖然一樣是完全沒有畫面。但是在終端機會多出幾行訊息，這也就是說我們剛剛寫的 listener.incoming() 方法會持續監聽 TCP 連線，直到我們關閉程式。\n\n讀取請求\n\n接下來要來讀取請求，然後避免 main 的程式碼太長，我們先把讀取請求的程式碼放到 handle_connection 函式中：\n\nuse std::net::TcpStream;\n\n// ...省略\nfn handle_connection(stream: TcpStream) {\n    println!(\"建立連線!\");\n}\n\n\n這裡可以使用 TcpStream 型態，因為我們在 main 函式中，已經將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n然後我們在 main 函式中，將 handle_connection 函式綁定到 for 迴圈中：\n\n// ...省略\nfn main() {\n    // ...省略\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        handle_connection(stream);\n    }\n}\n\n\n接著我們在 handle_connection 函式中，使用 stream.read 方法來讀取請求。\n這個 read 方法會需要從參數中傳入一個 \u0026amp;mut [u8] 型態的變數，所以我們先建立一個 buffer 變數，並且指定為一個 u8 型態的陣列，用來當作緩衝區使用。\n而緩衝區的大小，沒有特別規定。不過，這裡設定為 512 bytes，也就是 512 個 u8 型態的元素，也已經非常足夠了。\n\n這裡也將 std::io::prelude::* 引入，來實作 I/O 相關讀寫的方法。\n\nuse std::io::prelude::*;\n\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n}\n\n\n接著我們可以使用 println! 來印出 buffer 變數的內容，這樣我們就可以看到請求的內容了：\n\n// ...省略\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n\n    println!(\"請求內容: {}\", String::from_utf8_lossy(\u0026amp;buffer[..c]));\n}\n\n\n這裡使用 String::from_utf8_lossy 方法，來將 buffer 變數轉換成 String 型態，並且使用 \u0026amp;buffer[..c] 來指定要轉換的範圍。\n\n然後我們重新執行程式，並且把瀏覽器打開。雖然這時候瀏覽器一樣沒有畫面，但是我們可以在終端機看到請求的內容了：\n\n\n\n今天我們已經先做了讀取請求的步驟，明天將會做發送 response 的部分。\n","wordCount":276,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"來用 Rust 建立一個伺服器吧！Part I","description":"用 Rust 建立一個伺服器","url":"https://railquill.vercel.app/rust-part-i.html","datePublished":"2022-10-07T01:26:21Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust-part-i.html"},"articleBody":"從今天開始，我們要開始實作一個簡單的 HTTP 伺服器，並且複習一下並且運用我們之前學到 Rust 的知識，然後視情況加入一些需要了解的部分，到時候再加入解說，那麼就開始吧！\n\n建立一個新專案\n\n首先，我們要建立一個新的專案，這邊我們使用 cargo 來建立一個新的專案，使用 cargo new 指令，並且指定專案名稱為 server：\n\n$ cargo new server\n\n\n監聽 TCP 連線\n\n接著，我們要開始實作一個 TCP 伺服器，並且監聽 TCP 連線。\nRust 的標準函式庫中有一個 std::net 模組，裡面有一個 TcpListener 型態，可以用來監聽 TCP 連線，所以我們可以先在 src/main.rs 中 使用 TcpListener：\n\nuse std::net::TcpListener;\n\nconst PORT: i32 = 3000;\n\nfn main() {\n    let listener = TcpListener::bind(format!(\"127.0.0.1:{}\", PORT)).unwrap();\n\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        println!(\"連線建立!\");\n    }\n}\n\n\n上面的程式碼的意思是，我們從 std::net::TcpListener 中 import TcpListener，然後我們建立一個 PORT 常數，並且指定為 3000，接著我們在 main 函式中，我們建立一個 listener 變數，並且使用 TcpListener::bind 方法。這個方法會傳回一個 Result 型態，所以我們使用 unwrap 方法來解包，如果有錯誤發生，程式就會 panic，然後我們使用 for 迴圈來監聽 TCP 連線，並且將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n我們先試著執行一下，在終端機中執行 cargo run，然後打開瀏覽器，輸入 http://127.0.0.1:3000。\n\n雖然瀏覽器會顯示以下畫面：\n\n\n\n不過，我們可以在終端機中看到 連線建立! 的訊息，這代表我們的 TCP 伺服器已經成功的監聽到了 TCP 連線。\n\n但是可能有人會好奇，為什麼我們才開啟一次 http://127.0.0.1:3000，卻可以看到好幾個訊息出來呢？這是因為瀏覽器除了請求頁面內容之外，也會試著請求其他資源，像是瀏覽器分頁上的 favicon.ico 網站圖示等等的資源，所以我們會看到好幾個訊息出來。\n\n然後我們也可以試著重新整理網頁，雖然一樣是完全沒有畫面。但是在終端機會多出幾行訊息，這也就是說我們剛剛寫的 listener.incoming() 方法會持續監聽 TCP 連線，直到我們關閉程式。\n\n讀取請求\n\n接下來要來讀取請求，然後避免 main 的程式碼太長，我們先把讀取請求的程式碼放到 handle_connection 函式中：\n\nuse std::net::TcpStream;\n\n// ...省略\nfn handle_connection(stream: TcpStream) {\n    println!(\"建立連線!\");\n}\n\n\n這裡可以使用 TcpStream 型態，因為我們在 main 函式中，已經將 stream 變數綁定到 listener.incoming() 方法，這個方法會傳回一個 TcpStream 型態。\n\n然後我們在 main 函式中，將 handle_connection 函式綁定到 for 迴圈中：\n\n// ...省略\nfn main() {\n    // ...省略\n    for stream in listener.incoming() {\n        let stream = stream.unwrap();\n\n        handle_connection(stream);\n    }\n}\n\n\n接著我們在 handle_connection 函式中，使用 stream.read 方法來讀取請求。\n這個 read 方法會需要從參數中傳入一個 \u0026amp;mut [u8] 型態的變數，所以我們先建立一個 buffer 變數，並且指定為一個 u8 型態的陣列，用來當作緩衝區使用。\n而緩衝區的大小，沒有特別規定。不過，這裡設定為 512 bytes，也就是 512 個 u8 型態的元素，也已經非常足夠了。\n\n這裡也將 std::io::prelude::* 引入，來實作 I/O 相關讀寫的方法。\n\nuse std::io::prelude::*;\n\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n}\n\n\n接著我們可以使用 println! 來印出 buffer 變數的內容，這樣我們就可以看到請求的內容了：\n\n// ...省略\nfn handle_connection(mut stream: TcpStream) {\n    let mut buffer = [0; 512];\n\n    let c = stream.read(\u0026amp;mut buffer).unwrap();\n\n    println!(\"請求內容: {}\", String::from_utf8_lossy(\u0026amp;buffer[..c]));\n}\n\n\n這裡使用 String::from_utf8_lossy 方法，來將 buffer 變數轉換成 String 型態，並且使用 \u0026amp;buffer[..c] 來指定要轉換的範圍。\n\n然後我們重新執行程式，並且把瀏覽器打開。雖然這時候瀏覽器一樣沒有畫面，但是我們可以在終端機看到請求的內容了：\n\n\n\n今天我們已經先做了讀取請求的步驟，明天將會做發送 response 的部分。\n","wordCount":276,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1084,8 +1084,9 @@ fn handle_connection(mut stream: TcpStream) {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1106,7 +1107,7 @@ fn handle_connection(mut stream: TcpStream) {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

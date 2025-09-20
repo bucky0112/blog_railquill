@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Tailwind 安裝 React 篇 - Railquill</title>
+    <title>Tailwind 安裝 React 篇 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="React 專案如何安裝 Tailwind">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/tailwind-react.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Tailwind 安裝 React 篇">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Tailwind 安裝 React 篇","description":"React 專案如何安裝 Tailwind","url":"https://railquill.vercel.app/tailwind-react.html","datePublished":"2021-06-03T23:06:07Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/tailwind-react.html"},"articleBody":"最近幾年火速竄紅的 CSS 框架 Tailwind 也是蠻多前端工程師開始使用，於是就有了本篇跟風仔的安裝篇XD\n\n\n\n環境版本介紹\n\n本篇使用的是 Create-React-App 來建立環境，並且將會透過 NPM 來安裝 Tailwind。\n\n\nReact 版本：17.0.2\nNode.js 版本：14.16 （官方建議版本12.13或以上）\nTailwind 版本：2.1.4\n\n\n安裝流程\n\n\n請在終端機輸入： $ npx create-react-app 專案名稱，安裝完後再 $ cd 進入專案資料夾中。\n接著就要開始安裝 Tailwind 了，請輸入：\n\n$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9\n\n\n這時候碰到一個問題，我的終端機跳出一個訊息：no matches found: postcss@^7\n\n上網查了一下解法，如果跟我一樣遇到這個問題的話，請輸入：\n\n$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat \"postcss@^7\" \"autoprefixer@^9\"\n\n\n安裝 CRACO：\n\n\n$ npm install @craco/craco\n\n\n接著請打開編輯器，並將 package.json 中的 scripts 物件中的部份替換成:\n\n\n   \"scripts\": {\n       // \"start\": \"react-scripts start\",\n       // \"build\": \"react-scripts build\",\n       // \"test\": \"react-scripts test\",\n       \"start\": \"craco start\",\n       \"build\": \"craco build\",\n       \"test\": \"craco test\",\n       \"eject\": \"react-scripts eject\"\n     },\n\n\n\n在終端機輸入： $ touch craco.config.js，會在專案的根目錄產生一個檔案，並在檔案中手動加上：\n\n\n   module.exports = {\n     style: {\n       postcss: {\n         plugins: [\n           require('tailwindcss'),\n           require('autoprefixer'),\n         ],\n       },\n     },\n   }\n\n\n\n在終端機輸入：$ npx tailwindcss-cli@latest init，成功的話會自動生成一個 tailwind.config.js 在 根目錄中。\n然後修改一下該檔案：\n\n\n   module.exports = {\n     // purge: [],  將原本的 purge 替換成以下\n     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],\n     darkMode: false,\n     theme: {\n       extend: {},\n     },\n     variants: {\n       extend: {},\n     },\n     plugins: [],\n   }\n\n\n\n接著打開 /src 目錄中的 index.css，並將其內容替換成：\n\n\n   @tailwind base;\n   @tailwind components;\n   @tailwind utilities;\n\n\n\n最後一個步驟，請確保 index.css 有被引入到 /src/index.js 中\n\n\n   import React from 'react';\n   import ReactDOM from 'react-dom';\n   import './index.css';\n   import App from './App';\n   import reportWebVitals from;\n\n\n\n執行 $ npm run start，，畫面有顯示就代表恭喜你，可以準備進入 Tailwind 的坑了XD\n\n","wordCount":210,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Tailwind 安裝 React 篇","description":"React 專案如何安裝 Tailwind","url":"https://railquill.vercel.app/tailwind-react.html","datePublished":"2021-06-03T23:06:07Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/tailwind-react.html"},"articleBody":"最近幾年火速竄紅的 CSS 框架 Tailwind 也是蠻多前端工程師開始使用，於是就有了本篇跟風仔的安裝篇XD\n\n\n\n環境版本介紹\n\n本篇使用的是 Create-React-App 來建立環境，並且將會透過 NPM 來安裝 Tailwind。\n\n\nReact 版本：17.0.2\nNode.js 版本：14.16 （官方建議版本12.13或以上）\nTailwind 版本：2.1.4\n\n\n安裝流程\n\n\n請在終端機輸入： $ npx create-react-app 專案名稱，安裝完後再 $ cd 進入專案資料夾中。\n接著就要開始安裝 Tailwind 了，請輸入：\n\n$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9\n\n\n這時候碰到一個問題，我的終端機跳出一個訊息：no matches found: postcss@^7\n\n上網查了一下解法，如果跟我一樣遇到這個問題的話，請輸入：\n\n$ npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat \"postcss@^7\" \"autoprefixer@^9\"\n\n\n安裝 CRACO：\n\n\n$ npm install @craco/craco\n\n\n接著請打開編輯器，並將 package.json 中的 scripts 物件中的部份替換成:\n\n\n   \"scripts\": {\n       // \"start\": \"react-scripts start\",\n       // \"build\": \"react-scripts build\",\n       // \"test\": \"react-scripts test\",\n       \"start\": \"craco start\",\n       \"build\": \"craco build\",\n       \"test\": \"craco test\",\n       \"eject\": \"react-scripts eject\"\n     },\n\n\n\n在終端機輸入： $ touch craco.config.js，會在專案的根目錄產生一個檔案，並在檔案中手動加上：\n\n\n   module.exports = {\n     style: {\n       postcss: {\n         plugins: [\n           require('tailwindcss'),\n           require('autoprefixer'),\n         ],\n       },\n     },\n   }\n\n\n\n在終端機輸入：$ npx tailwindcss-cli@latest init，成功的話會自動生成一個 tailwind.config.js 在 根目錄中。\n然後修改一下該檔案：\n\n\n   module.exports = {\n     // purge: [],  將原本的 purge 替換成以下\n     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],\n     darkMode: false,\n     theme: {\n       extend: {},\n     },\n     variants: {\n       extend: {},\n     },\n     plugins: [],\n   }\n\n\n\n接著打開 /src 目錄中的 index.css，並將其內容替換成：\n\n\n   @tailwind base;\n   @tailwind components;\n   @tailwind utilities;\n\n\n\n最後一個步驟，請確保 index.css 有被引入到 /src/index.js 中\n\n\n   import React from 'react';\n   import ReactDOM from 'react-dom';\n   import './index.css';\n   import App from './App';\n   import reportWebVitals from;\n\n\n\n執行 $ npm run start，，畫面有顯示就代表恭喜你，可以準備進入 Tailwind 的坑了XD\n\n","wordCount":210,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1088,8 +1088,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1110,7 +1111,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

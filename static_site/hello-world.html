@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>先從意料中的 Hello World 開始 - Railquill</title>
+    <title>先從意料中的 Hello World 開始 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="BJ4，就只是 Hello World">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/hello-world.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="先從意料中的 Hello World 開始">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"先從意料中的 Hello World 開始","description":"BJ4，就只是 Hello World","url":"https://railquill.vercel.app/hello-world.html","datePublished":"2022-09-17T16:54:15Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/hello-world.html"},"articleBody":"今天就先從最基本的 Hello World 開始我們的 Rust，但第一步要先安裝環境，那麼就開始吧！ \n\n安裝\n\n基本上在安裝過程中沒有太多的難度，也不用繁複的設定，就可以在各個系統中順利安裝。\n\n由於我是使用 Mac 來安裝，所以只需要開啟終端機，並輸入：\n\n$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\n\n\n這裡是使用 rustup 這個版本管理工具來進行安裝，接著會如下圖中，問你要怎麼安裝，如果沒有什麼特殊需求的話，我們只需要輸入 1 用預設的就好。\n\n\n\n沒什麼意外的話，就會跟你說安裝已完成，但他還提示我們需要設定環境變數，一樣照著他指示的做，在終端機輸入：\n\n$ source \"$HOME/.cargo/env\"\n\n\n\n\n如果上述的過程中都沒遇到問題的話，那就來檢查是否安裝成功，輸入：\n\n$ rustc -V\n\n\n或是：\n\n$ rustc --version\n\n\n如果成功安裝的話，就會顯示安裝的版本，截至目前最新的版本是 1.63.0\n\n如果是其他系統的使用者的話，進入到 Rust 官網 進入 Install 的頁面，就會自動偵測使用者系統，並且給予安裝的說明或是下載連結，非常貼心。\n\nHello World\n\n接著就是我們今天的主要目標，用 Rust 來寫一個 Hello World。\n\n在開始寫 Code 之前，先打開我們慣用的編輯器，我個人是使用 Visual Studio Code，也就是 VSCode，然後推薦先安裝套件 — rust-analyzer，提供了提示程式碼的部分，更重要的是會即時的提示你哪邊有錯誤，可以幫助你在後續寫 code 的時候會比較舒適。\n\n首先建立一個 hello_world.rs 檔案（副檔名為 rs，Rust 的文件命名通常會用 Camel Case 也就是駝峰式的寫法），並且在檔案中輸入：\n\nfn main() {\n    println!(\"Hello, world!\");\n}\n\n\nfn main() {} 是 Rust 第一個優先執行的程式碼，是必需的一個函式，不會有參數，也不會回傳任何東西。\n\nRust 的排版風格是 4 個空格，而不是一個 tab。\n\nprintln!() 是 Rust 拿來印出內容的一個巨集（marco）。那麼什麼是巨集呢？他跟函式不太一樣，先把他想成是一種 Rust 的功能集合，之後會再找機會來講解這個部分。\n\n接著把 “Hello World” 作為參數帶入，然後最後記得加上 ;，結尾非常重要，不加的話肯定會報錯給你看。\n\n存檔後試著執行，在終端機輸入：\n\n$ rustc hello_world.rs\n\n\nrustc 的 c 是編譯（compiler）的意思。\n\n接著在該資料夾會出現一個執行檔，可以直接點擊該檔案，或是繼續在終端機輸入：\n\n$ ./hello_world\n\n\n接著就會在終端機顯示 Hello World!\n\n以上就是我們今天簡單的 Hello World 了，是不是很簡單呢？\n(ゝ∀･)b\n","wordCount":135,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"先從意料中的 Hello World 開始","description":"BJ4，就只是 Hello World","url":"https://railquill.vercel.app/hello-world.html","datePublished":"2022-09-17T16:54:15Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/hello-world.html"},"articleBody":"今天就先從最基本的 Hello World 開始我們的 Rust，但第一步要先安裝環境，那麼就開始吧！ \n\n安裝\n\n基本上在安裝過程中沒有太多的難度，也不用繁複的設定，就可以在各個系統中順利安裝。\n\n由於我是使用 Mac 來安裝，所以只需要開啟終端機，並輸入：\n\n$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\n\n\n這裡是使用 rustup 這個版本管理工具來進行安裝，接著會如下圖中，問你要怎麼安裝，如果沒有什麼特殊需求的話，我們只需要輸入 1 用預設的就好。\n\n\n\n沒什麼意外的話，就會跟你說安裝已完成，但他還提示我們需要設定環境變數，一樣照著他指示的做，在終端機輸入：\n\n$ source \"$HOME/.cargo/env\"\n\n\n\n\n如果上述的過程中都沒遇到問題的話，那就來檢查是否安裝成功，輸入：\n\n$ rustc -V\n\n\n或是：\n\n$ rustc --version\n\n\n如果成功安裝的話，就會顯示安裝的版本，截至目前最新的版本是 1.63.0\n\n如果是其他系統的使用者的話，進入到 Rust 官網 進入 Install 的頁面，就會自動偵測使用者系統，並且給予安裝的說明或是下載連結，非常貼心。\n\nHello World\n\n接著就是我們今天的主要目標，用 Rust 來寫一個 Hello World。\n\n在開始寫 Code 之前，先打開我們慣用的編輯器，我個人是使用 Visual Studio Code，也就是 VSCode，然後推薦先安裝套件 — rust-analyzer，提供了提示程式碼的部分，更重要的是會即時的提示你哪邊有錯誤，可以幫助你在後續寫 code 的時候會比較舒適。\n\n首先建立一個 hello_world.rs 檔案（副檔名為 rs，Rust 的文件命名通常會用 Camel Case 也就是駝峰式的寫法），並且在檔案中輸入：\n\nfn main() {\n    println!(\"Hello, world!\");\n}\n\n\nfn main() {} 是 Rust 第一個優先執行的程式碼，是必需的一個函式，不會有參數，也不會回傳任何東西。\n\nRust 的排版風格是 4 個空格，而不是一個 tab。\n\nprintln!() 是 Rust 拿來印出內容的一個巨集（marco）。那麼什麼是巨集呢？他跟函式不太一樣，先把他想成是一種 Rust 的功能集合，之後會再找機會來講解這個部分。\n\n接著把 “Hello World” 作為參數帶入，然後最後記得加上 ;，結尾非常重要，不加的話肯定會報錯給你看。\n\n存檔後試著執行，在終端機輸入：\n\n$ rustc hello_world.rs\n\n\nrustc 的 c 是編譯（compiler）的意思。\n\n接著在該資料夾會出現一個執行檔，可以直接點擊該檔案，或是繼續在終端機輸入：\n\n$ ./hello_world\n\n\n接著就會在終端機顯示 Hello World!\n\n以上就是我們今天簡單的 Hello World 了，是不是很簡單呢？\n(ゝ∀･)b\n","wordCount":135,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1053,8 +1053,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1075,7 +1076,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

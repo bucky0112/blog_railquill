@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>JS notice： JavaScript 與 undefined - Railquill</title>
+    <title>JS notice： JavaScript 與 undefined - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="undefined 與 not defined 的差異">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/js-notice-javascript-undefined.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="JS notice： JavaScript 與 undefined">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"JS notice： JavaScript 與 undefined","description":"undefined 與 not defined 的差異","url":"https://railquill.vercel.app/js-notice-javascript-undefined.html","datePublished":"2020-05-11T17:21:49Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/js-notice-javascript-undefined.html"},"articleBody":"本篇文章會稍微講解 undefined 與 not defined 的差異。\n\n\n\nundefined\n\n\n\n先來看一個例子：\n\nvar a = \"Hello World\";\nconsole.log(a)  // \"Hello World\"\n\n\n當宣告一個變數 a，並指定一個值給它時，再用 console.log 印出 a，不意外的得到賦予它的值。\n\n但如果把值去掉，再次看 a 會得到什麼？\n\nvar a;\nconsole.log(a)  // undefined\n\n\n結果得到 undefined。\n\nnot defined\n\n\n\n那麼如果把 var 跟值去掉的話，只留下 a 會發生什麼事？\n\na;\nconsole.log(a);\n\n\n會發生錯誤，錯誤訊息為 a is not defined。\n這邊則會有一個疑問，not defined 跟 undefined 是不同的嗎？\n\n這個部份有在 執行環境：創造與提升 提過，所有 JavaScript 的變數，在一開始都會被設定為 undefined，而 undefined 是 JavaScript 內建的一個特殊的值，表示這個值尚未被定義\n\n這邊可以用判斷式來測試一下：\n\nvar a = \"Hello World\";\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined') \n} else {\n  console.log('a is defined')\n}\n\n\n結果賦予 a 值的情況下，會出現 'a is defined'。\n而把值去掉的話：\n\nvar a;\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined') \n} else {\n  console.log('a is defined')\n}\n\n\n則是會出現 'a is undefined'。\n\nundefined 與 not defined 差在哪？\n\n\n\n接著把 var 去掉，只留下 a，則會出現錯誤，a is not defined。\n這是因為執行環境被創造時，沒有在記憶體中找到 a。\n而宣告 var a 時，a 在創造階段就被放進記憶體中，雖然沒有賦予它值，但是確實先給它一個特殊的初始值 undefined，已經在記憶體中佔據了一席之地。\n\n那麼可以設定值為 undefined 嗎？\n\n\n\n理論上是可以的，來測試看看：\n\nvar a = undefined;\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined')\n} else {\n  console.log('a is defined')\n}\n\n\n雖然 a 給它值，可能想說會是 'a is defined'，但是最後的結果會是 'a is undefined'。\n所以這邊就會有問題，萬一想要除錯的話，可能會發生混亂，所以這裏需要注意不要給予賦予變數 undefined 這個特殊關鍵字。\n","wordCount":189,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"JS notice： JavaScript 與 undefined","description":"undefined 與 not defined 的差異","url":"https://railquill.vercel.app/js-notice-javascript-undefined.html","datePublished":"2020-05-11T17:21:49Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/js-notice-javascript-undefined.html"},"articleBody":"本篇文章會稍微講解 undefined 與 not defined 的差異。\n\n\n\nundefined\n\n\n\n先來看一個例子：\n\nvar a = \"Hello World\";\nconsole.log(a)  // \"Hello World\"\n\n\n當宣告一個變數 a，並指定一個值給它時，再用 console.log 印出 a，不意外的得到賦予它的值。\n\n但如果把值去掉，再次看 a 會得到什麼？\n\nvar a;\nconsole.log(a)  // undefined\n\n\n結果得到 undefined。\n\nnot defined\n\n\n\n那麼如果把 var 跟值去掉的話，只留下 a 會發生什麼事？\n\na;\nconsole.log(a);\n\n\n會發生錯誤，錯誤訊息為 a is not defined。\n這邊則會有一個疑問，not defined 跟 undefined 是不同的嗎？\n\n這個部份有在 執行環境：創造與提升 提過，所有 JavaScript 的變數，在一開始都會被設定為 undefined，而 undefined 是 JavaScript 內建的一個特殊的值，表示這個值尚未被定義\n\n這邊可以用判斷式來測試一下：\n\nvar a = \"Hello World\";\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined') \n} else {\n  console.log('a is defined')\n}\n\n\n結果賦予 a 值的情況下，會出現 'a is defined'。\n而把值去掉的話：\n\nvar a;\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined') \n} else {\n  console.log('a is defined')\n}\n\n\n則是會出現 'a is undefined'。\n\nundefined 與 not defined 差在哪？\n\n\n\n接著把 var 去掉，只留下 a，則會出現錯誤，a is not defined。\n這是因為執行環境被創造時，沒有在記憶體中找到 a。\n而宣告 var a 時，a 在創造階段就被放進記憶體中，雖然沒有賦予它值，但是確實先給它一個特殊的初始值 undefined，已經在記憶體中佔據了一席之地。\n\n那麼可以設定值為 undefined 嗎？\n\n\n\n理論上是可以的，來測試看看：\n\nvar a = undefined;\nconsole.log(a);\n\nif (a === undefined) {\n  console.log('a is undefined')\n} else {\n  console.log('a is defined')\n}\n\n\n雖然 a 給它值，可能想說會是 'a is defined'，但是最後的結果會是 'a is undefined'。\n所以這邊就會有問題，萬一想要除錯的話，可能會發生混亂，所以這裏需要注意不要給予賦予變數 undefined 這個特殊關鍵字。\n","wordCount":189,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1072,8 +1072,9 @@ if (a === undefined) {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1094,7 +1095,7 @@ if (a === undefined) {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

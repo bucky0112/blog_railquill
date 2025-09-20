@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>用 Vuex 來管理 State 資料狀態 - Railquill</title>
+    <title>用 Vuex 來管理 State 資料狀態 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="用 Vuex 來管理 State 資料狀態">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vuex-state.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="用 Vuex 來管理 State 資料狀態">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Vuex 來管理 State 資料狀態","description":"用 Vuex 來管理 State 資料狀態","url":"https://railquill.vercel.app/vuex-state.html","datePublished":"2020-10-10T21:53:34Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vuex-state.html"},"articleBody":"在之前的專案中，如果碰到要資料傳遞的部份，例如是父子層關係的話，只要用 props 跟 emit 就可以解決了，而遇到同階層的關係，就用 $eventbus 來處理，不過這個方法只能處理比較簡單的資料，而且在 Vue 3 也不支援了。不怕，總是有技術可以解決問題，所以就從 state 開始來學學 Vuex 吧～\n\n\n\n\n\n什麼是 Vuex？\n\nVuex 是 Vue 官方開發的一種狀態管理模式，它的設計是把所有元件的狀態集中式管理，放在一個 store 裡面。\n以下是 Vuex 的處理方法：\n\nVuex\nstate ----------\u0026gt; 資料狀態，類似 component 中的 data\nactions ---------\u0026gt; 跟 methods 一樣，進行非同步的行為及取得資料\ngetter ---------\u0026gt; 跟 computed 一樣，資料呈現的方式\nmutations -------\u0026gt; 改變資料內容的方法\n\n\n怎麼使用 state？\n\n由於 State 就跟 Data 差不多概念，只是 State 是一個統一存放在 Vuex 的 Store 中的 Data，要使用的話也蠻簡單的，打開 store/index.js：\n\n\n\n直接在  state 中建立一筆資料：\n\nstate: {\n  movieTitle: 'Joker',\n},\n\n\n然後在需要存取的頁面中，使用 computed 來拿到 State：\n\ncomputed: {\n  movieTitle() {\n    return this.$store.state.movieTitle;\n  },\n},\n\n\n要怎麼確定有沒有拿到 state 呢？可以使用 Vue Devtools，如果成功的話就可以看到以下畫面：\n\n\n\n使用 mapState 來輔助存取 state\n\n如果一個 component 中需要大量地從 store 中存取 state 的話，這時候可以使用 mapState 來省去很多 return 的步驟：\n\n\n從 Vuex 中 import mapState\n使用 computed 調用  mapState 拿到 Vuex 的 State\n\n\nimport { mapState } from 'vuex';\n\nexport default {\n  computed: {\n    ...mapState(['movieTitle']),\n  },\n};\n\n\n接著就可以在這個頁面中使用拿到的 State，例如：\n\n\u0026lt;p\u0026gt;{{ movieTitle }}\u0026lt;/p\u0026gt;\n\n\n如果在 store 中有其他 State 要調用的話，例如：\n\nstate: {\n  movieTitle: 'Joker',\n  movieAge: 'PG13',\n},\n\n\n那麼在 computed 中就可以這樣用：\n\n\u0026lt;script\u0026gt;\nimport { mapState } from 'vuex';\n\nexport default {\n  computed: {\n    ...mapState(['movieTitle', 'movieAge']),\n  },\n};\n\u0026lt;/script\u0026gt;\n\n\n像這樣就可以拿到從 Store 的 State\n\n\n\n可以從 CodeSandbox看一下實際是怎麼運作的：\n\n\n","wordCount":223,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Vuex 來管理 State 資料狀態","description":"用 Vuex 來管理 State 資料狀態","url":"https://railquill.vercel.app/vuex-state.html","datePublished":"2020-10-10T21:53:34Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vuex-state.html"},"articleBody":"在之前的專案中，如果碰到要資料傳遞的部份，例如是父子層關係的話，只要用 props 跟 emit 就可以解決了，而遇到同階層的關係，就用 $eventbus 來處理，不過這個方法只能處理比較簡單的資料，而且在 Vue 3 也不支援了。不怕，總是有技術可以解決問題，所以就從 state 開始來學學 Vuex 吧～\n\n\n\n\n\n什麼是 Vuex？\n\nVuex 是 Vue 官方開發的一種狀態管理模式，它的設計是把所有元件的狀態集中式管理，放在一個 store 裡面。\n以下是 Vuex 的處理方法：\n\nVuex\nstate ----------\u0026gt; 資料狀態，類似 component 中的 data\nactions ---------\u0026gt; 跟 methods 一樣，進行非同步的行為及取得資料\ngetter ---------\u0026gt; 跟 computed 一樣，資料呈現的方式\nmutations -------\u0026gt; 改變資料內容的方法\n\n\n怎麼使用 state？\n\n由於 State 就跟 Data 差不多概念，只是 State 是一個統一存放在 Vuex 的 Store 中的 Data，要使用的話也蠻簡單的，打開 store/index.js：\n\n\n\n直接在  state 中建立一筆資料：\n\nstate: {\n  movieTitle: 'Joker',\n},\n\n\n然後在需要存取的頁面中，使用 computed 來拿到 State：\n\ncomputed: {\n  movieTitle() {\n    return this.$store.state.movieTitle;\n  },\n},\n\n\n要怎麼確定有沒有拿到 state 呢？可以使用 Vue Devtools，如果成功的話就可以看到以下畫面：\n\n\n\n使用 mapState 來輔助存取 state\n\n如果一個 component 中需要大量地從 store 中存取 state 的話，這時候可以使用 mapState 來省去很多 return 的步驟：\n\n\n從 Vuex 中 import mapState\n使用 computed 調用  mapState 拿到 Vuex 的 State\n\n\nimport { mapState } from 'vuex';\n\nexport default {\n  computed: {\n    ...mapState(['movieTitle']),\n  },\n};\n\n\n接著就可以在這個頁面中使用拿到的 State，例如：\n\n\u0026lt;p\u0026gt;{{ movieTitle }}\u0026lt;/p\u0026gt;\n\n\n如果在 store 中有其他 State 要調用的話，例如：\n\nstate: {\n  movieTitle: 'Joker',\n  movieAge: 'PG13',\n},\n\n\n那麼在 computed 中就可以這樣用：\n\n\u0026lt;script\u0026gt;\nimport { mapState } from 'vuex';\n\nexport default {\n  computed: {\n    ...mapState(['movieTitle', 'movieAge']),\n  },\n};\n\u0026lt;/script\u0026gt;\n\n\n像這樣就可以拿到從 Store 的 State\n\n\n\n可以從 CodeSandbox看一下實際是怎麼運作的：\n\n\n","wordCount":223,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1075,8 +1075,9 @@ export default {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1097,7 +1098,7 @@ export default {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

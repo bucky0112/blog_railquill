@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>在 CRA 專案中管理 components - Railquill</title>
+    <title>在 CRA 專案中管理 components - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="在 creat-react-app 的專案中，管理各個 components。">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/cra-components.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="在 CRA 專案中管理 components">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"在 CRA 專案中管理 components","description":"在 creat-react-app 的專案中，管理各個 components。","url":"https://railquill.vercel.app/cra-components.html","datePublished":"2020-11-23T22:54:22Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/cra-components.html"},"articleBody":"在一個專案中，通常不會在一個頁面放入太多的 HTML 結構，這樣會變得難以維護。前面也有提到如何拆分成 component，本篇文章則是講解如何在透過 creat-react-app 的專案中，管理各個 components。\n\n\n\n先來看 CodeSandbox 的範例：\n\n\n\n可以看到在 App.js 中有 3 個區塊，分別是 head、content、footer。前面的文章有提到如何拆分成 component，所以就來依樣畫葫蘆。\n\n分成 3 個 component\n\nconst Head = () =\u0026gt; (\n  \u0026lt;div className=\"head\"\u0026gt;\n    \u0026lt;h1\u0026gt;Head\u0026lt;/h1\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\nconst Content = () =\u0026gt; (\n  \u0026lt;div className=\"content\"\u0026gt;\n    \u0026lt;h2\u0026gt;This is content.\u0026lt;/h2\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\nconst Footer = () =\u0026gt; (\n  \u0026lt;div className=\"footer\"\u0026gt;\n    \u0026lt;span\u0026gt;This is footer.\u0026lt;/span\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\n\n\n\n可以看到畫面也是一樣，並且正常運作。但是如果內容一多的話，全部都放在同一個頁面中肯定是會非常難以維護，所以在實務上就會拆分成不同的 .js 檔案，這樣就可以方便管理了。\n\n檔案拆分\n\n\n首先在 /src 建立一個 components 的資料夾。\n新增 Head.js、Content.js、Footer.js 這三個檔案。\n如果有用到 JSX 的檔案，就要匯入 React 套件：\n\n\nimport React from \"react\";\n\n\n\n將剛剛在 App.js 中建立的 component 內容一一加入個別對應的 .js 中，例如：\n\n\nconst Content = () =\u0026gt; (\n  \u0026lt;div className=\"content\"\u0026gt;\n    \u0026lt;h2\u0026gt;This is content.\u0026lt;/h2\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\n\n\n記得匯出：\n\n\nexport default Content;\n\n\n\n最後在 App.js 中匯入 components：\n\n\nimport Content from \"./components/Content.js\";\n\n\n這樣就可以區分成非常乾淨而且方便管理的 components 了。\n\n\n\n在區分 component 的概念上，跟 Vue CLI 的資料管理差不多，不管是命名方式還有使用方法都蠻相似的，所以使用起來也非常熟悉。\n","wordCount":226,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"在 CRA 專案中管理 components","description":"在 creat-react-app 的專案中，管理各個 components。","url":"https://railquill.vercel.app/cra-components.html","datePublished":"2020-11-23T22:54:22Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/cra-components.html"},"articleBody":"在一個專案中，通常不會在一個頁面放入太多的 HTML 結構，這樣會變得難以維護。前面也有提到如何拆分成 component，本篇文章則是講解如何在透過 creat-react-app 的專案中，管理各個 components。\n\n\n\n先來看 CodeSandbox 的範例：\n\n\n\n可以看到在 App.js 中有 3 個區塊，分別是 head、content、footer。前面的文章有提到如何拆分成 component，所以就來依樣畫葫蘆。\n\n分成 3 個 component\n\nconst Head = () =\u0026gt; (\n  \u0026lt;div className=\"head\"\u0026gt;\n    \u0026lt;h1\u0026gt;Head\u0026lt;/h1\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\nconst Content = () =\u0026gt; (\n  \u0026lt;div className=\"content\"\u0026gt;\n    \u0026lt;h2\u0026gt;This is content.\u0026lt;/h2\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\nconst Footer = () =\u0026gt; (\n  \u0026lt;div className=\"footer\"\u0026gt;\n    \u0026lt;span\u0026gt;This is footer.\u0026lt;/span\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\n\n\n\n可以看到畫面也是一樣，並且正常運作。但是如果內容一多的話，全部都放在同一個頁面中肯定是會非常難以維護，所以在實務上就會拆分成不同的 .js 檔案，這樣就可以方便管理了。\n\n檔案拆分\n\n\n首先在 /src 建立一個 components 的資料夾。\n新增 Head.js、Content.js、Footer.js 這三個檔案。\n如果有用到 JSX 的檔案，就要匯入 React 套件：\n\n\nimport React from \"react\";\n\n\n\n將剛剛在 App.js 中建立的 component 內容一一加入個別對應的 .js 中，例如：\n\n\nconst Content = () =\u0026gt; (\n  \u0026lt;div className=\"content\"\u0026gt;\n    \u0026lt;h2\u0026gt;This is content.\u0026lt;/h2\u0026gt;\n  \u0026lt;/div\u0026gt;\n);\n\n\n\n記得匯出：\n\n\nexport default Content;\n\n\n\n最後在 App.js 中匯入 components：\n\n\nimport Content from \"./components/Content.js\";\n\n\n這樣就可以區分成非常乾淨而且方便管理的 components 了。\n\n\n\n在區分 component 的概念上，跟 Vue CLI 的資料管理差不多，不管是命名方式還有使用方法都蠻相似的，所以使用起來也非常熟悉。\n","wordCount":226,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1056,8 +1056,9 @@ const Footer = () =&gt; (
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1078,7 +1079,7 @@ const Footer = () =&gt; (
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

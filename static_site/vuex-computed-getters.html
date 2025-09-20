@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Vuex 中的 Computed 用法 - Getters - Railquill</title>
+    <title>Vuex 中的 Computed 用法 - Getters - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Vuex 中的 Computed 用法 - Getters">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vuex-computed-getters.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Vuex 中的 Computed 用法 - Getters">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Vuex 中的 Computed 用法 - Getters","description":"Vuex 中的 Computed 用法 - Getters","url":"https://railquill.vercel.app/vuex-computed-getters.html","datePublished":"2021-03-18T21:30:50Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vuex-computed-getters.html"},"articleBody":"在公司專案中，有多筆資料是從 actions 的回傳結果再透過 mutations 來更改資料狀態。這時候想要透過 computed 來處理這些資料，但是還要再把資料傳入 components 中再做處理，感覺總是沒那麼即時，如果在 Vuex 裡面也可以做 computed 就好了...咦？還真的有嗎！？太方便了吧！\n\n\n\n需求\n\n我的資料有複數筆陣列，結構如下示範：\n\nconst list_one = ['A001', 'A002', 'A003', 'A004'],\nconst list_two = ['B001', 'B002', 'B003'],\nconst list_three = ['C001', 'C002', 'C003', 'C004', 'C005']\n\n\n我的需要是將複數筆陣列的資料給合併成一個陣列，然後再去做資料處理。\n\nGetters 的用法\n\n如果要把 state 的資料給傳入 component 中再做處理也是一種作法，但是先在 Vuex 中做完，然後再拿到處理好的資料看要再做其他處理，這樣應該會是一個更好的作法。\n\n以下是我在 CodeSandbox 做的範例\n\n\n\n作法跟一般 component  中的 computed 差不多，差別在需要帶一個參數，也就是資料來源 state：\n\nstate: {\n  list_one: [\"A001\", \"A002\", \"A003\", \"A004\"],\n  list_two: [\"B001\", \"B002\", \"B003\"],\n  list_three: [\"C001\", \"C002\", \"C003\", \"C004\", \"C005\"]\n},\ngetters: {\n  combineArray(state) {\n    const { list_one, list_two, list_three } = state;\n    return list_one.concat(list_two, list_three); // 這裏使用 concat() 來做合併陣列\n  }\n}\n\n\n接著在 component 中來接收資料狀態：\n\ncomputed: {\n  combineArray() {\n    return this.$store.getters.combineArray;\n  }\n}\n\n\n如果有多筆來自 Vuex 的資料的話，最方便可以使用 mapGetters，效果也是一樣的：\n\n\u0026lt;script\u0026gt;\nimport { mapGetters } from \"vuex\";\nexport default {\n  computed: {\n    ...mapGetters([\"combineArray\"]),\n  },\n};\n\u0026lt;/script\u0026gt;\n\n","wordCount":165,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Vuex 中的 Computed 用法 - Getters","description":"Vuex 中的 Computed 用法 - Getters","url":"https://railquill.vercel.app/vuex-computed-getters.html","datePublished":"2021-03-18T21:30:50Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vuex-computed-getters.html"},"articleBody":"在公司專案中，有多筆資料是從 actions 的回傳結果再透過 mutations 來更改資料狀態。這時候想要透過 computed 來處理這些資料，但是還要再把資料傳入 components 中再做處理，感覺總是沒那麼即時，如果在 Vuex 裡面也可以做 computed 就好了...咦？還真的有嗎！？太方便了吧！\n\n\n\n需求\n\n我的資料有複數筆陣列，結構如下示範：\n\nconst list_one = ['A001', 'A002', 'A003', 'A004'],\nconst list_two = ['B001', 'B002', 'B003'],\nconst list_three = ['C001', 'C002', 'C003', 'C004', 'C005']\n\n\n我的需要是將複數筆陣列的資料給合併成一個陣列，然後再去做資料處理。\n\nGetters 的用法\n\n如果要把 state 的資料給傳入 component 中再做處理也是一種作法，但是先在 Vuex 中做完，然後再拿到處理好的資料看要再做其他處理，這樣應該會是一個更好的作法。\n\n以下是我在 CodeSandbox 做的範例\n\n\n\n作法跟一般 component  中的 computed 差不多，差別在需要帶一個參數，也就是資料來源 state：\n\nstate: {\n  list_one: [\"A001\", \"A002\", \"A003\", \"A004\"],\n  list_two: [\"B001\", \"B002\", \"B003\"],\n  list_three: [\"C001\", \"C002\", \"C003\", \"C004\", \"C005\"]\n},\ngetters: {\n  combineArray(state) {\n    const { list_one, list_two, list_three } = state;\n    return list_one.concat(list_two, list_three); // 這裏使用 concat() 來做合併陣列\n  }\n}\n\n\n接著在 component 中來接收資料狀態：\n\ncomputed: {\n  combineArray() {\n    return this.$store.getters.combineArray;\n  }\n}\n\n\n如果有多筆來自 Vuex 的資料的話，最方便可以使用 mapGetters，效果也是一樣的：\n\n\u0026lt;script\u0026gt;\nimport { mapGetters } from \"vuex\";\nexport default {\n  computed: {\n    ...mapGetters([\"combineArray\"]),\n  },\n};\n\u0026lt;/script\u0026gt;\n\n","wordCount":165,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1038,8 +1038,9 @@ export default {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1060,7 +1061,7 @@ export default {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>讓 Vue 每次換頁都能在最上方的方法 - Railquill</title>
+    <title>讓 Vue 每次換頁都能在最上方的方法 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="讓 Vue 每次換頁都能在最上方的方法">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vue.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="讓 Vue 每次換頁都能在最上方的方法">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"讓 Vue 每次換頁都能在最上方的方法","description":"讓 Vue 每次換頁都能在最上方的方法","url":"https://railquill.vercel.app/vue.html","datePublished":"2020-12-27T15:45:31Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue.html"},"articleBody":"在 Vue 開發的 SPA 上，每次換頁總是會有一個問題，那就是換到其他頁面，畫面總是不會在最頂端，而是在上一頁的位置，這個問題以前覺得還好，但客戶要求修正這個問題，那就來修正吧！\n\n\n\n問題點\n\n以我所做的 side project 來說，假設當我按下認識桌遊後，接著會跳到認識桌遊的頁面，在一般的網站理所當然的會刷新然後會顯示在最頂端並且讓使用者可以從上往下看。\n\n\n\n但是在 Vue 開發的 SPA 中，則是會顯示上一個頁面的位置，那麼接著就來說說該如何解決這個問題。\n\n\n\n解決方法\n\n找了一下關鍵字，就找到了解法，只要使用 afterEach 這個 hook 就解決了。\n\n\n在 main.js 加入\n\n\nrouter.afterEach((to, from, next) =\u0026gt; {\n    window.scrollTo(0, 0);\n});\n\n\n這樣就結束了，好輕鬆啊～～\n\n參考來源\n\nhttps://blog.csdn.net/weixin_40881970/article/details/102912283\n","wordCount":43,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"讓 Vue 每次換頁都能在最上方的方法","description":"讓 Vue 每次換頁都能在最上方的方法","url":"https://railquill.vercel.app/vue.html","datePublished":"2020-12-27T15:45:31Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue.html"},"articleBody":"在 Vue 開發的 SPA 上，每次換頁總是會有一個問題，那就是換到其他頁面，畫面總是不會在最頂端，而是在上一頁的位置，這個問題以前覺得還好，但客戶要求修正這個問題，那就來修正吧！\n\n\n\n問題點\n\n以我所做的 side project 來說，假設當我按下認識桌遊後，接著會跳到認識桌遊的頁面，在一般的網站理所當然的會刷新然後會顯示在最頂端並且讓使用者可以從上往下看。\n\n\n\n但是在 Vue 開發的 SPA 中，則是會顯示上一個頁面的位置，那麼接著就來說說該如何解決這個問題。\n\n\n\n解決方法\n\n找了一下關鍵字，就找到了解法，只要使用 afterEach 這個 hook 就解決了。\n\n\n在 main.js 加入\n\n\nrouter.afterEach((to, from, next) =\u0026gt; {\n    window.scrollTo(0, 0);\n});\n\n\n這樣就結束了，好輕鬆啊～～\n\n參考來源\n\nhttps://blog.csdn.net/weixin_40881970/article/details/102912283\n","wordCount":43,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1012,8 +1012,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1034,7 +1035,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

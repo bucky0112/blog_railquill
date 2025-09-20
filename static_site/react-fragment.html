@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>React Fragment 的標籤好適合懶人工程師啊～ - Railquill</title>
+    <title>React Fragment 的標籤好適合懶人工程師啊～ - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 `&lt;div&gt;` 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/react-fragment.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="React Fragment 的標籤好適合懶人工程師啊～">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React Fragment 的標籤好適合懶人工程師啊～","description":"在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 `\u003cdiv\u003e` 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～","url":"https://railquill.vercel.app/react-fragment.html","datePublished":"2020-10-16T00:08:31Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-fragment.html"},"articleBody":"在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 \u0026lt;div\u0026gt; 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～\n\n\n\nJSX 只能夠有一個最外層元素\n\nJSX 只能夠有一個最外層元素是什麼意思？就像下面的例子中，如果把 \u0026lt;div className=\"container\"\u0026gt; 給拿掉的話就會無法運作，所以一定要有一個 \u0026lt;div\u0026gt; 在最外層包起來。\n\nconst Counter = () =\u0026gt; {\n  const [count, setCount] = useState(0);\n  return (\n    \u0026lt;div className=\"container\"\u0026gt;\n      \u0026lt;div\n        className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count + 1)}\n      \u0026gt;\n        +\n      \u0026lt;/div\u0026gt;\n\n      \u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n      \u0026lt;div\n        className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;\n        -\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\n\n試試看 React Fragment 吧\n\n有些人對於多包一層 \u0026lt;div\u0026gt; 可能會覺得看起來很累贅，不舒服（我是還好啦）。沒關係，React 似乎聽到這些人的需求了，於是給了一個解決方案，\n\n\n\n就是 React Fragment 的標籤，那怎麼使用呢？\n非常簡單，就跟一般的 \u0026lt;div\u0026gt; 標籤一樣，用 \u0026lt;React.Fragment\u0026gt;\u0026lt;/React.Fragment\u0026gt; 包起來就可以了。\n\nconst Counter = () =\u0026gt; {\n  const [count, setCount] = useState(0);\n  return (\n    \u0026lt;React.Fragment\u0026gt;\n      \u0026lt;div\n        className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count + 1)}\n      \u0026gt;\n        +\n      \u0026lt;/div\u0026gt;\n\n      \u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n      \u0026lt;div\n        className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;\n        -\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/React.Fragment\u0026gt;\n  );\n};\n\n\n你如果懶人性格發作的話，你就直接用 \u0026lt;\u0026gt;\u0026lt;/\u0026gt; 來包也可以。完美符合工程師的要求。\n\n\n\n這樣跟 \u0026lt;div\u0026gt; 有什麼差異？\n\n可能會有人有疑問說，欸不是啊，這樣跟用 \u0026lt;div\u0026gt; 有什麼差別？\n有差啦，哪次沒有差，檢查一下元素就會發現原本使用 \u0026lt;div\u0026gt; 的話就會在外層有一個包著。\n\n\n\n而使用 React Fragment 的標籤則是不會有無用的 \u0026lt;div\u0026gt; 干擾閱讀，看起來清爽許多。\n\n\n\n這東西 Vue 好像沒有類似的功能，不過有查到有人使用指令來解決這個需求，詳情請看 =\u0026gt; 連結\n","wordCount":174,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React Fragment 的標籤好適合懶人工程師啊～","description":"在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 `\u003cdiv\u003e` 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～","url":"https://railquill.vercel.app/react-fragment.html","datePublished":"2020-10-16T00:08:31Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-fragment.html"},"articleBody":"在使用 Vue 的 template 模板時，如果有多個 HTML 標籤的話，就必定需要一個 \u0026lt;div\u0026gt; 包起來才能運行。而 React 在 JSX 中也是一樣的，只是它多了一個選擇可以用，而且更精簡，看起來就跟沒有一樣呢～\n\n\n\nJSX 只能夠有一個最外層元素\n\nJSX 只能夠有一個最外層元素是什麼意思？就像下面的例子中，如果把 \u0026lt;div className=\"container\"\u0026gt; 給拿掉的話就會無法運作，所以一定要有一個 \u0026lt;div\u0026gt; 在最外層包起來。\n\nconst Counter = () =\u0026gt; {\n  const [count, setCount] = useState(0);\n  return (\n    \u0026lt;div className=\"container\"\u0026gt;\n      \u0026lt;div\n        className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count + 1)}\n      \u0026gt;\n        +\n      \u0026lt;/div\u0026gt;\n\n      \u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n      \u0026lt;div\n        className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;\n        -\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\n\n試試看 React Fragment 吧\n\n有些人對於多包一層 \u0026lt;div\u0026gt; 可能會覺得看起來很累贅，不舒服（我是還好啦）。沒關係，React 似乎聽到這些人的需求了，於是給了一個解決方案，\n\n\n\n就是 React Fragment 的標籤，那怎麼使用呢？\n非常簡單，就跟一般的 \u0026lt;div\u0026gt; 標籤一樣，用 \u0026lt;React.Fragment\u0026gt;\u0026lt;/React.Fragment\u0026gt; 包起來就可以了。\n\nconst Counter = () =\u0026gt; {\n  const [count, setCount] = useState(0);\n  return (\n    \u0026lt;React.Fragment\u0026gt;\n      \u0026lt;div\n        className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count + 1)}\n      \u0026gt;\n        +\n      \u0026lt;/div\u0026gt;\n\n      \u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n      \u0026lt;div\n        className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"}`}\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;\n        -\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/React.Fragment\u0026gt;\n  );\n};\n\n\n你如果懶人性格發作的話，你就直接用 \u0026lt;\u0026gt;\u0026lt;/\u0026gt; 來包也可以。完美符合工程師的要求。\n\n\n\n這樣跟 \u0026lt;div\u0026gt; 有什麼差異？\n\n可能會有人有疑問說，欸不是啊，這樣跟用 \u0026lt;div\u0026gt; 有什麼差別？\n有差啦，哪次沒有差，檢查一下元素就會發現原本使用 \u0026lt;div\u0026gt; 的話就會在外層有一個包著。\n\n\n\n而使用 React Fragment 的標籤則是不會有無用的 \u0026lt;div\u0026gt; 干擾閱讀，看起來清爽許多。\n\n\n\n這東西 Vue 好像沒有類似的功能，不過有查到有人使用指令來解決這個需求，詳情請看 =\u0026gt; 連結\n","wordCount":174,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1061,8 +1061,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1083,7 +1084,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

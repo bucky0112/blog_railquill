@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Think first, code later - Railquill</title>
+    <title>Think first, code later - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="先別急著寫 leetcode 課程心得">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/think-first-code-later.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Think first, code later">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Think first, code later","description":"先別急著寫 leetcode 課程心得","url":"https://railquill.vercel.app/think-first-code-later.html","datePublished":"2020-04-03T22:45:39Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/think-first-code-later.html"},"articleBody":"以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -\u0026gt; 從拉麵店的販賣機理解什麼是 API\n\n最近作者開了一系列的課 -\u0026gt; 先別急著寫 leetcode。因為我不是本科系出身，所以確實在解題時很容易遇上困難，不然就是會想很久。剛好看到這個課程就覺得蠻需要培養如何寫程式的思維，而且重點是免費喔！免費喔！免費喔！（很重要要說 3 次）所以這個系列會記載一些對我有幫助的筆記，希望能讓自己更進步一些。\n\n\n\n會寫程式的人與初學者差別在哪？\n\n\n\n會寫程式的人\n\n\n先想解法\n如果是有做過或是簡單的，就會直接構思出方法\n如果比較困難或是複雜的問題，就把解法轉換成程式碼\n\n\n初學者\n\n\n邊寫邊想怎麼解\n試著套用自己以前學過的語法\n\n\n這個我自己蠻有感覺的，確實一開始會邊寫邊想，然後如果卡住了，就翻筆記看有什麼語法可以拿來套用，不過通常都沒什麼好下場就是了，哈。\n\n在解題會有兩種情況\n\n\n\n看題目覺得自己解得開\n\n\n有效率的解開\n有解開但是時間花較久\n最後解不開\n\n\n看題目就覺得看不懂\n\n撇開第二種看不懂的情況，在看得懂的情形下，以我自己比較常遇到解不開的狀況是，一開始覺得應該可以怎麼做，可是最後不知道怎麼將想法轉換成程式碼，而講者推薦了一些做法。\n\n推薦初學者寫程式的作法\n\n\n\n首先看一道題目，然後按照以下的作法，題目是：\n\n如何印出 1-100 之間的偶數？\n\n想一下解法，不寫任何程式碼\n\n先不要急著想寫 code，想如何一步一步解決的方法。\n\n\n如何印出 1-100\n如何判斷偶數\n\n\n把解法寫成 pseudo code\n\n虛擬碼（pseudo code）在維基百科的解釋： \n\n\n更類似自然語言。它是半形式化、不標準的語言。我們可以將整個演算法執行過程的結構用接近自然語言的形式（這裡可以使用任何一種作者熟悉的文字，例如中文、英文，重點是將程式的意思表達出來）描述出來。使用虛擬碼，可以幫助我們更好的表述演算法，不用拘泥於具體的實現。\n\n\n主要是讓自己看得懂的方法，首先要讓如何印出 1-100：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n然後題目是要印出偶數，所以把第 3 步改成判斷式：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n如果 i 是偶數，印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n雖然 pseudo code 沒有一定的形式，但是可以練習寫成比較像是程式碼的 pseudo code：\n\nlet i = 1\nif i \u0026gt; 100 then exit\nif i % 2 === 0, print i\ni = i + 1\njump to line 2\n\n\n寫到這邊還可以進一步寫成：\n\nfor (i from 1 to 100) do\n    if (i % 2 === 0)\n    print i\nend for\n\n\n把 pseudo code 翻譯成程式碼\n\n到了這個步驟，如果有學過程式的話，應該就可以把程式碼寫出來，這邊使用 JavaScript 來寫，就可以印出從 1-100 的偶數：\n\nfor ( let i = 1; i \u0026lt; 100; i ++) {\n    if(i % 2 === 0) {\n        console.log(i)\n    }\n}\n\n","wordCount":200,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Think first, code later","description":"先別急著寫 leetcode 課程心得","url":"https://railquill.vercel.app/think-first-code-later.html","datePublished":"2020-04-03T22:45:39Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/think-first-code-later.html"},"articleBody":"以前看過一篇文章，是用拉麵店販賣機講解關於 api 的概念，我覺得作者很厲害，可以用淺顯易懂的方式讓當時還是前端麻瓜的我看得懂，那篇文章很推薦新手去看 -\u0026gt; 從拉麵店的販賣機理解什麼是 API\n\n最近作者開了一系列的課 -\u0026gt; 先別急著寫 leetcode。因為我不是本科系出身，所以確實在解題時很容易遇上困難，不然就是會想很久。剛好看到這個課程就覺得蠻需要培養如何寫程式的思維，而且重點是免費喔！免費喔！免費喔！（很重要要說 3 次）所以這個系列會記載一些對我有幫助的筆記，希望能讓自己更進步一些。\n\n\n\n會寫程式的人與初學者差別在哪？\n\n\n\n會寫程式的人\n\n\n先想解法\n如果是有做過或是簡單的，就會直接構思出方法\n如果比較困難或是複雜的問題，就把解法轉換成程式碼\n\n\n初學者\n\n\n邊寫邊想怎麼解\n試著套用自己以前學過的語法\n\n\n這個我自己蠻有感覺的，確實一開始會邊寫邊想，然後如果卡住了，就翻筆記看有什麼語法可以拿來套用，不過通常都沒什麼好下場就是了，哈。\n\n在解題會有兩種情況\n\n\n\n看題目覺得自己解得開\n\n\n有效率的解開\n有解開但是時間花較久\n最後解不開\n\n\n看題目就覺得看不懂\n\n撇開第二種看不懂的情況，在看得懂的情形下，以我自己比較常遇到解不開的狀況是，一開始覺得應該可以怎麼做，可是最後不知道怎麼將想法轉換成程式碼，而講者推薦了一些做法。\n\n推薦初學者寫程式的作法\n\n\n\n首先看一道題目，然後按照以下的作法，題目是：\n\n如何印出 1-100 之間的偶數？\n\n想一下解法，不寫任何程式碼\n\n先不要急著想寫 code，想如何一步一步解決的方法。\n\n\n如何印出 1-100\n如何判斷偶數\n\n\n把解法寫成 pseudo code\n\n虛擬碼（pseudo code）在維基百科的解釋： \n\n\n更類似自然語言。它是半形式化、不標準的語言。我們可以將整個演算法執行過程的結構用接近自然語言的形式（這裡可以使用任何一種作者熟悉的文字，例如中文、英文，重點是將程式的意思表達出來）描述出來。使用虛擬碼，可以幫助我們更好的表述演算法，不用拘泥於具體的實現。\n\n\n主要是讓自己看得懂的方法，首先要讓如何印出 1-100：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n然後題目是要印出偶數，所以把第 3 步改成判斷式：\n\n讓 i = 1\n如果 i \u0026gt; 100，結束\n如果 i 是偶數，印出 i\n讓 i 可以一直累加\n然後再跳回第 2 步\n\n\n雖然 pseudo code 沒有一定的形式，但是可以練習寫成比較像是程式碼的 pseudo code：\n\nlet i = 1\nif i \u0026gt; 100 then exit\nif i % 2 === 0, print i\ni = i + 1\njump to line 2\n\n\n寫到這邊還可以進一步寫成：\n\nfor (i from 1 to 100) do\n    if (i % 2 === 0)\n    print i\nend for\n\n\n把 pseudo code 翻譯成程式碼\n\n到了這個步驟，如果有學過程式的話，應該就可以把程式碼寫出來，這邊使用 JavaScript 來寫，就可以印出從 1-100 的偶數：\n\nfor ( let i = 1; i \u0026lt; 100; i ++) {\n    if(i % 2 === 0) {\n        console.log(i)\n    }\n}\n\n","wordCount":200,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1095,8 +1095,9 @@ end for
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1117,7 +1118,7 @@ end for
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

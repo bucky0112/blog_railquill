@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>React 的 props 運用 - Railquill</title>
+    <title>React 的 props 運用 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="React 用 props 傳遞資料">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/react-props.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="React 的 props 運用">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 的 props 運用","description":"React 用 props 傳遞資料","url":"https://railquill.vercel.app/react-props.html","datePublished":"2020-11-26T19:19:24Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-props.html"},"articleBody":"在 React 中，元件之間資料的傳遞都是由父元件傳給子元件的單向數據流，本篇文章將會講到如何使用 props 來傳遞資料。\n\n\n\n上一篇講到 component 的使用，但是有些時候想要另外客製化不一樣的內容的話，不就還要做出好幾個不一樣的 component 嗎？\n\n例如下面的 Codesandbox 有兩個 button，按下按鈕就會跳出訊息。\n\n\n\n但是如果想要做出一個 component，然後內容不要寫死可以自定義的情況下，該怎麼做呢？\n\nprops 的運用\n\n這時候就可以透過 props 來做出想要的效果，例如在 CustomButton.js 這個 component 中：\n\n\n加入參數 props。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  return \u0026lt;button\u0026gt;\u0026lt;/button\u0026gt;;\n};\n\n\n\n定義一個變數並使用它，等等可以在父層輸入客製化內容。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  const msg = props.text;\n  return \u0026lt;button\u0026gt;{msg}\u0026lt;/button\u0026gt;;\n};\n\n\n\n做出 alert，設定客製化內容。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  const msg = props.text;\n  return \u0026lt;button onClick={props.handleClick}\u0026gt;{msg}\u0026lt;/button\u0026gt;;\n};\n\n\n\nimport 這個 CustomButton.js，並帶入我們想要顯示的內容。\n\n\n\u0026lt;CustomButton\n    handleClick={() =\u0026gt; {\n    window.alert(\"I'm OK!\");\n  }}\n  text={\"OK\"}\n/\u0026gt;\n\n\n最後的 Demo 就像這樣：\n\n\n\n解構賦值的寫法\n\n在使用 props 時的寫法，也可以使用解構賦值，把需要的變數從 props 中取出來，例如：\n\n// 子層元件\nconst CustomButton = (props) =\u0026gt; {\n  const { msg, handleClick } = props;\n  return (\n    \u0026lt;button onClick={handleClick}\u0026gt;\n      {msg}\n    \u0026lt;/button\u0026gt;\n  );\n};\n\n\n// 父層元件\n\u0026lt;CustomButton \n  handleClick={() =\u0026gt; {\n        window.alert(\"Hello React\");\n    }}\n    msg=\"Hello\"\n/\u0026gt;\n\n","wordCount":198,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 的 props 運用","description":"React 用 props 傳遞資料","url":"https://railquill.vercel.app/react-props.html","datePublished":"2020-11-26T19:19:24Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-props.html"},"articleBody":"在 React 中，元件之間資料的傳遞都是由父元件傳給子元件的單向數據流，本篇文章將會講到如何使用 props 來傳遞資料。\n\n\n\n上一篇講到 component 的使用，但是有些時候想要另外客製化不一樣的內容的話，不就還要做出好幾個不一樣的 component 嗎？\n\n例如下面的 Codesandbox 有兩個 button，按下按鈕就會跳出訊息。\n\n\n\n但是如果想要做出一個 component，然後內容不要寫死可以自定義的情況下，該怎麼做呢？\n\nprops 的運用\n\n這時候就可以透過 props 來做出想要的效果，例如在 CustomButton.js 這個 component 中：\n\n\n加入參數 props。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  return \u0026lt;button\u0026gt;\u0026lt;/button\u0026gt;;\n};\n\n\n\n定義一個變數並使用它，等等可以在父層輸入客製化內容。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  const msg = props.text;\n  return \u0026lt;button\u0026gt;{msg}\u0026lt;/button\u0026gt;;\n};\n\n\n\n做出 alert，設定客製化內容。\n\n\nconst CustomButton = (props) =\u0026gt; {\n  const msg = props.text;\n  return \u0026lt;button onClick={props.handleClick}\u0026gt;{msg}\u0026lt;/button\u0026gt;;\n};\n\n\n\nimport 這個 CustomButton.js，並帶入我們想要顯示的內容。\n\n\n\u0026lt;CustomButton\n    handleClick={() =\u0026gt; {\n    window.alert(\"I'm OK!\");\n  }}\n  text={\"OK\"}\n/\u0026gt;\n\n\n最後的 Demo 就像這樣：\n\n\n\n解構賦值的寫法\n\n在使用 props 時的寫法，也可以使用解構賦值，把需要的變數從 props 中取出來，例如：\n\n// 子層元件\nconst CustomButton = (props) =\u0026gt; {\n  const { msg, handleClick } = props;\n  return (\n    \u0026lt;button onClick={handleClick}\u0026gt;\n      {msg}\n    \u0026lt;/button\u0026gt;\n  );\n};\n\n\n// 父層元件\n\u0026lt;CustomButton \n  handleClick={() =\u0026gt; {\n        window.alert(\"Hello React\");\n    }}\n    msg=\"Hello\"\n/\u0026gt;\n\n","wordCount":198,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1064,8 +1064,9 @@ const CustomButton = (props) =&gt; {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1086,7 +1087,7 @@ const CustomButton = (props) =&gt; {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>了解 Redux 並實作一個範例 - Railquill</title>
+    <title>了解 Redux 並實作一個範例 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="了解 Redux 並實作一個範例">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/redux.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="了解 Redux 並實作一個範例">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"了解 Redux 並實作一個範例","description":"了解 Redux 並實作一個範例","url":"https://railquill.vercel.app/redux.html","datePublished":"2022-03-10T14:42:54Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/redux.html"},"articleBody":"在開發網站時，有時狀態可能會傳來傳去，不好掌控狀態流，就可能會有 bug，這不是開發者樂見的，還好我們有 Redux 可以幫忙處理這個問題。\n\n什麼是 Redux\n\nRedux 是一個管理狀態的 JavaScript library，一般會跟 React 搭配使用。但其實可以運用在原生的 JavaScript，甚至在其他 JavaScript 框架也能使用。\n\nRedux 核心概念\n\n可以參照下圖所示 ⬇️\n\n\n\nRedux 的概念是所有 state 是來自建立的 store 統一管理，而 state 是唯讀，能夠確保不會隨意變更。\n當某一個元件想要改變 state 時，必須要透過 dispatch 去發送 action。\nReducer 是一個 pure function，會帶入 state 和 action，並且回傳一個新的 state，藉由這樣的動作去變異 store 中管理的 state。\n\n\n實作範例\n\n這篇會透過原生的 JavaScript 來實作一個加減點擊案例。\n\n從 Redux 取出 creatStore，並建立一個 store 變數\n\nconst { createStore } = Redux\n\nconst store = createStore()\n\n\n建立預設狀態\n\nconst initialState = {\n  counter: 0\n}\n\n\n建立 reducer\n\n帶入兩個參數，並將 state 指定爲剛剛建立的 initialState ，而 action 則是待會要 dispatch。\n\n邏輯區加入加入 if...else，判斷等一下 dispatch 的 type 是什麼，並且 return 一個物件，最後如果不做處理的話 return 一個原始值：\n\nconst counterReducer = (state = initialState, action) =\u0026gt; {\n  if (action.type === \"plus\") {\n    return {\n            ...state\n      counter: state.counter + 5\n    }\n  }\n\n  return state\n}\n\n\n或是寫成 switch，然後寫好加減的方法\n\nconst counterReducer = (state = initialState, action) =\u0026gt; {\n  switch (action.type) {\n    case 'plus':\n      return {\n        ...state,\n        counter: state.counter + action.payload\n      }\n    case 'minus':\n      return {\n        ...state,\n        counter: state.counter - 5\n      }\n    default:\n      return state\n  }\n}\n\n\n如果確定要代入的是什麼值的話，可以在 state 給定值，如果不確定或是想要另外做處理，就可以在 action 的 payload 再另外給。\n\n在 store 傳入 reducer\n\nconst store = createStore(counterReducer)\n\n\n建立一個 action 來呼叫 reducer\n\ngetState() 是 store 中內建的 method，會回傳當下的 state\n\nconst counterSubscriber = () =\u0026gt; {\n  const latestState = store.getState()\n}\n\n\n加入一個變異監聽器\n\n使用 store 中內建的 subscribe()，並帶入參數爲剛剛建立的 action\n\nstore.subscribe(counterSubscriber)\n\n\n新增 dispatch\n\n觸發 state 變異的唯一方法，帶入 action 參數，並且必須要有 type 屬性，就帶入想要呼叫的 action type 即可，這邊綁定按鈕並監聽事件。\n\n前面的 reducer 中有寫到 action.payload 可以自己帶入，所以這邊 payload 我們帶入想要的值。\n\nconst plusNumBTN = document.querySelector('.plus-num')\n\nplusNumBTN.addEventListener(\n  'click',\n  () =\u0026gt; store.dispatch({ type: 'plus', payload: 5 }),\n  false\n)\n\n\n下方是一個完整的範例，有興趣可以玩看看 ⬇️\n\n\nSee the Pen \u0026lt;a href=\"https://codepen.io/bucky0112/pen/YzVvjLG\"\u0026gt;\nRedux-demo\u0026lt;/a\u0026gt; by Bucky Chu (\u0026lt;a href=\"https://codepen.io/bucky0112\"\u0026gt;@bucky0112\u0026lt;/a\u0026gt;)\non \u0026lt;a href=\"https://codepen.io\"\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":293,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"了解 Redux 並實作一個範例","description":"了解 Redux 並實作一個範例","url":"https://railquill.vercel.app/redux.html","datePublished":"2022-03-10T14:42:54Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/redux.html"},"articleBody":"在開發網站時，有時狀態可能會傳來傳去，不好掌控狀態流，就可能會有 bug，這不是開發者樂見的，還好我們有 Redux 可以幫忙處理這個問題。\n\n什麼是 Redux\n\nRedux 是一個管理狀態的 JavaScript library，一般會跟 React 搭配使用。但其實可以運用在原生的 JavaScript，甚至在其他 JavaScript 框架也能使用。\n\nRedux 核心概念\n\n可以參照下圖所示 ⬇️\n\n\n\nRedux 的概念是所有 state 是來自建立的 store 統一管理，而 state 是唯讀，能夠確保不會隨意變更。\n當某一個元件想要改變 state 時，必須要透過 dispatch 去發送 action。\nReducer 是一個 pure function，會帶入 state 和 action，並且回傳一個新的 state，藉由這樣的動作去變異 store 中管理的 state。\n\n\n實作範例\n\n這篇會透過原生的 JavaScript 來實作一個加減點擊案例。\n\n從 Redux 取出 creatStore，並建立一個 store 變數\n\nconst { createStore } = Redux\n\nconst store = createStore()\n\n\n建立預設狀態\n\nconst initialState = {\n  counter: 0\n}\n\n\n建立 reducer\n\n帶入兩個參數，並將 state 指定爲剛剛建立的 initialState ，而 action 則是待會要 dispatch。\n\n邏輯區加入加入 if...else，判斷等一下 dispatch 的 type 是什麼，並且 return 一個物件，最後如果不做處理的話 return 一個原始值：\n\nconst counterReducer = (state = initialState, action) =\u0026gt; {\n  if (action.type === \"plus\") {\n    return {\n            ...state\n      counter: state.counter + 5\n    }\n  }\n\n  return state\n}\n\n\n或是寫成 switch，然後寫好加減的方法\n\nconst counterReducer = (state = initialState, action) =\u0026gt; {\n  switch (action.type) {\n    case 'plus':\n      return {\n        ...state,\n        counter: state.counter + action.payload\n      }\n    case 'minus':\n      return {\n        ...state,\n        counter: state.counter - 5\n      }\n    default:\n      return state\n  }\n}\n\n\n如果確定要代入的是什麼值的話，可以在 state 給定值，如果不確定或是想要另外做處理，就可以在 action 的 payload 再另外給。\n\n在 store 傳入 reducer\n\nconst store = createStore(counterReducer)\n\n\n建立一個 action 來呼叫 reducer\n\ngetState() 是 store 中內建的 method，會回傳當下的 state\n\nconst counterSubscriber = () =\u0026gt; {\n  const latestState = store.getState()\n}\n\n\n加入一個變異監聽器\n\n使用 store 中內建的 subscribe()，並帶入參數爲剛剛建立的 action\n\nstore.subscribe(counterSubscriber)\n\n\n新增 dispatch\n\n觸發 state 變異的唯一方法，帶入 action 參數，並且必須要有 type 屬性，就帶入想要呼叫的 action type 即可，這邊綁定按鈕並監聽事件。\n\n前面的 reducer 中有寫到 action.payload 可以自己帶入，所以這邊 payload 我們帶入想要的值。\n\nconst plusNumBTN = document.querySelector('.plus-num')\n\nplusNumBTN.addEventListener(\n  'click',\n  () =\u0026gt; store.dispatch({ type: 'plus', payload: 5 }),\n  false\n)\n\n\n下方是一個完整的範例，有興趣可以玩看看 ⬇️\n\n\nSee the Pen \u0026lt;a href=\"https://codepen.io/bucky0112/pen/YzVvjLG\"\u0026gt;\nRedux-demo\u0026lt;/a\u0026gt; by Bucky Chu (\u0026lt;a href=\"https://codepen.io/bucky0112\"\u0026gt;@bucky0112\u0026lt;/a\u0026gt;)\non \u0026lt;a href=\"https://codepen.io\"\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":293,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1098,8 +1098,9 @@ on &lt;a href="https://codepen.io"&gt;CodePen&lt;/a&gt;.
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1120,7 +1121,7 @@ on &lt;a href="https://codepen.io"&gt;CodePen&lt;/a&gt;.
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

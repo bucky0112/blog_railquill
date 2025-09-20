@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>使用 useContext 處理跨元件狀態 - Railquill</title>
+    <title>使用 useContext 處理跨元件狀態 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="使用 useContext 處理跨元件狀態">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/usecontext.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="使用 useContext 處理跨元件狀態">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 useContext 處理跨元件狀態","description":"使用 useContext 處理跨元件狀態","url":"https://railquill.vercel.app/usecontext.html","datePublished":"2022-03-02T16:09:10Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/usecontext.html"},"articleBody":"寫了這麼久 React，發現我的筆記都沒整理過，趁最近比較不忙來清理一下筆記 XD\n這次要分享的是跨元件處理狀態的 hook -- useContext。\n\n\n\n使用情境\n\n一般寫 React 時，如果需要將元件的狀態傳遞的話，如果是簡單的父子元件傳遞，可以用 props 來傳。但如果是很多層的情況，或是同層的子組件要互傳狀態的話，可能用 props 就不是這麼適合。當然也可以使用一些狀態管理的套件，例如：Redux（之後會找時間分享）。不過，其實 React 內建就有 useContext 這個 hook，這邊就來示範一下作法：\n\n使用的情境是分別有兩個元件，有一個輸入框 - A，跟一個顯示輸入的文字 - B，如果 A 改變輸入的文字，那麼 B 就會即時顯示該文字。\n\n初始設置\n\n以下是原始的程式碼，可以看到分別有 InputText.js 跟 ShowText.js 兩個元件放在 App.js 中\n\n// App.js\nimport InputText from './InputText'\nimport ShowText from './ShowText'\n\nexport default function App() {\n\n  return (\n    \u0026lt;div className='App'\u0026gt;\n      \u0026lt;InputText /\u0026gt;\n      \u0026lt;ShowText /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n// InputText\nconst InputText = () =\u0026gt; {\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;input type=\"text\" /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\nexport default InputText;\n\n// ShowText\nconst ShowText = () =\u0026gt; {\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;p\u0026gt;Hello World\u0026lt;/p\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\nexport default ShowText;\n\n\n使用 createContext 建立共用狀態\n\n首先 import createContext，並且設一個變數，然後 export 該變數，例如： AppContext，等等會給其他元件使用。\n\nimport { createContext } from 'react'\n\nexport const AppContext = createContext()\n\n\n接著在要傳遞狀態的父元件，在這個範例也就是 App.js 中，在最外層用 AppContext 將所有子元件包起來，並且設置 value。\n\n\u0026lt;AppContext.Provider value={{}}\u0026gt;\n  \u0026lt;div\u0026gt;\n    \u0026lt;InputText /\u0026gt;\n    \u0026lt;ShowText /\u0026gt;\n  \u0026lt;/div\u0026gt;\n\u0026lt;/AppContext.Provider\u0026gt;\n\n\n可以發現 value 是一個物件，裡面可以放入任何狀態，等等就可以讓其他元件使用，這邊用一個 useState 來處理狀態。\n\nimport { createContext, useState } from 'react'\n\nexport default function App() {\n  const [text, setText] = useState('Hello World')\n\n  return (\n    \u0026lt;AppContext.Provider value={{ text, setText }}\u0026gt;\n      \u0026lt;div className='App'\u0026gt;\n        \u0026lt;InputText /\u0026gt;\n        \u0026lt;ShowText /\u0026gt;\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/AppContext.Provider\u0026gt;\n  )\n}\n\n\n利用 useContext 讓其他元件處理狀態\n\nInputText\n\n首先 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 setText 來變更狀態。\n\nimport { useContext } from 'react'\nimport { AppContext } from './App'\n\nconst InputText = () =\u0026gt; {\n  const { text, setText } = useContext(AppContext)\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;input type='text' value={text} onChange={(e) =\u0026gt; setText(e.target.value)} /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n\nShowText\n\n一樣 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 text 來顯示狀態。\n\nimport { useContext } from 'react'\nimport { AppContext } from './App'\n\nconst ShowText = () =\u0026gt; {\n  const { text } = useContext(AppContext)\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;p\u0026gt;{text}\u0026lt;/p\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n\n這樣本次範例就完成了，下面有 Demo 可以試玩看看 ⬇️\n\n\n","wordCount":315,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 useContext 處理跨元件狀態","description":"使用 useContext 處理跨元件狀態","url":"https://railquill.vercel.app/usecontext.html","datePublished":"2022-03-02T16:09:10Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/usecontext.html"},"articleBody":"寫了這麼久 React，發現我的筆記都沒整理過，趁最近比較不忙來清理一下筆記 XD\n這次要分享的是跨元件處理狀態的 hook -- useContext。\n\n\n\n使用情境\n\n一般寫 React 時，如果需要將元件的狀態傳遞的話，如果是簡單的父子元件傳遞，可以用 props 來傳。但如果是很多層的情況，或是同層的子組件要互傳狀態的話，可能用 props 就不是這麼適合。當然也可以使用一些狀態管理的套件，例如：Redux（之後會找時間分享）。不過，其實 React 內建就有 useContext 這個 hook，這邊就來示範一下作法：\n\n使用的情境是分別有兩個元件，有一個輸入框 - A，跟一個顯示輸入的文字 - B，如果 A 改變輸入的文字，那麼 B 就會即時顯示該文字。\n\n初始設置\n\n以下是原始的程式碼，可以看到分別有 InputText.js 跟 ShowText.js 兩個元件放在 App.js 中\n\n// App.js\nimport InputText from './InputText'\nimport ShowText from './ShowText'\n\nexport default function App() {\n\n  return (\n    \u0026lt;div className='App'\u0026gt;\n      \u0026lt;InputText /\u0026gt;\n      \u0026lt;ShowText /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n// InputText\nconst InputText = () =\u0026gt; {\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;input type=\"text\" /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\nexport default InputText;\n\n// ShowText\nconst ShowText = () =\u0026gt; {\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;p\u0026gt;Hello World\u0026lt;/p\u0026gt;\n    \u0026lt;/div\u0026gt;\n  );\n};\n\nexport default ShowText;\n\n\n使用 createContext 建立共用狀態\n\n首先 import createContext，並且設一個變數，然後 export 該變數，例如： AppContext，等等會給其他元件使用。\n\nimport { createContext } from 'react'\n\nexport const AppContext = createContext()\n\n\n接著在要傳遞狀態的父元件，在這個範例也就是 App.js 中，在最外層用 AppContext 將所有子元件包起來，並且設置 value。\n\n\u0026lt;AppContext.Provider value={{}}\u0026gt;\n  \u0026lt;div\u0026gt;\n    \u0026lt;InputText /\u0026gt;\n    \u0026lt;ShowText /\u0026gt;\n  \u0026lt;/div\u0026gt;\n\u0026lt;/AppContext.Provider\u0026gt;\n\n\n可以發現 value 是一個物件，裡面可以放入任何狀態，等等就可以讓其他元件使用，這邊用一個 useState 來處理狀態。\n\nimport { createContext, useState } from 'react'\n\nexport default function App() {\n  const [text, setText] = useState('Hello World')\n\n  return (\n    \u0026lt;AppContext.Provider value={{ text, setText }}\u0026gt;\n      \u0026lt;div className='App'\u0026gt;\n        \u0026lt;InputText /\u0026gt;\n        \u0026lt;ShowText /\u0026gt;\n      \u0026lt;/div\u0026gt;\n    \u0026lt;/AppContext.Provider\u0026gt;\n  )\n}\n\n\n利用 useContext 讓其他元件處理狀態\n\nInputText\n\n首先 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 setText 來變更狀態。\n\nimport { useContext } from 'react'\nimport { AppContext } from './App'\n\nconst InputText = () =\u0026gt; {\n  const { text, setText } = useContext(AppContext)\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;input type='text' value={text} onChange={(e) =\u0026gt; setText(e.target.value)} /\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n\nShowText\n\n一樣 import useContext，並且參數帶入一開始建立的 AppContext，然後從裡面取出 text 來顯示狀態。\n\nimport { useContext } from 'react'\nimport { AppContext } from './App'\n\nconst ShowText = () =\u0026gt; {\n  const { text } = useContext(AppContext)\n\n  return (\n    \u0026lt;div\u0026gt;\n      \u0026lt;p\u0026gt;{text}\u0026lt;/p\u0026gt;\n    \u0026lt;/div\u0026gt;\n  )\n}\n\n\n這樣本次範例就完成了，下面有 Demo 可以試玩看看 ⬇️\n\n\n","wordCount":315,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1113,8 +1113,9 @@ const ShowText = () =&gt; {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1135,7 +1136,7 @@ const ShowText = () =&gt; {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

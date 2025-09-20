@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Railquill</title>
+    <title>Bucky Chu | Railquill</title>
     <link>https://railquill.vercel.app</link>
-    <description>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.</description>
+    <description>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.
+</description>
     <language>en-us</language>
     <atom:link href="https://railquill.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>Fri, 19 Sep 2025 18:54:59 +0000</lastBuildDate>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Rust 的閉包 - Railquill</title>
+    <title>Rust 的閉包 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Rust 的閉包">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/rust.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Rust 的閉包">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Rust 的閉包","description":"Rust 的閉包","url":"https://railquill.vercel.app/rust.html","datePublished":"2022-10-04T00:30:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust.html"},"articleBody":"什麼是閉包（closure）？\n\nRust 的閉包是一種匿名函式，可以從其函式的作用域中捕獲數值，而且閉包是為了快速執行而設計的，也因為如此它們的性能比一般函式還要好。\n\n閉包有以下幾個特性：\n\n\n是一種匿名函式\n可以保存為變數，或是作為參數傳遞給其他函式\n可以在某處建立閉包，然後在不同的地方執行它\n可以從定義的作用域中捕獲變數\n\n\n如何建立閉包？\n\n閉包的建立方式：\n\n\n使用 | 來分隔參數，| 後面是函式的主體\n使用 {} 來包裹函式的主體\n\n\n例如：\n\nlet plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\nplus_one(1); // 2\n\n\n建立閉包的時候，有些特殊的地方可以注意：\n\n\n可以不用參數，直接使用 || 來建立一個空閉包\n可以不用 return 來回傳值，直接使用 -\u0026gt; 來指定回傳值的型別\n可以不用指定型別，Rust 會自動推導型別\n\n\n如何使用閉包？\n\n上面的範例中，我們建立了一個閉包，並且將它存到變數 plus_one 中，然後呼叫它。\n\n閉包可以像函式一樣使用，例如：\n\nfn main() {\n    let plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\n    let a = plus_one(1);\n    println!(\"a is {}\", a); // a is 2\n}\n\n\n如何傳遞閉包？\n\n閉包可以像函式一樣傳遞給其他函式，例如：\n\nfn main() {\n    let plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\n    let a = do_twice(plus_one, 1);\n    println!(\"a is {}\", a); // a is 3\n}\n\nfn do_twice\u0026lt;F\u0026gt;(f: F, arg: i32) -\u0026gt; i32\nwhere\n    F: Fn(i32) -\u0026gt; i32,\n{\n    f(arg) + f(arg)\n}\n\n\n上面的範例中，我們定義了一個函式 do_twice，它接受一個函式 f 和一個參數 arg，然後呼叫 f 兩次，並且將結果相加。\n\n在呼叫 do_twice 的時候，我們傳遞了一個閉包 plus_one，並且傳遞了一個參數 1。\n\n如何捕獲變數？\n\n閉包可以從定義的作用域中捕獲變數，例如：\n\nfn main() {\n    let num = 5;\n    let plus_num = |x: i32| -\u0026gt; i32 { x + num };\n    let a = plus_num(1);\n    println!(\"a is {}\", a); // a is 6\n}\n\n\n上面的範例中，我們定義了一個變數 num，並且將它傳遞給一個閉包 plus_num，然後呼叫 plus_num。\n\n在呼叫 plus_num 的時候，閉包會從定義的作用域中捕獲變數 num，並且將它加到 x 上。\n\n如何使用 move 關鍵字來捕獲變數？\n\n使用 move 關鍵字可以用來捕獲變數，並且將它們移動到閉包中，例如：\n\nfn main() {\n    let num = 5;\n    let plus_num = move |x: i32| -\u0026gt; i32 { x + num };\n    let a = plus_num(1);\n    println!(\"a is {}\", a); // a is 6\n}\n\n\n上面的範例中，我們定義了一個變數 num，並且將它傳遞給一個閉包 plus_num，然後呼叫 plus_num。\n\n在呼叫 plus_num 的時候，與上面其他例子不同的是，我們使用 move 關鍵字來捕獲變數，並且將它加到 x 上。\n","wordCount":256,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Rust 的閉包","description":"Rust 的閉包","url":"https://railquill.vercel.app/rust.html","datePublished":"2022-10-04T00:30:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/rust.html"},"articleBody":"什麼是閉包（closure）？\n\nRust 的閉包是一種匿名函式，可以從其函式的作用域中捕獲數值，而且閉包是為了快速執行而設計的，也因為如此它們的性能比一般函式還要好。\n\n閉包有以下幾個特性：\n\n\n是一種匿名函式\n可以保存為變數，或是作為參數傳遞給其他函式\n可以在某處建立閉包，然後在不同的地方執行它\n可以從定義的作用域中捕獲變數\n\n\n如何建立閉包？\n\n閉包的建立方式：\n\n\n使用 | 來分隔參數，| 後面是函式的主體\n使用 {} 來包裹函式的主體\n\n\n例如：\n\nlet plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\nplus_one(1); // 2\n\n\n建立閉包的時候，有些特殊的地方可以注意：\n\n\n可以不用參數，直接使用 || 來建立一個空閉包\n可以不用 return 來回傳值，直接使用 -\u0026gt; 來指定回傳值的型別\n可以不用指定型別，Rust 會自動推導型別\n\n\n如何使用閉包？\n\n上面的範例中，我們建立了一個閉包，並且將它存到變數 plus_one 中，然後呼叫它。\n\n閉包可以像函式一樣使用，例如：\n\nfn main() {\n    let plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\n    let a = plus_one(1);\n    println!(\"a is {}\", a); // a is 2\n}\n\n\n如何傳遞閉包？\n\n閉包可以像函式一樣傳遞給其他函式，例如：\n\nfn main() {\n    let plus_one = |x: i32| -\u0026gt; i32 { x + 1 };\n    let a = do_twice(plus_one, 1);\n    println!(\"a is {}\", a); // a is 3\n}\n\nfn do_twice\u0026lt;F\u0026gt;(f: F, arg: i32) -\u0026gt; i32\nwhere\n    F: Fn(i32) -\u0026gt; i32,\n{\n    f(arg) + f(arg)\n}\n\n\n上面的範例中，我們定義了一個函式 do_twice，它接受一個函式 f 和一個參數 arg，然後呼叫 f 兩次，並且將結果相加。\n\n在呼叫 do_twice 的時候，我們傳遞了一個閉包 plus_one，並且傳遞了一個參數 1。\n\n如何捕獲變數？\n\n閉包可以從定義的作用域中捕獲變數，例如：\n\nfn main() {\n    let num = 5;\n    let plus_num = |x: i32| -\u0026gt; i32 { x + num };\n    let a = plus_num(1);\n    println!(\"a is {}\", a); // a is 6\n}\n\n\n上面的範例中，我們定義了一個變數 num，並且將它傳遞給一個閉包 plus_num，然後呼叫 plus_num。\n\n在呼叫 plus_num 的時候，閉包會從定義的作用域中捕獲變數 num，並且將它加到 x 上。\n\n如何使用 move 關鍵字來捕獲變數？\n\n使用 move 關鍵字可以用來捕獲變數，並且將它們移動到閉包中，例如：\n\nfn main() {\n    let num = 5;\n    let plus_num = move |x: i32| -\u0026gt; i32 { x + num };\n    let a = plus_num(1);\n    println!(\"a is {}\", a); // a is 6\n}\n\n\n上面的範例中，我們定義了一個變數 num，並且將它傳遞給一個閉包 plus_num，然後呼叫 plus_num。\n\n在呼叫 plus_num 的時候，與上面其他例子不同的是，我們使用 move 關鍵字來捕獲變數，並且將它加到 x 上。\n","wordCount":256,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1082,8 +1082,9 @@ where
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1104,7 +1105,7 @@ where
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

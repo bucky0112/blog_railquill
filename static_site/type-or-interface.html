@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Type or Interface? - Railquill</title>
+    <title>Type or Interface? - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="TypeScript 的 type 和 interface 有什麼不同？">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/type-or-interface.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Type or Interface?">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Type or Interface?","description":"TypeScript 的 type 和 interface 有什麼不同？","url":"https://railquill.vercel.app/type-or-interface.html","datePublished":"2024-07-28T15:55:31Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/type-or-interface.html"},"articleBody":"在開發 TS 一段時間後，發覺 type 跟 interface 這兩個東西看起來很像，一直不太清楚使用的時機是什麼，所以研究了一下，寫了一篇文章記錄一下。\n\n站在巨人的肩膀上，我參考了這部影片，有些觀點很有趣：\n\n\n\n在開始之前，先簡單介紹一下這兩種東西，並比較一下兩者的差異。\n\n什麼是 type？\n\ntype 是 TypeScript 中用來定義型別別名的關鍵字，它可以定義任何型別。\n\ntype UserType = {\n    name: string\n    age: number\n}\n\nconst user: UserType = {\n    name: \"Bucky\",\n    age: 18,\n}\n\n\n什麼是 interface\n\ninterface 是用來定義物件型別的一種方式，它主要用於描述物件的形狀。\n\ninterface UserInter {\n    name: string\n    age: number\n}\n\nconst user: UserInter = {\n    name: \"Bucky\",\n    age: 18,\n}\n\n\nTypeScript 官方文件推薦哪一個？\n\n在官方文件中，Differences Between Type Aliases and Interfaces這一段落最後有下一個結論：\n\n\nFor the most part, you can choose based on personal preference, and TypeScript will tell you if it needs something to be the other kind of declaration. If you would like a heuristic, use interface until you need to use features from type.\n\n\ninterface 的局限性\n\n在 Kyle 的影片當中，他提到了 interface 只能用在物件上，而不像 type 比較靈活，例如：\n\ntype StringType = string\n\nconst user: StringType = \"Bucky\"\n\n\n但是 interface 沒辦法這樣做，這樣做就會壞掉：\n\ninterface StringInter = string\n\nconst user: StringInter = \"Bucky\"\n\n\n會跟你說：\n\n'string' only refers to a type, but is being used as a value here.\n\n\n那麼 type 還可以做到什麼呢？\n\ntype 的靈活\n\n例如一個變數可能有多個型別，type 可以定義聯合型別：\n\ntype IdType = string | number\n\nconst orderId: IdType = \"123\"\n\n\ntype 還可以用於定義交叉型別：\n\ntype A = { a: string }\ntype B = { b: number }\ntype AB = A \u0026amp; B\n\nconst ab: AB = { a: \"hello\", b: 42 }\n\n\ninterface 的擴充性\n\ninterface 可以通過 extends 關鍵字進行擴充：\n\ninterface A {\n  age: number\n}\n\ninterface User extends A {\n  name: string\n}\n\nconst user: User = {\n  name: \"John\",\n  age: 30,\n}\n\n\n但是 type 也可以通過交叉型別實現類似的擴充：\n\ntype User = {\n  name: string\n} \u0026amp; {\n  age: number\n}\n\nconst user: User = {\n  name: \"John\",\n  age: 30,\n}\n\n\ntype 的獨特之處\n\ntype 可以用於定義聯合型別的物件：\n\ntype User = {\n  name: string\n} | {\n  age: number\n}\n\nconst user1: User = { name: \"John\" }\nconst user2: User = { age: 30 }\nconst user3: User = { name: \"John\", age: 30 } // 這也是合法的\n\n\n這是 interface 無法直接實現的功能。\n\ninterface 的獨特特性：宣告合併\n\n前面講了這麼多 type 做得到，但 interface 做不到的地方。不過 interface 確實是有一個 type 無法實現的特性是宣告合併（Declaration Merging）。\n\n可以讓你在多個地方定義同一個 interface，TypeScript 會自動將這些定義合併。例如：\n\ninterface Order {\n  id: number\n}\n\ninterface Order {\n  name: string\n}\n\ninterface Order {\n  age: number\n}\n\nconst order: Order = {\n  id: 1,\n  name: \"John\",\n  age: 30,\n}\n\n\n但我想不到這樣做的好處有什麼，反而會降低可讀性。\n\n總結\n\n如果你需要定義複雜的型別（如聯合型別、交叉型別、條件類型等），使用 type。\n\n如果你主要想定義物件的結構，並且可能需要在未來擴展這個結構，那就可考慮使用 interface。\n\n最後，無論選擇 type 還是 interface 都是可以的，選擇哪一個主要取決於個人偏好和團隊約定。最重要的還是在整個專案中保持一致性，程式碼的可讀性和可維護性還是最重要的。\n","wordCount":408,"timeRequired":"PT3M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Type or Interface?","description":"TypeScript 的 type 和 interface 有什麼不同？","url":"https://railquill.vercel.app/type-or-interface.html","datePublished":"2024-07-28T15:55:31Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/type-or-interface.html"},"articleBody":"在開發 TS 一段時間後，發覺 type 跟 interface 這兩個東西看起來很像，一直不太清楚使用的時機是什麼，所以研究了一下，寫了一篇文章記錄一下。\n\n站在巨人的肩膀上，我參考了這部影片，有些觀點很有趣：\n\n\n\n在開始之前，先簡單介紹一下這兩種東西，並比較一下兩者的差異。\n\n什麼是 type？\n\ntype 是 TypeScript 中用來定義型別別名的關鍵字，它可以定義任何型別。\n\ntype UserType = {\n    name: string\n    age: number\n}\n\nconst user: UserType = {\n    name: \"Bucky\",\n    age: 18,\n}\n\n\n什麼是 interface\n\ninterface 是用來定義物件型別的一種方式，它主要用於描述物件的形狀。\n\ninterface UserInter {\n    name: string\n    age: number\n}\n\nconst user: UserInter = {\n    name: \"Bucky\",\n    age: 18,\n}\n\n\nTypeScript 官方文件推薦哪一個？\n\n在官方文件中，Differences Between Type Aliases and Interfaces這一段落最後有下一個結論：\n\n\nFor the most part, you can choose based on personal preference, and TypeScript will tell you if it needs something to be the other kind of declaration. If you would like a heuristic, use interface until you need to use features from type.\n\n\ninterface 的局限性\n\n在 Kyle 的影片當中，他提到了 interface 只能用在物件上，而不像 type 比較靈活，例如：\n\ntype StringType = string\n\nconst user: StringType = \"Bucky\"\n\n\n但是 interface 沒辦法這樣做，這樣做就會壞掉：\n\ninterface StringInter = string\n\nconst user: StringInter = \"Bucky\"\n\n\n會跟你說：\n\n'string' only refers to a type, but is being used as a value here.\n\n\n那麼 type 還可以做到什麼呢？\n\ntype 的靈活\n\n例如一個變數可能有多個型別，type 可以定義聯合型別：\n\ntype IdType = string | number\n\nconst orderId: IdType = \"123\"\n\n\ntype 還可以用於定義交叉型別：\n\ntype A = { a: string }\ntype B = { b: number }\ntype AB = A \u0026amp; B\n\nconst ab: AB = { a: \"hello\", b: 42 }\n\n\ninterface 的擴充性\n\ninterface 可以通過 extends 關鍵字進行擴充：\n\ninterface A {\n  age: number\n}\n\ninterface User extends A {\n  name: string\n}\n\nconst user: User = {\n  name: \"John\",\n  age: 30,\n}\n\n\n但是 type 也可以通過交叉型別實現類似的擴充：\n\ntype User = {\n  name: string\n} \u0026amp; {\n  age: number\n}\n\nconst user: User = {\n  name: \"John\",\n  age: 30,\n}\n\n\ntype 的獨特之處\n\ntype 可以用於定義聯合型別的物件：\n\ntype User = {\n  name: string\n} | {\n  age: number\n}\n\nconst user1: User = { name: \"John\" }\nconst user2: User = { age: 30 }\nconst user3: User = { name: \"John\", age: 30 } // 這也是合法的\n\n\n這是 interface 無法直接實現的功能。\n\ninterface 的獨特特性：宣告合併\n\n前面講了這麼多 type 做得到，但 interface 做不到的地方。不過 interface 確實是有一個 type 無法實現的特性是宣告合併（Declaration Merging）。\n\n可以讓你在多個地方定義同一個 interface，TypeScript 會自動將這些定義合併。例如：\n\ninterface Order {\n  id: number\n}\n\ninterface Order {\n  name: string\n}\n\ninterface Order {\n  age: number\n}\n\nconst order: Order = {\n  id: 1,\n  name: \"John\",\n  age: 30,\n}\n\n\n但我想不到這樣做的好處有什麼，反而會降低可讀性。\n\n總結\n\n如果你需要定義複雜的型別（如聯合型別、交叉型別、條件類型等），使用 type。\n\n如果你主要想定義物件的結構，並且可能需要在未來擴展這個結構，那就可考慮使用 interface。\n\n最後，無論選擇 type 還是 interface 都是可以的，選擇哪一個主要取決於個人偏好和團隊約定。最重要的還是在整個專案中保持一致性，程式碼的可讀性和可維護性還是最重要的。\n","wordCount":408,"timeRequired":"PT3M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1150,8 +1150,9 @@ const order: Order = {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1172,7 +1173,7 @@ const order: Order = {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

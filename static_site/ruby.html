@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Ruby 的邏輯判斷與流程控制 - Railquill</title>
+    <title>Ruby 的邏輯判斷與流程控制 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Ruby 的邏輯判斷與流程控制">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/ruby.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="Ruby 的邏輯判斷與流程控制">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Ruby 的邏輯判斷與流程控制","description":"Ruby 的邏輯判斷與流程控制","url":"https://railquill.vercel.app/ruby.html","datePublished":"2021-05-16T17:12:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/ruby.html"},"articleBody":"本篇文章將會提到 Ruby 該如何使用判斷式。\n\n\n\nIf\n\n在 JavaScript 中，如果要做判斷式的話，會這樣做：\n\nlet num = 10;\n\nif (num !== 5) {\n  console.log('false');\n}\n// 結果會印出 false\n\n\n而在 Ruby 中，也是差不多的作法：\n\nnum = 10\n\nif num != 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\n不過 Ruby 倒是提供了不一樣的寫法：\n\nif not\n\n這個用法感覺起來比較像英文的寫法，上面的例子如果用 if not 來表示的話，就會是：\n\nnum = 10\n\nif not num == 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\nif 倒裝句\n\n這個寫法就更像英文了，如果寫起來就像是英文的倒裝句一樣，但是這個的用法只限一行的程式碼使用：\n\nnum = 10\n\nputs 'false' if not num == 5\n# 結果會印出 false\n\n\nunless\n\nif not 也可以使用 unless 來替代：\n\nnum = 10\n\nunless num == 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\n當然也可以使用倒裝句：\n\nnum = 10\n\nputs 'false' unless num == 5\n# 結果會印出 false\n\n\nif...else 跟 if...elsif...else 還有 case...when\n\nif...else\n\n如果要使用到判斷的話，一般情況下都會有多種情形判別，例如：\n\ndeposit = 30000\noption = ''\n\nif deposit \u0026gt;= 30900\n  option = '可以買 M1 Macbook Air'\nelse\n  option = '繼續存錢QQ'\nend\n\nputs option\n# 繼續存錢QQ\n\n\n也可以使用三元運算子：\n\ndeposit = 31000\noption = ''\n\noption = (deposit \u0026gt;= 30900) ? '可以買 M1 Macbook Air' : '繼續存錢QQ'\nputs option\n# 可以買 M1 Macbook Air\n\n\nif...elsif...else\n\n如果有兩種以上的選擇的話，就可以使用這個寫法，要特別注意是 elsif：\n\ndeposit = 40000\noption = ''\n\nif deposit \u0026gt;= 39900\n  option = '可以買 M1 MacBook Pro'\nelsif deposit \u0026gt;= 30900\n  option = '可以買 M1 Macbook Air'\nelse\n  option = '繼續存錢QQ'\nend\n\nputs option\n\n\ncase...when\n\n如果在 JavaScript 中，有多種條件判別的話，可以使用 swtich：\n\nconst skill = 'JavaScript';\nlet option = '';\n\nswitch (skill) {\n  case 'Ruby':\n    option = 'Ruby on Rails';\n    break;\n  case 'C#':\n    option = 'ASP.Net';\n    break;\n  case 'JavaScript':\n    option = 'Express';\n    break;\n  default:\n    option = 'Learn something else';\n}\n\nconsole.log(option)\n\n\n而在 Ruby 中，也有類似的語法可以使用，那就是 case...when：\n\nskill = 'PHP'\noption = ''\n\ncase skill\nwhen 'Ruby'\n  option = 'Ruby on Rails'\nwhen 'PHP'\n  option = 'Laravel'\nwhen 'JavaScript'\n  option = 'Express'\nelse\n  option = 'Learn something else'\nend\n\nputs option\n# 印出 Laravel\n\n","wordCount":319,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"Ruby 的邏輯判斷與流程控制","description":"Ruby 的邏輯判斷與流程控制","url":"https://railquill.vercel.app/ruby.html","datePublished":"2021-05-16T17:12:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/ruby.html"},"articleBody":"本篇文章將會提到 Ruby 該如何使用判斷式。\n\n\n\nIf\n\n在 JavaScript 中，如果要做判斷式的話，會這樣做：\n\nlet num = 10;\n\nif (num !== 5) {\n  console.log('false');\n}\n// 結果會印出 false\n\n\n而在 Ruby 中，也是差不多的作法：\n\nnum = 10\n\nif num != 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\n不過 Ruby 倒是提供了不一樣的寫法：\n\nif not\n\n這個用法感覺起來比較像英文的寫法，上面的例子如果用 if not 來表示的話，就會是：\n\nnum = 10\n\nif not num == 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\nif 倒裝句\n\n這個寫法就更像英文了，如果寫起來就像是英文的倒裝句一樣，但是這個的用法只限一行的程式碼使用：\n\nnum = 10\n\nputs 'false' if not num == 5\n# 結果會印出 false\n\n\nunless\n\nif not 也可以使用 unless 來替代：\n\nnum = 10\n\nunless num == 5\n  puts 'false'\nend\n# 結果會印出 false\n\n\n當然也可以使用倒裝句：\n\nnum = 10\n\nputs 'false' unless num == 5\n# 結果會印出 false\n\n\nif...else 跟 if...elsif...else 還有 case...when\n\nif...else\n\n如果要使用到判斷的話，一般情況下都會有多種情形判別，例如：\n\ndeposit = 30000\noption = ''\n\nif deposit \u0026gt;= 30900\n  option = '可以買 M1 Macbook Air'\nelse\n  option = '繼續存錢QQ'\nend\n\nputs option\n# 繼續存錢QQ\n\n\n也可以使用三元運算子：\n\ndeposit = 31000\noption = ''\n\noption = (deposit \u0026gt;= 30900) ? '可以買 M1 Macbook Air' : '繼續存錢QQ'\nputs option\n# 可以買 M1 Macbook Air\n\n\nif...elsif...else\n\n如果有兩種以上的選擇的話，就可以使用這個寫法，要特別注意是 elsif：\n\ndeposit = 40000\noption = ''\n\nif deposit \u0026gt;= 39900\n  option = '可以買 M1 MacBook Pro'\nelsif deposit \u0026gt;= 30900\n  option = '可以買 M1 Macbook Air'\nelse\n  option = '繼續存錢QQ'\nend\n\nputs option\n\n\ncase...when\n\n如果在 JavaScript 中，有多種條件判別的話，可以使用 swtich：\n\nconst skill = 'JavaScript';\nlet option = '';\n\nswitch (skill) {\n  case 'Ruby':\n    option = 'Ruby on Rails';\n    break;\n  case 'C#':\n    option = 'ASP.Net';\n    break;\n  case 'JavaScript':\n    option = 'Express';\n    break;\n  default:\n    option = 'Learn something else';\n}\n\nconsole.log(option)\n\n\n而在 Ruby 中，也有類似的語法可以使用，那就是 case...when：\n\nskill = 'PHP'\noption = ''\n\ncase skill\nwhen 'Ruby'\n  option = 'Ruby on Rails'\nwhen 'PHP'\n  option = 'Laravel'\nwhen 'JavaScript'\n  option = 'Express'\nelse\n  option = 'Learn something else'\nend\n\nputs option\n# 印出 Laravel\n\n","wordCount":319,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1140,8 +1140,9 @@ puts option
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1162,7 +1163,7 @@ puts option
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

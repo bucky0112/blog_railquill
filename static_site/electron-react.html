@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>使用 Electron 搭配 React 建置桌面程式 - Railquill</title>
+    <title>使用 Electron 搭配 React 建置桌面程式 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="使用 Electron 搭配 React 建立桌面程式">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/electron-react.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="使用 Electron 搭配 React 建置桌面程式">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Electron 搭配 React 建置桌面程式","description":"使用 Electron 搭配 React 建立桌面程式","url":"https://railquill.vercel.app/electron-react.html","datePublished":"2022-02-24T16:42:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/electron-react.html"},"articleBody":"這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。\n\n\n\n什麼是 Electron\n\nElectron 原本是 GitHub 開發的一個開源框架，使用 Node.js (後段) 與 Chromium (前端)，可以讓開發者透過 JavaScript、HTML 和 CSS 就可以來製作跨平台的桌面 GUI 應用程式，現在開發者常用的 Visual Studio Code 就是使用 Electron 建置的。\n\n簡介\n\n本次計畫是要將我之前練習的作品，打包成桌面程式。\n\n專案初始\n\n如果是新專案的話，可以使用 Create React App 來建立專案，並且要加上 TypeScript。\n\n$ yarn create react-app my-app --template typescript\n\n\n如果是像我這次要做的，在原有專案加上 TypeScript，就執行以下：\n\n$ yarn add typescript @types/node @types/react @types/react-dom @types/jest\n\n\n安裝插件\n\n$ yarn add cross-env electron-is-dev\n\n$ yarn add --dev concurrently electron electron-builder wait-on\n\n\n新增檔案\n\n安裝完以上兩個步驟之後，接著在 public 資料夾中新增一個檔案，並命名為 electron.js，並貼上以下內容：\n\nconst electron = require(\"electron\");\nconst app = electron.app;\nconst BrowserWindow = electron.BrowserWindow;\nconst path = require(\"path\");\nconst isDev = require(\"electron-is-dev\");\nlet mainWindow;\nfunction createWindow() {\nmainWindow = new BrowserWindow({ width: 900, height: 680 });\nmainWindow.loadURL(\nisDev\n? \"http://localhost:3000\"\n: `file://${path.join(__dirname, \"../build/index.html\")}`\n);\nmainWindow.on(\"closed\", () =\u0026gt; (mainWindow = null));\n}\napp.on(\"ready\", createWindow);\napp.on(\"window-all-closed\", () =\u0026gt; {\nif (process.platform !== \"darwin\") {\napp.quit();\n}\n});\napp.on(\"activate\", () =\u0026gt; {\nif (mainWindow === null) {\ncreateWindow();\n}\n});\n\n\npackage.json 新增內容\n\n\"name\": \"程式檔案名稱\",\n\"description\": \"描述你的程式\",\n\"author\": \"作者名\",\n\"build\": {\n\"appId\": \"\u0026lt;com.your_app\u0026gt;\"\n},\n\"main\": \"public/electron.js\",\n\"homepage\": \"./\",\n\"scripts\": {\n    \"react-start\": \"react-scripts start\",\n    \"react-build\": \"react-scripts build\",\n    \"react-test\": \"react-scripts test --env=jsdom\",\n    \"react-eject\": \"react-scripts eject\",\n    \"electron-build\": \"electron-builder\",\n    \"release\": \"yarn react-build \u0026amp;\u0026amp; electron-builder --publish=always\",\n    \"build\": \"yarn react-build \u0026amp;\u0026amp; yarn electron-build\",\n    \"start\": \"concurrently \\\"cross-env BROWSER=none yarn react-start\\\" \\\"wait-on http://localhost:3000 \u0026amp;\u0026amp; electron .\\\"\"\n},\n\n\n到這裡基本上就設定的差不多了，接著先來測試看看\n\n$ yarn start\n\n\n沒問題的話，會出現一個視窗，並且顯示內容\n\n\n\n\n\n將內容打包成程式檔\n\n如果以上都沒問題的話，就可以來打包成可以在電腦執行的一般程式了。\n\nyarn build\n\n\n成功的話，就會在資料夾 dist 中新增一個資料夾\n\n\n\n這裡會按照你的電腦是什麼系統來編譯成什麼檔案，舉例來說，在 Mac 編譯的最後結果就會是 dmg 檔，如果是 Windows 的話，就會是 exe 檔。\n\n\n\n執行該檔案就會安裝檔案\n\n\n\n如果是 Mac 的話，會在應用程式看得到剛剛安裝的檔案；如果是 Windows 的話，則會在桌面顯示檔案捷徑。\n\n遇到的雷點\n\n首先這次專案一開始就說要安裝 TypeScript，一開始曾試過沒安裝 TypeScript，後面就有遇到一些錯誤，所以在專案的一開始要記得安裝 TypeScript。\n","wordCount":264,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Electron 搭配 React 建置桌面程式","description":"使用 Electron 搭配 React 建立桌面程式","url":"https://railquill.vercel.app/electron-react.html","datePublished":"2022-02-24T16:42:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/electron-react.html"},"articleBody":"這次公司打算把專案製作的網頁打包成桌面程式，之前就已經知道有 Electron 這個工具可以用，剛好趁這個機會來紀錄一下過程。\n\n\n\n什麼是 Electron\n\nElectron 原本是 GitHub 開發的一個開源框架，使用 Node.js (後段) 與 Chromium (前端)，可以讓開發者透過 JavaScript、HTML 和 CSS 就可以來製作跨平台的桌面 GUI 應用程式，現在開發者常用的 Visual Studio Code 就是使用 Electron 建置的。\n\n簡介\n\n本次計畫是要將我之前練習的作品，打包成桌面程式。\n\n專案初始\n\n如果是新專案的話，可以使用 Create React App 來建立專案，並且要加上 TypeScript。\n\n$ yarn create react-app my-app --template typescript\n\n\n如果是像我這次要做的，在原有專案加上 TypeScript，就執行以下：\n\n$ yarn add typescript @types/node @types/react @types/react-dom @types/jest\n\n\n安裝插件\n\n$ yarn add cross-env electron-is-dev\n\n$ yarn add --dev concurrently electron electron-builder wait-on\n\n\n新增檔案\n\n安裝完以上兩個步驟之後，接著在 public 資料夾中新增一個檔案，並命名為 electron.js，並貼上以下內容：\n\nconst electron = require(\"electron\");\nconst app = electron.app;\nconst BrowserWindow = electron.BrowserWindow;\nconst path = require(\"path\");\nconst isDev = require(\"electron-is-dev\");\nlet mainWindow;\nfunction createWindow() {\nmainWindow = new BrowserWindow({ width: 900, height: 680 });\nmainWindow.loadURL(\nisDev\n? \"http://localhost:3000\"\n: `file://${path.join(__dirname, \"../build/index.html\")}`\n);\nmainWindow.on(\"closed\", () =\u0026gt; (mainWindow = null));\n}\napp.on(\"ready\", createWindow);\napp.on(\"window-all-closed\", () =\u0026gt; {\nif (process.platform !== \"darwin\") {\napp.quit();\n}\n});\napp.on(\"activate\", () =\u0026gt; {\nif (mainWindow === null) {\ncreateWindow();\n}\n});\n\n\npackage.json 新增內容\n\n\"name\": \"程式檔案名稱\",\n\"description\": \"描述你的程式\",\n\"author\": \"作者名\",\n\"build\": {\n\"appId\": \"\u0026lt;com.your_app\u0026gt;\"\n},\n\"main\": \"public/electron.js\",\n\"homepage\": \"./\",\n\"scripts\": {\n    \"react-start\": \"react-scripts start\",\n    \"react-build\": \"react-scripts build\",\n    \"react-test\": \"react-scripts test --env=jsdom\",\n    \"react-eject\": \"react-scripts eject\",\n    \"electron-build\": \"electron-builder\",\n    \"release\": \"yarn react-build \u0026amp;\u0026amp; electron-builder --publish=always\",\n    \"build\": \"yarn react-build \u0026amp;\u0026amp; yarn electron-build\",\n    \"start\": \"concurrently \\\"cross-env BROWSER=none yarn react-start\\\" \\\"wait-on http://localhost:3000 \u0026amp;\u0026amp; electron .\\\"\"\n},\n\n\n到這裡基本上就設定的差不多了，接著先來測試看看\n\n$ yarn start\n\n\n沒問題的話，會出現一個視窗，並且顯示內容\n\n\n\n\n\n將內容打包成程式檔\n\n如果以上都沒問題的話，就可以來打包成可以在電腦執行的一般程式了。\n\nyarn build\n\n\n成功的話，就會在資料夾 dist 中新增一個資料夾\n\n\n\n這裡會按照你的電腦是什麼系統來編譯成什麼檔案，舉例來說，在 Mac 編譯的最後結果就會是 dmg 檔，如果是 Windows 的話，就會是 exe 檔。\n\n\n\n執行該檔案就會安裝檔案\n\n\n\n如果是 Mac 的話，會在應用程式看得到剛剛安裝的檔案；如果是 Windows 的話，則會在桌面顯示檔案捷徑。\n\n遇到的雷點\n\n首先這次專案一開始就說要安裝 TypeScript，一開始曾試過沒安裝 TypeScript，後面就有遇到一些錯誤，所以在專案的一開始要記得安裝 TypeScript。\n","wordCount":264,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1100,8 +1100,9 @@ createWindow();
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1122,7 +1123,7 @@ createWindow();
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

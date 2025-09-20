@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>用 Cargo 管理專案好棒棒 - Railquill</title>
+    <title>用 Cargo 管理專案好棒棒 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="專案太大怎麼管理？用 Cargo 就搞定！">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/cargo.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="用 Cargo 管理專案好棒棒">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Cargo 管理專案好棒棒","description":"專案太大怎麼管理？用 Cargo 就搞定！","url":"https://railquill.vercel.app/cargo.html","datePublished":"2022-09-18T12:58:33Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/cargo.html"},"articleBody":"昨天我們自己新增了一個副檔名為 rs 的檔案，然後在終端機執行 rustc 來編譯出結果。雖然這樣的作法沒什麼問題，但是只適合用在簡單的情況下。如果是一個龐大而且複雜的案例的話，顯然是沒辦法很有效地管理我們的專案，於是 Rust 也幫我們設想好，並且提供了 Cargo。\n\n什麼是 Cargo\n\nCargo 可以做到套件管理、建構系統、跑測試，甚至是產生文件，Cargo 的角色就像是 JavaScript 的 NPM，或是 Python 的 Pip。\n\n由於安裝 Rust 的時候，已經順便安裝了 Cargo，如果想確認有沒有安裝完成的話，可以在終端機輸入：\n\n$ cargo --version\n\n或是\n\n$ cargo -V\n\n正常顯示出版本號的話，就代表你的 Cargo 已經安裝好了。\n\n建立專案\n\n既然已經有了 Cargo，那麼接下來就來用 Cargo 來建立一個專案。\n例如要建立一個名稱為 hello_world 專案的話請在終端機輸入：\n\n$ cargo new hello_world\n\n\n可以看到 Cargo 幫我們建立了一個 hello_world 專案，並且產生下圖中的檔案以及目錄。\n\n\n\n可以看到 Cargo 幫我們建立了資料夾 src，還有一個 Cargo.toml 檔案，並且幫我們用 Git 來做版本控制。\n\n資料夾 src 裡面有一個 main.rs 檔案，然後裡面理所當然地有一個主程式 main()，並且預設可以印出 \"Hello, World\"\n\n\n\n而 Cargo.toml 是一個專案的設定檔，就像 NPM 的 package.json。\n\n\n\n簡單介紹一下 Cargo.toml 裡面有什麼內容：\n\n\n[package] 代表一個區域，然後下面的內容是 Cargo 的一些設定。\nname 是我們用 Cargo 所建立這個專案的名稱。\nversion 是這個專案的版本。\nedition 是目前所使用的 Rust 版本。\n[dependencies] 代表另一個區域，下面則是會列出這個專案所安裝的函式庫，Rust 稱其為 crates。\n\n\ncargo build\n\n既然 Cargo 都已經幫我們建立並給了一些預設的程式碼，那麼我們就可以來試著印出 \"Hello, World\"。\n\n在終端機輸入以下指令：\n\n$ cargo build\n\n\n或是\n\n$ cargo b\n\n\n這時 Cargo 就會自動產生出一個執行檔，路徑為 /target/debug/hello_world\n\n如果要執行結果的話，就在終端機輸入該檔案的路徑，則會顯示出運行的結果，就像下圖這樣：\n\n\n\ncargo run\n\n如果想要 build 並且執行專案結果的話，Cargo 也有提供更快的方式。\n\n在終端機輸入：\n\n$ cargo run\n\n\n或是\n\n$ cargo r\n\n\nCargo 就會 build 這個專案，並且執行得到結果。\n\ncargo check\n\n如果只想要檢查這個專案的程式碼有無錯誤的話，可以省略產生執行檔的步驟。\n\n在終端機輸入：\n\n$ cargo check\n\n\n或是\n\n$ cargo c\n\n\ncargo release\n\n如果專案已經準備好發佈的話，可以輸入：\n\n$ cargo build --release\n\n\n或是\n\n$ cargo b -r\n\n\n如果要順便執行的話，就輸入：\n\n$ cargo run --release\n\n\n或是\n\n$ cargo r -r\n\n\n那麼 release 跟 build 有什麼差別呢？\n\n最大的不同是 Cargo 會幫你最佳化編譯結果，並且產生的執行檔會在 /target/release。不過要注意的是，編譯的時間會變得更久，但可以讓該程式跑得更快。\n\n以上就是 Cargo 的一些簡單介紹，很多的步驟都可以使用指令來幫助開發者快速地管理專案，是不是很棒呢(⁎⁍̴̛ᴗ⁍̴̛⁎)‼\n","wordCount":213,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"用 Cargo 管理專案好棒棒","description":"專案太大怎麼管理？用 Cargo 就搞定！","url":"https://railquill.vercel.app/cargo.html","datePublished":"2022-09-18T12:58:33Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/cargo.html"},"articleBody":"昨天我們自己新增了一個副檔名為 rs 的檔案，然後在終端機執行 rustc 來編譯出結果。雖然這樣的作法沒什麼問題，但是只適合用在簡單的情況下。如果是一個龐大而且複雜的案例的話，顯然是沒辦法很有效地管理我們的專案，於是 Rust 也幫我們設想好，並且提供了 Cargo。\n\n什麼是 Cargo\n\nCargo 可以做到套件管理、建構系統、跑測試，甚至是產生文件，Cargo 的角色就像是 JavaScript 的 NPM，或是 Python 的 Pip。\n\n由於安裝 Rust 的時候，已經順便安裝了 Cargo，如果想確認有沒有安裝完成的話，可以在終端機輸入：\n\n$ cargo --version\n\n或是\n\n$ cargo -V\n\n正常顯示出版本號的話，就代表你的 Cargo 已經安裝好了。\n\n建立專案\n\n既然已經有了 Cargo，那麼接下來就來用 Cargo 來建立一個專案。\n例如要建立一個名稱為 hello_world 專案的話請在終端機輸入：\n\n$ cargo new hello_world\n\n\n可以看到 Cargo 幫我們建立了一個 hello_world 專案，並且產生下圖中的檔案以及目錄。\n\n\n\n可以看到 Cargo 幫我們建立了資料夾 src，還有一個 Cargo.toml 檔案，並且幫我們用 Git 來做版本控制。\n\n資料夾 src 裡面有一個 main.rs 檔案，然後裡面理所當然地有一個主程式 main()，並且預設可以印出 \"Hello, World\"\n\n\n\n而 Cargo.toml 是一個專案的設定檔，就像 NPM 的 package.json。\n\n\n\n簡單介紹一下 Cargo.toml 裡面有什麼內容：\n\n\n[package] 代表一個區域，然後下面的內容是 Cargo 的一些設定。\nname 是我們用 Cargo 所建立這個專案的名稱。\nversion 是這個專案的版本。\nedition 是目前所使用的 Rust 版本。\n[dependencies] 代表另一個區域，下面則是會列出這個專案所安裝的函式庫，Rust 稱其為 crates。\n\n\ncargo build\n\n既然 Cargo 都已經幫我們建立並給了一些預設的程式碼，那麼我們就可以來試著印出 \"Hello, World\"。\n\n在終端機輸入以下指令：\n\n$ cargo build\n\n\n或是\n\n$ cargo b\n\n\n這時 Cargo 就會自動產生出一個執行檔，路徑為 /target/debug/hello_world\n\n如果要執行結果的話，就在終端機輸入該檔案的路徑，則會顯示出運行的結果，就像下圖這樣：\n\n\n\ncargo run\n\n如果想要 build 並且執行專案結果的話，Cargo 也有提供更快的方式。\n\n在終端機輸入：\n\n$ cargo run\n\n\n或是\n\n$ cargo r\n\n\nCargo 就會 build 這個專案，並且執行得到結果。\n\ncargo check\n\n如果只想要檢查這個專案的程式碼有無錯誤的話，可以省略產生執行檔的步驟。\n\n在終端機輸入：\n\n$ cargo check\n\n\n或是\n\n$ cargo c\n\n\ncargo release\n\n如果專案已經準備好發佈的話，可以輸入：\n\n$ cargo build --release\n\n\n或是\n\n$ cargo b -r\n\n\n如果要順便執行的話，就輸入：\n\n$ cargo run --release\n\n\n或是\n\n$ cargo r -r\n\n\n那麼 release 跟 build 有什麼差別呢？\n\n最大的不同是 Cargo 會幫你最佳化編譯結果，並且產生的執行檔會在 /target/release。不過要注意的是，編譯的時間會變得更久，但可以讓該程式跑得更快。\n\n以上就是 Cargo 的一些簡單介紹，很多的步驟都可以使用指令來幫助開發者快速地管理專案，是不是很棒呢(⁎⁍̴̛ᴗ⁍̴̛⁎)‼\n","wordCount":213,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1105,8 +1105,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1127,7 +1128,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>控制流程 if…else - Railquill</title>
+    <title>控制流程 if…else - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Rust 的 如果可以...">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/if-else.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="控制流程 if…else">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"控制流程 if…else","description":"Rust 的 如果可以...","url":"https://railquill.vercel.app/if-else.html","datePublished":"2022-09-25T01:28:41Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/if-else.html"},"articleBody":"不知不覺中我們也一起學到了第 10 天，已經達成三分之一了。(ง๑ •̀_•́)ง\n\n今天來介紹的是 Rust 的條件判斷，相信有學過其他程式語言的人應該都知道，條件判斷是用來判斷程式執行的流程，而在 Rust 中，條件判斷的語法跟其他語言也差不多，但還是有一些地方需要了解一下。\n\nif...else\n\n在 Rust 中寫 if…else 非常簡單，不需要在條件加上 ()，因為在 if 和 { 中的範圍都是代表條件，這也就表示在這範圍內寫的條件必須是 true 或 false，而且在大多數情況下並不需要加入型別。\n\n以下是一個簡單的範例：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?';\n    } else {\n        msg = '?';\n    };\n    return msg;\n}\n\n\n在上面的範例中，我們定義了一個 print_result() 函式，並且在裡面定義了一個 msg 變數，接著在 if…else 中判斷 x 和 y 的大小，如果 x 大於 y，則將 msg 設定為 ?，否則就設定為 ?。\n\n然後建立一個變數 result 來接收 print_result() 函式的回傳值，最後將 result 的值印出來。\n\nprint_result() 的參數 x 和 y 分別帶入 20 和 10，所以 x 大於 y，所以 msg 的值會是 ?，最後印出來的結果就是 ?。\n\nelse if 多個條件判斷\n\n有時候我們可能會需要多個條件判斷，這時候就可以使用 else if 來判斷，以下是一個範例：\n\nfn main() {\n    let result = print_result(20, 20);\n    println!(\"{}\", result);\n    // =\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?';\n    } else if x \u0026lt; y {\n        msg = '?';\n    } else {\n        msg = '=';\n    };\n    return msg;\n}\n\n\n在這個範例中，我們多加了一個條件判斷，如果 x 小於 y，則將 msg 設定為 ?，否則就設定為 =。\n由於 x 和 y 的值都是 20，所以 x 等於 y，所以 msg 的值會是 =，最後印出來的結果就是 =。\n\n特殊寫法\n\n前面都有提到說在 Rust 中，每次一段結尾都要加上 ;，但在 if…else 中，如果只有一行程式碼，則可以省略 ;，以下是一個範例：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?'\n    } else {\n        msg = '?'\n    };\n    return msg;\n}\n\n\n甚至我們可以直接寫表達式，來將變數直接指向 if…else 的回傳值，就像這樣：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg = if x \u0026gt; y { '?' } else { '?' };\n    return msg;\n}\n\n\n以上就是 Rust 中 if…else 的基本用法，是不是很簡單呢？\n","wordCount":291,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"控制流程 if…else","description":"Rust 的 如果可以...","url":"https://railquill.vercel.app/if-else.html","datePublished":"2022-09-25T01:28:41Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/if-else.html"},"articleBody":"不知不覺中我們也一起學到了第 10 天，已經達成三分之一了。(ง๑ •̀_•́)ง\n\n今天來介紹的是 Rust 的條件判斷，相信有學過其他程式語言的人應該都知道，條件判斷是用來判斷程式執行的流程，而在 Rust 中，條件判斷的語法跟其他語言也差不多，但還是有一些地方需要了解一下。\n\nif...else\n\n在 Rust 中寫 if…else 非常簡單，不需要在條件加上 ()，因為在 if 和 { 中的範圍都是代表條件，這也就表示在這範圍內寫的條件必須是 true 或 false，而且在大多數情況下並不需要加入型別。\n\n以下是一個簡單的範例：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?';\n    } else {\n        msg = '?';\n    };\n    return msg;\n}\n\n\n在上面的範例中，我們定義了一個 print_result() 函式，並且在裡面定義了一個 msg 變數，接著在 if…else 中判斷 x 和 y 的大小，如果 x 大於 y，則將 msg 設定為 ?，否則就設定為 ?。\n\n然後建立一個變數 result 來接收 print_result() 函式的回傳值，最後將 result 的值印出來。\n\nprint_result() 的參數 x 和 y 分別帶入 20 和 10，所以 x 大於 y，所以 msg 的值會是 ?，最後印出來的結果就是 ?。\n\nelse if 多個條件判斷\n\n有時候我們可能會需要多個條件判斷，這時候就可以使用 else if 來判斷，以下是一個範例：\n\nfn main() {\n    let result = print_result(20, 20);\n    println!(\"{}\", result);\n    // =\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?';\n    } else if x \u0026lt; y {\n        msg = '?';\n    } else {\n        msg = '=';\n    };\n    return msg;\n}\n\n\n在這個範例中，我們多加了一個條件判斷，如果 x 小於 y，則將 msg 設定為 ?，否則就設定為 =。\n由於 x 和 y 的值都是 20，所以 x 等於 y，所以 msg 的值會是 =，最後印出來的結果就是 =。\n\n特殊寫法\n\n前面都有提到說在 Rust 中，每次一段結尾都要加上 ;，但在 if…else 中，如果只有一行程式碼，則可以省略 ;，以下是一個範例：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg;\n    if x \u0026gt; y {\n        msg = '?'\n    } else {\n        msg = '?'\n    };\n    return msg;\n}\n\n\n甚至我們可以直接寫表達式，來將變數直接指向 if…else 的回傳值，就像這樣：\n\nfn main() {\n    let result = print_result(20, 10);\n    println!(\"{}\", result);\n    // ?\n}\n\nfn print_result(x: i32, y: i32) -\u0026gt; char {\n    let msg = if x \u0026gt; y { '?' } else { '?' };\n    return msg;\n}\n\n\n以上就是 Rust 中 if…else 的基本用法，是不是很簡單呢？\n","wordCount":291,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1075,8 +1075,9 @@ fn print_result(x: i32, y: i32) -&gt; char {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1097,7 +1098,7 @@ fn print_result(x: i32, y: i32) -&gt; char {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>安裝 Gulp - Railquill</title>
+    <title>安裝 Gulp - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="介紹 Gulp 及如何安裝">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/gulp.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="安裝 Gulp">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"安裝 Gulp","description":"介紹 Gulp 及如何安裝","url":"https://railquill.vercel.app/gulp.html","datePublished":"2020-10-03T16:56:38Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/gulp.html"},"articleBody":"Gulp 是一種前端自動化工具，可以幫助開發者將 SASS 跟 ES6 編譯成一般瀏覽器看得懂的版本，也可以把圖片跟 .css 還有 .js 壓縮成更小的檔案，是一個很方便的開發工具，這篇文章將介紹如何安裝 Gulp 並引入專案中。\n\n\n\n安裝 NVM\n\n安裝 Gulp 之前，首先你的電腦需要有 Node.js 的環境，建議使用 NVM 來安裝 Node.js，方便日後可以切換不同版本的 Node.js。\n\n\n使用 cURL 或 Wget 指令安裝：：\n\n\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash\n\n\nwget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash\n\n\n\n確認是否安裝成功，輸入指令確認，成功的話會顯示 nvm：\n\n\ncommand -v nvm\n\n\n用 NVM 安裝 Node.js\n\n\n輸入指令查看 LTS 版本（長期穩定開發版本）：\n\n\nnvm ls-remote --lts\n\n\n\n\n\n輸入指令安裝指定版本：\n\n\nnvm install v12.18.4\n\n\n\n確定有無成功安裝 Node.js：node -v，如果有會顯示版本。\n確認 npm 版本：npm -v，如果有會顯示版本。\n\n\n安裝 Gulp\n\n安裝了一堆東西，接著就是安裝 Gulp 了：\n\n\n安裝 Gulp 在 Global 環境：\n\n\nnpm install --global gulp-cli\n\n\n\n確定有無成功安裝 Gulp：gulp -v，如果有會顯示版本。\n\n\n恭喜你，可以開始 Gulp 專案了🎉\n\n初始化專案\n\n\n利用指令 cd 到專案資料夾，輸入 npm init，建立一個 package.json，接著會確認一些資料，沒什麼需要修改的話就一路 Enter 到底就好。\n輸入 npm install --save gulp，建立資訊在你的 package.json 中。\n輸入 gulp -v 確認安裝完成。\n\n","wordCount":133,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"安裝 Gulp","description":"介紹 Gulp 及如何安裝","url":"https://railquill.vercel.app/gulp.html","datePublished":"2020-10-03T16:56:38Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/gulp.html"},"articleBody":"Gulp 是一種前端自動化工具，可以幫助開發者將 SASS 跟 ES6 編譯成一般瀏覽器看得懂的版本，也可以把圖片跟 .css 還有 .js 壓縮成更小的檔案，是一個很方便的開發工具，這篇文章將介紹如何安裝 Gulp 並引入專案中。\n\n\n\n安裝 NVM\n\n安裝 Gulp 之前，首先你的電腦需要有 Node.js 的環境，建議使用 NVM 來安裝 Node.js，方便日後可以切換不同版本的 Node.js。\n\n\n使用 cURL 或 Wget 指令安裝：：\n\n\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash\n\n\nwget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash\n\n\n\n確認是否安裝成功，輸入指令確認，成功的話會顯示 nvm：\n\n\ncommand -v nvm\n\n\n用 NVM 安裝 Node.js\n\n\n輸入指令查看 LTS 版本（長期穩定開發版本）：\n\n\nnvm ls-remote --lts\n\n\n\n\n\n輸入指令安裝指定版本：\n\n\nnvm install v12.18.4\n\n\n\n確定有無成功安裝 Node.js：node -v，如果有會顯示版本。\n確認 npm 版本：npm -v，如果有會顯示版本。\n\n\n安裝 Gulp\n\n安裝了一堆東西，接著就是安裝 Gulp 了：\n\n\n安裝 Gulp 在 Global 環境：\n\n\nnpm install --global gulp-cli\n\n\n\n確定有無成功安裝 Gulp：gulp -v，如果有會顯示版本。\n\n\n恭喜你，可以開始 Gulp 專案了🎉\n\n初始化專案\n\n\n利用指令 cd 到專案資料夾，輸入 npm init，建立一個 package.json，接著會確認一些資料，沒什麼需要修改的話就一路 Enter 到底就好。\n輸入 npm install --save gulp，建立資訊在你的 package.json 中。\n輸入 gulp -v 確認安裝完成。\n\n","wordCount":133,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1052,8 +1052,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1074,7 +1075,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

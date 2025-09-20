@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>基礎 Vue.js(上) - Railquill</title>
+    <title>基礎 Vue.js(上) - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="Basic use about Vue.">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vue-js.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="基礎 Vue.js(上)">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"基礎 Vue.js(上)","description":"Basic use about Vue.","url":"https://railquill.vercel.app/vue-js.html","datePublished":"2020-03-30T11:34:35Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-js.html"},"articleBody":"身為目前 3 大前端應用框架之一的 Vue.js，截至目前為止在 GitHub 已經累積 160k 的星星數，以下是個人的學習筆記。\n\n\n\n開發環境\n\n\n\n在 Vue.js官網 中建議在瀏覽器上安裝 Vue Devtools，這樣可以方便在瀏覽器中觀看訊息。\n\n在 \u0026lt;script\u0026gt; 中直接載入 Vue 的檔案，在官網有提供各式檔案來源可供存取，要注意的是如果在開發環境下，建議使用開發版本，這樣會提供完整的警告訊息，方便開發者去查閱問題來源。\n\n應用程式建立\n\n\n\n首先在 HTML 建立一個 div ，這邊可以使用 id 或是 class，一般建議是使用 id，\n\n接著在 \u0026lt;script\u0026gt; 中輸入建立 Vue 的起手式\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app'\n  })\n\u0026lt;/script\u0026gt;\n\n\n然後打開瀏覽器的開發人員工具，如果有安裝  Vue Devtools 就可以看到已經建立了一個 Root\n\n\n\n如果要建立資料的話，然後顯示在 HTML 上：\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\n  \u0026lt;!-- 建立完data，想要顯示message的話，在 {{ }} 中放入名稱就可以顯示 --\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    // 建立data，裡面可以存放資料，例如 message\n    data: {\n      message: 'Hello World'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n注意事項： 一個頁面可以同時建立 2 個 app，但是 3 個就沒辦法\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\n  \u0026lt;div id=\"app2\"\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    data: {\n        message: 'Hello'\n    }\n  })\n\n  var app2 = new Vue({\n    el: 'app2',\n    data: {\n        message: 'World'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n建立兩個是可以的，一樣會出現 2 個 Root\n\n\n\n但是如果建立 3 個 app，就會出現找不到 element\n\n\n\n雙向綁定的資料\n\n在 Vue 中，有雙向綁定的特色，\n\n前面提到如果要將資料顯示在網頁上，可以使用 {% raw %}{{  }}{% endraw %} 這個語法，在 Vue 的語法中還有其他可以使用的：\n\n\nv-model\nv-text\nv-html\n\n\nv-model 的使用\n\n主要是使用在：\n\n\n\u0026lt;input\u0026gt;\n\u0026lt;select\u0026gt;\n\u0026lt;textarea\u0026gt;\ncomponents\n\n\n例如：\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{message}}\n  \u0026lt;input type=\"text\" v-model=\"message\"\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    data: {\n        message: 'Hello'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n在畫面上 \u0026lt;text\u0026gt; 跟 {{message}} 就會顯示一樣的內容\n\n\n\n而當直接在畫面修改 \u0026lt;text\u0026gt; 輸入欄中的內容時，{{message}}也會一起改變。\n\n\n\nv-text 跟 v-html 使用的方法\n\n兩者差不多，都可以直接顯示內容，差別在 v-html 可以加入 html 標籤\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{message}}\n  \u0026lt;input type=\"text\" v-model=\"message\"\u0026gt;\n  \u0026lt;div v-text=\"message\"\u0026gt;\u0026lt;/div\u0026gt;\n  \u0026lt;div v-html=\"message\"\u0026gt;\u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n\n    data: {\n        message: '\u0026lt;h1\u0026gt;Hello\u0026lt;/h1\u0026gt;'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n在畫面上的呈現是這樣：\n\n\n","wordCount":263,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"基礎 Vue.js(上)","description":"Basic use about Vue.","url":"https://railquill.vercel.app/vue-js.html","datePublished":"2020-03-30T11:34:35Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-js.html"},"articleBody":"身為目前 3 大前端應用框架之一的 Vue.js，截至目前為止在 GitHub 已經累積 160k 的星星數，以下是個人的學習筆記。\n\n\n\n開發環境\n\n\n\n在 Vue.js官網 中建議在瀏覽器上安裝 Vue Devtools，這樣可以方便在瀏覽器中觀看訊息。\n\n在 \u0026lt;script\u0026gt; 中直接載入 Vue 的檔案，在官網有提供各式檔案來源可供存取，要注意的是如果在開發環境下，建議使用開發版本，這樣會提供完整的警告訊息，方便開發者去查閱問題來源。\n\n應用程式建立\n\n\n\n首先在 HTML 建立一個 div ，這邊可以使用 id 或是 class，一般建議是使用 id，\n\n接著在 \u0026lt;script\u0026gt; 中輸入建立 Vue 的起手式\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app'\n  })\n\u0026lt;/script\u0026gt;\n\n\n然後打開瀏覽器的開發人員工具，如果有安裝  Vue Devtools 就可以看到已經建立了一個 Root\n\n\n\n如果要建立資料的話，然後顯示在 HTML 上：\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\n  \u0026lt;!-- 建立完data，想要顯示message的話，在 {{ }} 中放入名稱就可以顯示 --\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    // 建立data，裡面可以存放資料，例如 message\n    data: {\n      message: 'Hello World'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n注意事項： 一個頁面可以同時建立 2 個 app，但是 3 個就沒辦法\n\n\u0026lt;div\u0026gt;\n  \u0026lt;div id=\"app\"\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\n  \u0026lt;div id=\"app2\"\u0026gt;\n    {{message}} \n  \u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    data: {\n        message: 'Hello'\n    }\n  })\n\n  var app2 = new Vue({\n    el: 'app2',\n    data: {\n        message: 'World'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n建立兩個是可以的，一樣會出現 2 個 Root\n\n\n\n但是如果建立 3 個 app，就會出現找不到 element\n\n\n\n雙向綁定的資料\n\n在 Vue 中，有雙向綁定的特色，\n\n前面提到如果要將資料顯示在網頁上，可以使用 {% raw %}{{  }}{% endraw %} 這個語法，在 Vue 的語法中還有其他可以使用的：\n\n\nv-model\nv-text\nv-html\n\n\nv-model 的使用\n\n主要是使用在：\n\n\n\u0026lt;input\u0026gt;\n\u0026lt;select\u0026gt;\n\u0026lt;textarea\u0026gt;\ncomponents\n\n\n例如：\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{message}}\n  \u0026lt;input type=\"text\" v-model=\"message\"\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n    data: {\n        message: 'Hello'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n在畫面上 \u0026lt;text\u0026gt; 跟 {{message}} 就會顯示一樣的內容\n\n\n\n而當直接在畫面修改 \u0026lt;text\u0026gt; 輸入欄中的內容時，{{message}}也會一起改變。\n\n\n\nv-text 跟 v-html 使用的方法\n\n兩者差不多，都可以直接顯示內容，差別在 v-html 可以加入 html 標籤\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{message}}\n  \u0026lt;input type=\"text\" v-model=\"message\"\u0026gt;\n  \u0026lt;div v-text=\"message\"\u0026gt;\u0026lt;/div\u0026gt;\n  \u0026lt;div v-html=\"message\"\u0026gt;\u0026lt;/div\u0026gt;\n\u0026lt;/div\u0026gt;\n\n\u0026lt;script\u0026gt;\n  var app = new Vue({\n    el: '#app',\n\n    data: {\n        message: '\u0026lt;h1\u0026gt;Hello\u0026lt;/h1\u0026gt;'\n    }\n  })\n\u0026lt;/script\u0026gt;\n\n\n在畫面上的呈現是這樣：\n\n\n","wordCount":263,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1145,8 +1145,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1167,7 +1168,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

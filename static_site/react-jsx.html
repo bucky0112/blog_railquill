@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>React 運用邏輯運算子解決 JSX 問題 - Railquill</title>
+    <title>React 運用邏輯運算子解決 JSX 問題 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="React 運用邏輯運算子解決 JSX 問題">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/react-jsx.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="React 運用邏輯運算子解決 JSX 問題">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 運用邏輯運算子解決 JSX 問題","description":"React 運用邏輯運算子解決 JSX 問題","url":"https://railquill.vercel.app/react-jsx.html","datePublished":"2020-10-01T22:22:49Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-jsx.html"},"articleBody":"在 React 前一個筆記中，有試著做出一個 Counter，並且有加入判斷條件：如果數字為 0 的話，就沒辦法繼續按減號。還有另一種作法是：如果數字為 0 的話，減號按鈕就消失不能按，不過實做的話，會出現一些問題，這篇來看看需要解決什麼問題。\n\n\n\nJSX 不能使用陳述式\n\n設定數字大於 0，減號顯示，按照邏輯可能會這樣寫：\n\nconst Count = () =\u0026gt; {\n  return (\n    if (count \u0026gt; 0) {\n      \u0026lt;div\n        className=\"plus\"\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;+\u0026lt;/div\u0026gt;\n    }\n  );\n}\n\n\n但是這樣做會違反 JSX 的規則，也就是 JSX 只能使用表達式，不能使用陳述式。\n如果要解決這個問題的話，可以使用邏輯運算子。\n\n什麼是邏輯運算子？\n\n根據 MDN 官網解釋，邏輯運算子通常被用於布林值的判斷，使用的符號有 \u0026amp;\u0026amp;、||、!，要注意的是在判斷會自動轉型，例如  null、0、undefined、NaN、空字串，都會被轉換成 false，看以下例子：\n\n// 假設兩個都是 true 的話，就回傳後面的值；如果不是就回傳 false 的那一個值\nconst a = 'cat' \u0026amp;\u0026amp; 'dog'; // 'dog'\nconst b = true \u0026amp;\u0026amp; false; // false\nconst c = null \u0026amp;\u0026amp; 1; // null\nconst d = 0 \u0026amp;\u0026amp; 2; // 0\nconst e = undefined \u0026amp;\u0026amp; 'yes'; // undefined\nconst f = NaN \u0026amp;\u0026amp; 'cat'; // NaN;\nconst g = '' \u0026amp;\u0026amp; 'dog'; // '';\n\n\n// 假設兩個都是 true 的話，就回傳前面的值；如果不是就回傳 true 的那一個值\nconst a = 'cat' || 'dog'; // 'cat'\nconst b = true || false; // true\nconst c = null || 1; // 1\nconst d = 0 || 2; // 2\nconst e = undefined || 'yes'; // 'yes'\nconst f = NaN || 'cat'; // 'cat';\nconst g = '' || 'dog'; // 'dog';\n\n\n// 判斷 ! 後面的值是 true 的話，回傳 false，反之回傳 true\nconst a = !'cat'; // false\nconst b = !true; // false\nconst c = !null; // true\nconst d = !0; // true\nconst e = !undefined; // true\nconst f = !NaN; // 'true\nconst g = !''; // true\n\n\n運用邏輯運算子來編譯畫面\n\n前面提到設定數字大於 0，減號顯示，這邊再加上如果數字小於 10 的話，加號才能顯示，所以可以這樣寫：\n\n// 當 count \u0026gt;= 10，就顯示加號\n{count \u0026gt;= 10 || (\n  \u0026lt;div className=\"plus\" onClick={() =\u0026gt; setCount(count + 1)}\u0026gt;\n    +\n  \u0026lt;/div\u0026gt;\n)}\n\n// 當 count \u0026gt; 0，就顯示減號\n{count \u0026gt; 0 \u0026amp;\u0026amp; (\n  \u0026lt;div className=\"minus\" onClick={() =\u0026gt; setCount(count - 1)}\u0026gt;\n    -\n  \u0026lt;/div\u0026gt;\n)}\n\n\n下面是完整的 CodePen，可以玩玩看：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/NWNZddN'\u0026gt;React count demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":313,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 運用邏輯運算子解決 JSX 問題","description":"React 運用邏輯運算子解決 JSX 問題","url":"https://railquill.vercel.app/react-jsx.html","datePublished":"2020-10-01T22:22:49Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-jsx.html"},"articleBody":"在 React 前一個筆記中，有試著做出一個 Counter，並且有加入判斷條件：如果數字為 0 的話，就沒辦法繼續按減號。還有另一種作法是：如果數字為 0 的話，減號按鈕就消失不能按，不過實做的話，會出現一些問題，這篇來看看需要解決什麼問題。\n\n\n\nJSX 不能使用陳述式\n\n設定數字大於 0，減號顯示，按照邏輯可能會這樣寫：\n\nconst Count = () =\u0026gt; {\n  return (\n    if (count \u0026gt; 0) {\n      \u0026lt;div\n        className=\"plus\"\n        onClick={() =\u0026gt; setCount(count - 1)}\n      \u0026gt;+\u0026lt;/div\u0026gt;\n    }\n  );\n}\n\n\n但是這樣做會違反 JSX 的規則，也就是 JSX 只能使用表達式，不能使用陳述式。\n如果要解決這個問題的話，可以使用邏輯運算子。\n\n什麼是邏輯運算子？\n\n根據 MDN 官網解釋，邏輯運算子通常被用於布林值的判斷，使用的符號有 \u0026amp;\u0026amp;、||、!，要注意的是在判斷會自動轉型，例如  null、0、undefined、NaN、空字串，都會被轉換成 false，看以下例子：\n\n// 假設兩個都是 true 的話，就回傳後面的值；如果不是就回傳 false 的那一個值\nconst a = 'cat' \u0026amp;\u0026amp; 'dog'; // 'dog'\nconst b = true \u0026amp;\u0026amp; false; // false\nconst c = null \u0026amp;\u0026amp; 1; // null\nconst d = 0 \u0026amp;\u0026amp; 2; // 0\nconst e = undefined \u0026amp;\u0026amp; 'yes'; // undefined\nconst f = NaN \u0026amp;\u0026amp; 'cat'; // NaN;\nconst g = '' \u0026amp;\u0026amp; 'dog'; // '';\n\n\n// 假設兩個都是 true 的話，就回傳前面的值；如果不是就回傳 true 的那一個值\nconst a = 'cat' || 'dog'; // 'cat'\nconst b = true || false; // true\nconst c = null || 1; // 1\nconst d = 0 || 2; // 2\nconst e = undefined || 'yes'; // 'yes'\nconst f = NaN || 'cat'; // 'cat';\nconst g = '' || 'dog'; // 'dog';\n\n\n// 判斷 ! 後面的值是 true 的話，回傳 false，反之回傳 true\nconst a = !'cat'; // false\nconst b = !true; // false\nconst c = !null; // true\nconst d = !0; // true\nconst e = !undefined; // true\nconst f = !NaN; // 'true\nconst g = !''; // true\n\n\n運用邏輯運算子來編譯畫面\n\n前面提到設定數字大於 0，減號顯示，這邊再加上如果數字小於 10 的話，加號才能顯示，所以可以這樣寫：\n\n// 當 count \u0026gt;= 10，就顯示加號\n{count \u0026gt;= 10 || (\n  \u0026lt;div className=\"plus\" onClick={() =\u0026gt; setCount(count + 1)}\u0026gt;\n    +\n  \u0026lt;/div\u0026gt;\n)}\n\n// 當 count \u0026gt; 0，就顯示減號\n{count \u0026gt; 0 \u0026amp;\u0026amp; (\n  \u0026lt;div className=\"minus\" onClick={() =\u0026gt; setCount(count - 1)}\u0026gt;\n    -\n  \u0026lt;/div\u0026gt;\n)}\n\n\n下面是完整的 CodePen，可以玩玩看：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/NWNZddN'\u0026gt;React count demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":313,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1062,8 +1062,9 @@ const g = !''; // true
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1084,7 +1085,7 @@ const g = !''; // true
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

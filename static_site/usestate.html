@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>使用 useState 來管理狀態 - Railquill</title>
+    <title>使用 useState 來管理狀態 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="介紹 React 的 Hooks 之一 - useState">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/usestate.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="使用 useState 來管理狀態">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 useState 來管理狀態","description":"介紹 React 的 Hooks 之一 - useState","url":"https://railquill.vercel.app/usestate.html","datePublished":"2020-09-30T00:23:26Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/usestate.html"},"articleBody":"前面提到當變數更新時，React 還不知道資料有更新。所以 React 提供了一個方法來監控而且管理資料，而這就是 React 的 Hooks 之一 - useState。\n\n\n\n\n\n什麼是 State\n\n首先要先來了解 State 是什麼，才能 use 它。\n根據 React 官網說到，State 類似 props，不過差別在於 State 是由 Component 私有控制的。可以把它當成是資料，\n假設一個資料有兩種狀態，true 或 false，預設狀態是 false，當你使用它時，就會變成 true，這種狀態就是 state。\n\n來試著使用 State Hook 吧\n\n先來簡單瞭解一下什麼是 Hook：\n\n\nHook 是 React 16.8 中增加的新功能。它讓你不必寫 class 就能使用 state 以及其他 React 的功能。 (來自 React 官網的解釋)\n\n\n簡單來說 Hook 就是 React 中各項特殊 function，而本篇則是會介紹 useState 的用法。\n\n開始使用 useState\n\n下方有一個 Component，來試著使用 useState 改動畫面。\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/JjXVMEK'\u0026gt;React Component\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n\n從 React 中引入 useState。\n\nconst { useState } = React;\n\n呼叫 useState，宣告一個 state，並回傳了 2 個值。第一個是變數，並帶入參數給 useState；第二個是更新變數的函式。\n\n// [變數, 更新變數的函式] = useState(變數預設值)\nconst [count, setCount] = useState(0);\n\n讀取 State。\n\n\u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n透過點擊，就會呼叫 setCount 並傳入新的值，React 會 重新 render component，顯示新的 State 值。\n\n\u0026lt;div className=\"plus\"\nonClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;+\u0026lt;/div\u0026gt;\n\n\n\n完整的點擊器範例就完成了\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/GRZaZEz'\u0026gt;React useState\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\nuseState 做了什麼？\n\n我們透過 useState 建立一個需要被即時監控的資料變數，在這個範例中也就是 count，並呼叫了它提供的更新變數的函式來改變數值。\n如果變數的值有變化，也確實有呼叫 setCount 的話，那麼 React 就會以資料驅動畫面更新，這就是 useState 幫我們做的事情。\n","wordCount":200,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 useState 來管理狀態","description":"介紹 React 的 Hooks 之一 - useState","url":"https://railquill.vercel.app/usestate.html","datePublished":"2020-09-30T00:23:26Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/usestate.html"},"articleBody":"前面提到當變數更新時，React 還不知道資料有更新。所以 React 提供了一個方法來監控而且管理資料，而這就是 React 的 Hooks 之一 - useState。\n\n\n\n\n\n什麼是 State\n\n首先要先來了解 State 是什麼，才能 use 它。\n根據 React 官網說到，State 類似 props，不過差別在於 State 是由 Component 私有控制的。可以把它當成是資料，\n假設一個資料有兩種狀態，true 或 false，預設狀態是 false，當你使用它時，就會變成 true，這種狀態就是 state。\n\n來試著使用 State Hook 吧\n\n先來簡單瞭解一下什麼是 Hook：\n\n\nHook 是 React 16.8 中增加的新功能。它讓你不必寫 class 就能使用 state 以及其他 React 的功能。 (來自 React 官網的解釋)\n\n\n簡單來說 Hook 就是 React 中各項特殊 function，而本篇則是會介紹 useState 的用法。\n\n開始使用 useState\n\n下方有一個 Component，來試著使用 useState 改動畫面。\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/JjXVMEK'\u0026gt;React Component\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n\n從 React 中引入 useState。\n\nconst { useState } = React;\n\n呼叫 useState，宣告一個 state，並回傳了 2 個值。第一個是變數，並帶入參數給 useState；第二個是更新變數的函式。\n\n// [變數, 更新變數的函式] = useState(變數預設值)\nconst [count, setCount] = useState(0);\n\n讀取 State。\n\n\u0026lt;div className=\"num\"\u0026gt;{count}\u0026lt;/div\u0026gt;\n\n透過點擊，就會呼叫 setCount 並傳入新的值，React 會 重新 render component，顯示新的 State 值。\n\n\u0026lt;div className=\"plus\"\nonClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;+\u0026lt;/div\u0026gt;\n\n\n\n完整的點擊器範例就完成了\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/GRZaZEz'\u0026gt;React useState\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\nuseState 做了什麼？\n\n我們透過 useState 建立一個需要被即時監控的資料變數，在這個範例中也就是 count，並呼叫了它提供的更新變數的函式來改變數值。\n如果變數的值有變化，也確實有呼叫 setCount 的話，那麼 React 就會以資料驅動畫面更新，這就是 useState 幫我們做的事情。\n","wordCount":200,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1044,8 +1044,9 @@ onClick={() =&gt; setCount(count + 1)}
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1066,7 +1067,7 @@ onClick={() =&gt; setCount(count + 1)}
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

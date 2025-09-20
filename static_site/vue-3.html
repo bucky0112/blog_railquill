@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>開始我的 Vue 3 - Railquill</title>
+    <title>開始我的 Vue 3 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="從 0 開始學習 Vue 3">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/vue-3.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="開始我的 Vue 3">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"開始我的 Vue 3","description":"從 0 開始學習 Vue 3","url":"https://railquill.vercel.app/vue-3.html","datePublished":"2021-02-10T10:55:50Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-3.html"},"articleBody":"Vue 3 正式版問世也一段時間了，也是時候來認識一下新朋友了，前端就是要不停地追技術啊0.0\n\n\n\n前言\n\n自從 Vue 3 的消息不斷傳出，相信主力開發工具為 Vue 的前端工程師也多少都有耳聞，小弟我也不例外，常常會跟朋友討論相關訊息。而當正式版（代號：one piece）發布之後，全世界前端大概都開始了尋找大秘寶之旅。\n\n\n\n雖然公司目前專案大概也還不到使用 Vue 3 的時機，但是多了解新技術總是不會錯。剛好 Vue.js Taiwan 的主辦人 - Kuro 大大，在過年前出了一本 Vue 3 的書 - 重新認識 Vue.js：008天絕對看不完的 Vue.js 3 指南，想趁著過年期間來學一下，本系列就是紀錄我學習 Vue 3 的歷程，那麼就開始吧！\n\n安裝\n\n\n如果想要小試一下的話，可以使用 CDN 的方式來掛載，只要加上：\n\n\n  \u0026lt;script src=\"https://unpkg.com/vue@next\"\u0026gt;\u0026lt;/script\u0026gt;\n\n\n\n有經驗的開發者想透過 Vue-CLI 的話：\n\n\n  $ npm install -g @vue/cli\n  $ vue create 專案名稱\n\n\n來寫個 Hello World 吧\n\n以往在 Vue 2.x 版本中的寫法：\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{ text }}\n\u0026lt;/div\u0026gt;\n\n\nconst vm = new Vue({\n  el: '#app',\n  data() {\n    return {\n      text: \"Hello World\",\n    };\n  },\n})\n\n// 或是使用 mount 掛載\nconst vm = new Vue({\n  data() {\n    return {\n      text: \"Hello\",\n    };\n  },\n})\n\nvm.$mount(\"#app\");\n\n\n而在 Vue 3 則是加入了 Composition API 的寫法：\n\nconst { createApp, ref } = Vue;\n\nconst vm = createApp({\n  setup() {\n    const text = ref(\"Hello World\");\n    return {\n      text\n    };\n  }\n});\n\nvm.mount(\"#app\");\n\n\n謎之音：不得不說，看起來還真有點像 React。\n\nVue 3 試玩後有感的新增特性\n\n根據 Vue 官方文件中介紹的新增特性有不少，其中最有感的是上方有提到的 Composition API，還有 Fragment ，讓原本必須要單一根元素下編譯模板的情況下，取消了這個限制，將會變得更加直覺。\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/mdOrRNv'\u0026gt;Vue 2  Fragment\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n像上面的 CodePen 例子，原本在 Vue 2 中，template 中如果有一個以上的元素，那麼必須使用一個 \u0026lt;div\u0026gt; 包起來才能正常顯示。\n\n而在 Vue 3 中，就少了這個限制：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/zYoKNWN'\u0026gt;Vue 3  Fragment\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n其他還有很多新功能等待發掘，就一起來加入 Vue 3 的行列吧！\n","wordCount":239,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"開始我的 Vue 3","description":"從 0 開始學習 Vue 3","url":"https://railquill.vercel.app/vue-3.html","datePublished":"2021-02-10T10:55:50Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/vue-3.html"},"articleBody":"Vue 3 正式版問世也一段時間了，也是時候來認識一下新朋友了，前端就是要不停地追技術啊0.0\n\n\n\n前言\n\n自從 Vue 3 的消息不斷傳出，相信主力開發工具為 Vue 的前端工程師也多少都有耳聞，小弟我也不例外，常常會跟朋友討論相關訊息。而當正式版（代號：one piece）發布之後，全世界前端大概都開始了尋找大秘寶之旅。\n\n\n\n雖然公司目前專案大概也還不到使用 Vue 3 的時機，但是多了解新技術總是不會錯。剛好 Vue.js Taiwan 的主辦人 - Kuro 大大，在過年前出了一本 Vue 3 的書 - 重新認識 Vue.js：008天絕對看不完的 Vue.js 3 指南，想趁著過年期間來學一下，本系列就是紀錄我學習 Vue 3 的歷程，那麼就開始吧！\n\n安裝\n\n\n如果想要小試一下的話，可以使用 CDN 的方式來掛載，只要加上：\n\n\n  \u0026lt;script src=\"https://unpkg.com/vue@next\"\u0026gt;\u0026lt;/script\u0026gt;\n\n\n\n有經驗的開發者想透過 Vue-CLI 的話：\n\n\n  $ npm install -g @vue/cli\n  $ vue create 專案名稱\n\n\n來寫個 Hello World 吧\n\n以往在 Vue 2.x 版本中的寫法：\n\n\u0026lt;div id=\"app\"\u0026gt;\n  {{ text }}\n\u0026lt;/div\u0026gt;\n\n\nconst vm = new Vue({\n  el: '#app',\n  data() {\n    return {\n      text: \"Hello World\",\n    };\n  },\n})\n\n// 或是使用 mount 掛載\nconst vm = new Vue({\n  data() {\n    return {\n      text: \"Hello\",\n    };\n  },\n})\n\nvm.$mount(\"#app\");\n\n\n而在 Vue 3 則是加入了 Composition API 的寫法：\n\nconst { createApp, ref } = Vue;\n\nconst vm = createApp({\n  setup() {\n    const text = ref(\"Hello World\");\n    return {\n      text\n    };\n  }\n});\n\nvm.mount(\"#app\");\n\n\n謎之音：不得不說，看起來還真有點像 React。\n\nVue 3 試玩後有感的新增特性\n\n根據 Vue 官方文件中介紹的新增特性有不少，其中最有感的是上方有提到的 Composition API，還有 Fragment ，讓原本必須要單一根元素下編譯模板的情況下，取消了這個限制，將會變得更加直覺。\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/mdOrRNv'\u0026gt;Vue 2  Fragment\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n像上面的 CodePen 例子，原本在 Vue 2 中，template 中如果有一個以上的元素，那麼必須使用一個 \u0026lt;div\u0026gt; 包起來才能正常顯示。\n\n而在 Vue 3 中，就少了這個限制：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/zYoKNWN'\u0026gt;Vue 3  Fragment\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n其他還有很多新功能等待發掘，就一起來加入 Vue 3 的行列吧！\n","wordCount":239,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1076,8 +1076,9 @@ vm.mount("#app");
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1098,7 +1099,7 @@ vm.mount("#app");
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

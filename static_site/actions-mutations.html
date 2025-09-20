@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>使用 Actions 跟 Mutations 來改變資料狀態 - Railquill</title>
+    <title>使用 Actions 跟 Mutations 來改變資料狀態 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="使用 Actions 跟 Mutations 來改變資料狀態">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/actions-mutations.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="使用 Actions 跟 Mutations 來改變資料狀態">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Actions 跟 Mutations 來改變資料狀態","description":"使用 Actions 跟 Mutations 來改變資料狀態","url":"https://railquill.vercel.app/actions-mutations.html","datePublished":"2020-10-12T00:02:47Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/actions-mutations.html"},"articleBody":"上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。\n\n\n\nActions 跟 Mutations 如何改變資料\n\n先看官網的 Vuex 的週期介紹圖，如果 Component 要改變 State 的話，就要透過 Actions 發出 Commit 去呼叫 Mutations，藉由 Mutations 去改變 State。\n\n\n\n如何使用\n\n我在 CodeSandbox 建立了一個 Vuex 來模擬變更資料，當按下 Click Me 按鈕，原本顯示在頁面上的 Hello Vuex 會變更為 Good Job，在過 5 秒後則會再變更為 Try Again，就可以繼續按，觀察資料如何變更。\n\n\n\n首先在 State 中設立一筆資料\n\nstate: {\n  testWord: \"Hello Vuex\"\n}\n\n\n接著就可以透過 Actions 跟 Mutations 來改變資料：\n\n\n在 Actions 及 Mutations 加入：\n\n\nmutations: {\n  CHANGE(state, word) {\n    state.testWord = word;\n  }\n},\nactions: {\n  changeStateWord(context, word) {\n    context.commit(\"CHANGE\", word);\n  }\n},\n\n\n\n在 actions 建立一個函式，並帶入 context 為第一個參數，第二個參數則是 payload，可以自定義名稱，而 context 則是有下列屬性：\n\n\n{\n  state,      // 等同于 `store.state`，若在模块中则为局部状态\n  rootState,  // 等同于 `store.state`，只存在于模块中\n  commit,     // 等同于 `store.commit`\n  dispatch,   // 等同于 `store.dispatch`\n  getters,    // 等同于 `store.getters`\n  rootGetters // 等同于 `store.getters`，只存在于模块中\n}\n\n\n\n接著在函式中使用 commit 屬性，呼叫 mutations。\n在 mutations 也建立一個函式，建議使用常數來命名方便區分，並帶入 state 為第一個參數，第二個參數則是 payload 。\n因為要藉由 mutations 來改變 state，所以在函式中加入動作。\n最後在 component 中加入 Actions，使用 this.$store.dispatch('actions', 欲變更資料)\n\n\n使用嚴格模式\n\n在使用 Actions 跟 Mutations 時，還需要特別注意的是，當使用非同步處理時，要在 Actions 處理，而不要在 Mutations。\n這時候可以開啟嚴格模式，幫助追蹤所有的狀態變更，使用方法很簡單，在 Vuex 中加入 strict，並開啟即可：\n\nexport default new Vuex.Store({\n  strict: true\n})\n\n","wordCount":205,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"使用 Actions 跟 Mutations 來改變資料狀態","description":"使用 Actions 跟 Mutations 來改變資料狀態","url":"https://railquill.vercel.app/actions-mutations.html","datePublished":"2020-10-12T00:02:47Z","dateModified":"2025-09-19T17:23:23Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/actions-mutations.html"},"articleBody":"上一篇已經初步了解 State，這篇繼續試著了解怎麼透過 Actions 跟 Mutations 來改變 State。\n\n\n\nActions 跟 Mutations 如何改變資料\n\n先看官網的 Vuex 的週期介紹圖，如果 Component 要改變 State 的話，就要透過 Actions 發出 Commit 去呼叫 Mutations，藉由 Mutations 去改變 State。\n\n\n\n如何使用\n\n我在 CodeSandbox 建立了一個 Vuex 來模擬變更資料，當按下 Click Me 按鈕，原本顯示在頁面上的 Hello Vuex 會變更為 Good Job，在過 5 秒後則會再變更為 Try Again，就可以繼續按，觀察資料如何變更。\n\n\n\n首先在 State 中設立一筆資料\n\nstate: {\n  testWord: \"Hello Vuex\"\n}\n\n\n接著就可以透過 Actions 跟 Mutations 來改變資料：\n\n\n在 Actions 及 Mutations 加入：\n\n\nmutations: {\n  CHANGE(state, word) {\n    state.testWord = word;\n  }\n},\nactions: {\n  changeStateWord(context, word) {\n    context.commit(\"CHANGE\", word);\n  }\n},\n\n\n\n在 actions 建立一個函式，並帶入 context 為第一個參數，第二個參數則是 payload，可以自定義名稱，而 context 則是有下列屬性：\n\n\n{\n  state,      // 等同于 `store.state`，若在模块中则为局部状态\n  rootState,  // 等同于 `store.state`，只存在于模块中\n  commit,     // 等同于 `store.commit`\n  dispatch,   // 等同于 `store.dispatch`\n  getters,    // 等同于 `store.getters`\n  rootGetters // 等同于 `store.getters`，只存在于模块中\n}\n\n\n\n接著在函式中使用 commit 屬性，呼叫 mutations。\n在 mutations 也建立一個函式，建議使用常數來命名方便區分，並帶入 state 為第一個參數，第二個參數則是 payload 。\n因為要藉由 mutations 來改變 state，所以在函式中加入動作。\n最後在 component 中加入 Actions，使用 this.$store.dispatch('actions', 欲變更資料)\n\n\n使用嚴格模式\n\n在使用 Actions 跟 Mutations 時，還需要特別注意的是，當使用非同步處理時，要在 Actions 處理，而不要在 Mutations。\n這時候可以開啟嚴格模式，幫助追蹤所有的狀態變更，使用方法很簡單，在 Vuex 中加入 strict，並開啟即可：\n\nexport default new Vuex.Store({\n  strict: true\n})\n\n","wordCount":205,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1051,8 +1051,9 @@ actions: {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1073,7 +1074,7 @@ actions: {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>React 動態加入 CSS - Railquill</title>
+    <title>React 動態加入 CSS - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="React 動態加入 CSS">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/react-css.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="React 動態加入 CSS">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 動態加入 CSS","description":"React 動態加入 CSS","url":"https://railquill.vercel.app/react-css.html","datePublished":"2020-10-08T00:49:12Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-css.html"},"articleBody":"前面提到如何使用邏輯運算子來判斷顯示加號減號，這篇則是介紹其他方式，也就是使用 CSS 來動態將 HTML 元素隱藏起來。\n\n\n\nvisibility 與 display 的差異\n\n首先，要先了解 visibility: hidden 與 display: none 這兩個的運用有什麼差異。\n\n\nvisibility: hidden：當隱藏元素時，原本的元素依然存在佈局中。\ndisplay: none：當隱藏元素時，該元素會在原本的佈局移除。\n\n\n根據以上條件的不同，選擇使用 visibility: hidden 會是不錯的作法。\n\n動態加入 CSS\n\n在前面的筆記中有提到如何加入 inline-style，這邊就再加入邏輯運算子來判斷，當 count \u0026gt;= 10 就執行  visibility: hidden：\n\n\u0026lt;div \n  className=\"plus\"\n  style={{\n    visibility: count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"\n  }}\n  onClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;\n    +\n\u0026lt;/div\u0026gt;\n\n\n另外當  count \u0026lt; 1 就執行  visibility: hidden：\n\n\u0026lt;div \n  className=\"minus\"\n  style={{\n    visibility: count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"\n  }}\n  onClick={() =\u0026gt; setCount(count - 1)}\n\u0026gt;\n    -\n\u0026lt;/div\u0026gt;\n\n\n可以試試看 CodePen，看看效果如何：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/vYKYWYe'\u0026gt;React counter use css\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n動態加入 class\n\n除了動態加入 inline-style 以外，還可以動態加入 class 來顯示樣式，作法也差不多。\n\n\n在 css 部份設定一個 class，並帶入樣式：\n\n\n.hidden {\n  visibility: hidden;\n}\n\n\n\n在加號減號部份加上動態 class 效果：\n\n\n\u0026lt;div \n  className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; 'hidden'}`}\n  onClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;\n    +\n\u0026lt;/div\u0026gt;\n\n\u0026lt;div\n  className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; 'hidden'}`}\n  onClick={() =\u0026gt; setCount(count - 1)}\n\u0026gt;\n  -\n\u0026lt;/div\u0026gt;\n\n\n呈現的效果是一樣的，可以在 CodePen 玩玩看：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/MWeYYwb'\u0026gt;React counter use css class\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":211,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"React 動態加入 CSS","description":"React 動態加入 CSS","url":"https://railquill.vercel.app/react-css.html","datePublished":"2020-10-08T00:49:12Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/react-css.html"},"articleBody":"前面提到如何使用邏輯運算子來判斷顯示加號減號，這篇則是介紹其他方式，也就是使用 CSS 來動態將 HTML 元素隱藏起來。\n\n\n\nvisibility 與 display 的差異\n\n首先，要先了解 visibility: hidden 與 display: none 這兩個的運用有什麼差異。\n\n\nvisibility: hidden：當隱藏元素時，原本的元素依然存在佈局中。\ndisplay: none：當隱藏元素時，該元素會在原本的佈局移除。\n\n\n根據以上條件的不同，選擇使用 visibility: hidden 會是不錯的作法。\n\n動態加入 CSS\n\n在前面的筆記中有提到如何加入 inline-style，這邊就再加入邏輯運算子來判斷，當 count \u0026gt;= 10 就執行  visibility: hidden：\n\n\u0026lt;div \n  className=\"plus\"\n  style={{\n    visibility: count \u0026gt;= 10 \u0026amp;\u0026amp; \"hidden\"\n  }}\n  onClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;\n    +\n\u0026lt;/div\u0026gt;\n\n\n另外當  count \u0026lt; 1 就執行  visibility: hidden：\n\n\u0026lt;div \n  className=\"minus\"\n  style={{\n    visibility: count \u0026lt; 1 \u0026amp;\u0026amp; \"hidden\"\n  }}\n  onClick={() =\u0026gt; setCount(count - 1)}\n\u0026gt;\n    -\n\u0026lt;/div\u0026gt;\n\n\n可以試試看 CodePen，看看效果如何：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/vYKYWYe'\u0026gt;React counter use css\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n動態加入 class\n\n除了動態加入 inline-style 以外，還可以動態加入 class 來顯示樣式，作法也差不多。\n\n\n在 css 部份設定一個 class，並帶入樣式：\n\n\n.hidden {\n  visibility: hidden;\n}\n\n\n\n在加號減號部份加上動態 class 效果：\n\n\n\u0026lt;div \n  className={`plus ${count \u0026gt;= 10 \u0026amp;\u0026amp; 'hidden'}`}\n  onClick={() =\u0026gt; setCount(count + 1)}\n\u0026gt;\n    +\n\u0026lt;/div\u0026gt;\n\n\u0026lt;div\n  className={`minus ${count \u0026lt; 1 \u0026amp;\u0026amp; 'hidden'}`}\n  onClick={() =\u0026gt; setCount(count - 1)}\n\u0026gt;\n  -\n\u0026lt;/div\u0026gt;\n\n\n呈現的效果是一樣的，可以在 CodePen 玩玩看：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/MWeYYwb'\u0026gt;React counter use css class\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":211,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1068,8 +1068,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1090,7 +1091,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

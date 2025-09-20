@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>JSX 變數與表達式使用 - Railquill</title>
+    <title>JSX 變數與表達式使用 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="JSX 變數與表達式使用">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/jsx.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="JSX 變數與表達式使用">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"JSX 變數與表達式使用","description":"JSX 變數與表達式使用","url":"https://railquill.vercel.app/jsx.html","datePublished":"2020-09-26T22:33:07Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/jsx.html"},"articleBody":"經過上一回的 JSX 超入門，這一次一樣入門，不過從變數以及表達式開始。\n\n\n\n變數怎麼使用？\n先定義一個變數出來，例如 const word = 'PS5' ，接著在 ReactDOM 的第一個參數中使用，只要在變數名稱的外面包上一個大括號就可以使用了，例如：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/VwaRxwb'\u0026gt;React variable\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n表達式使用\n\n而在大括號中，除了可以放入變數以外，也可以放入表達式（關於表達式與陳述式這個話題，以後會專門開一個文章來說明）。\n\nconst num = 100;\nReactDOM.render(\n  \u0026lt;p\u0026gt;PS5 今天賣 {num * 100} 台了\u0026lt;/p\u0026gt;,\n  document.querySelector(\"#root\")\n); // 在畫面上就會呈現 PS5 今天賣 10000 台了\n\n\nJSX 的變數大致上就是這樣使用了，使用起來跟 Vue 的感覺有點像，雖然目前還不太習慣，總之就繼續練習下去吧！\n","wordCount":68,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"JSX 變數與表達式使用","description":"JSX 變數與表達式使用","url":"https://railquill.vercel.app/jsx.html","datePublished":"2020-09-26T22:33:07Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/jsx.html"},"articleBody":"經過上一回的 JSX 超入門，這一次一樣入門，不過從變數以及表達式開始。\n\n\n\n變數怎麼使用？\n先定義一個變數出來，例如 const word = 'PS5' ，接著在 ReactDOM 的第一個參數中使用，只要在變數名稱的外面包上一個大括號就可以使用了，例如：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/VwaRxwb'\u0026gt;React variable\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n表達式使用\n\n而在大括號中，除了可以放入變數以外，也可以放入表達式（關於表達式與陳述式這個話題，以後會專門開一個文章來說明）。\n\nconst num = 100;\nReactDOM.render(\n  \u0026lt;p\u0026gt;PS5 今天賣 {num * 100} 台了\u0026lt;/p\u0026gt;,\n  document.querySelector(\"#root\")\n); // 在畫面上就會呈現 PS5 今天賣 10000 台了\n\n\nJSX 的變數大致上就是這樣使用了，使用起來跟 Vue 的感覺有點像，雖然目前還不太習慣，總之就繼續練習下去吧！\n","wordCount":68,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1004,8 +1004,9 @@ ReactDOM.render(
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1026,7 +1027,7 @@ ReactDOM.render(
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

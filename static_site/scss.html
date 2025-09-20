@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SCSS 變數運用 - Railquill</title>
+    <title>SCSS 變數運用 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="SCSS 的變數運用、數值運算、字串使用、darken、lighten 的用法。">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/scss.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="SCSS 變數運用">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"SCSS 變數運用","description":"SCSS 的變數運用、數值運算、字串使用、darken、lighten 的用法。","url":"https://railquill.vercel.app/scss.html","datePublished":"2020-09-20T20:23:38Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/scss.html"},"articleBody":"說來慚愧，立志成為一名前端工程師的我，只會純 CSS 跟框架來幫網頁做樣式，對於 SASS 這個好用的語言工具卻是知道的不多，所以想趁有時間來學一下 SASS，就開了這個學習筆記系列。\n\n\n\n何謂 SASS？\n\n根據維基百科中介紹，SASS 全名為 Syntactically Awesome Style*s*heets，是一個將指令碼解析成 CSS 的手稿語言，也就是 SassScript。SASS 有兩種語法，一種是 SASS，另一種是 SCSS，那麼兩種有什麼差別呢？\n\n這是 SCSS 的寫法：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/OJNBqGK'\u0026gt;scss sample\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n這是 SASS 的寫法：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/XWdxGwe'\u0026gt;sass sample\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n跟普通的 CSS 相比，SCSS 是相對好入門的寫法，在相同架構下，例如 li 就可以寫在 ul 中，而且寫法差不多；而 SASS 看起來架構也一樣，差別在於完全沒有大括號跟分號，感覺很適合懶人的寫法。\n不過我似乎很少看到有人使用 SASS，也許是我孤陋寡聞，看的東西不夠多qq。所以為了避免未來協作實務上的困難，所以我之後的實用還是會以 SCSS 為主。\n\n變數運用\n\n前面稍微簡單介紹一下 SCSS 語法之間的差異，這裡就要來講一下 SCSS 好用的地方 - 變數。\n\n在寫 CSS 時，有時候會遇到文字或是區塊共用同樣的顏色，例如下方例子：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/JjXmVjZ'\u0026gt;same color\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n如果遇到需要改變顏色的需求時，可能就得要一個一個更換。\n不過在 SCSS 就可以運用到變數的概念，設定變數也很簡單，一個錢字符號加上變數的名稱，後面設定想要的效果，例如：\n\n// 設定字型大小\n$size-xl: 40px;\n// 設定字型顏色\n$font-color: red;\n\n.header {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n.content {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n.footer {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n\n以上就可以一口氣更換大量的效果，如果想要再改的話，只要變更變數的值就可以了，非常靈活。\n\nSCSS 變數做加減乘除好方便\n\n傳統 CSS 要做數值運算的話，得要透過 calc() 才能做到，不過在 SCSS 中的變數，很輕易的就可以做到跟一般的程式語言一樣的數值運算，例如：\n\n// 設定一個基準\n$font-m: 20px;\n// 將基準 * 2\n$font-l: $font-m * 2;\n\nh1 {\n  font-size: $font-l;\n}\n\np {\n  font-size: $font-m;\n}\n\n\n字串運用\n\n變數在 SCSS 中也可以做一般程式語言字串的使用，例如：\n\n@import url('https://fonts.googleapis.com/css2?family=Kufam\u0026amp;display=swap');\n$font-family-base: 'Kufam', cursive;\n\nh1 {\n  font-family: $font-family-base;\n}\n\np {\n  font-family: $font-family-base;\n}\n\n\n透過 darken、lighten 來調顏色\n\ndarken、lighten 是 SCSS 內建的功能，可以用來微調顏色，是一個非常有趣的功能，使用方法是 darken(orange, 10%);，這樣就可以將 orange 的顏色調深 10%，反之 lighten 就是調淺，例如：\n\n$bg-red: red;\n$bg-green: green;\n\nh1 {\n  background-color: lighten($bg-red, 30%);\n}\n\np {\n  background-color: darken($bg-green, 10%);\n}\n\nspan {\n  background-color: darken(orange, 10%);\n}\n\n","wordCount":265,"timeRequired":"PT2M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"SCSS 變數運用","description":"SCSS 的變數運用、數值運算、字串使用、darken、lighten 的用法。","url":"https://railquill.vercel.app/scss.html","datePublished":"2020-09-20T20:23:38Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/scss.html"},"articleBody":"說來慚愧，立志成為一名前端工程師的我，只會純 CSS 跟框架來幫網頁做樣式，對於 SASS 這個好用的語言工具卻是知道的不多，所以想趁有時間來學一下 SASS，就開了這個學習筆記系列。\n\n\n\n何謂 SASS？\n\n根據維基百科中介紹，SASS 全名為 Syntactically Awesome Style*s*heets，是一個將指令碼解析成 CSS 的手稿語言，也就是 SassScript。SASS 有兩種語法，一種是 SASS，另一種是 SCSS，那麼兩種有什麼差別呢？\n\n這是 SCSS 的寫法：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/OJNBqGK'\u0026gt;scss sample\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n這是 SASS 的寫法：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/XWdxGwe'\u0026gt;sass sample\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n跟普通的 CSS 相比，SCSS 是相對好入門的寫法，在相同架構下，例如 li 就可以寫在 ul 中，而且寫法差不多；而 SASS 看起來架構也一樣，差別在於完全沒有大括號跟分號，感覺很適合懶人的寫法。\n不過我似乎很少看到有人使用 SASS，也許是我孤陋寡聞，看的東西不夠多qq。所以為了避免未來協作實務上的困難，所以我之後的實用還是會以 SCSS 為主。\n\n變數運用\n\n前面稍微簡單介紹一下 SCSS 語法之間的差異，這裡就要來講一下 SCSS 好用的地方 - 變數。\n\n在寫 CSS 時，有時候會遇到文字或是區塊共用同樣的顏色，例如下方例子：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/JjXmVjZ'\u0026gt;same color\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n如果遇到需要改變顏色的需求時，可能就得要一個一個更換。\n不過在 SCSS 就可以運用到變數的概念，設定變數也很簡單，一個錢字符號加上變數的名稱，後面設定想要的效果，例如：\n\n// 設定字型大小\n$size-xl: 40px;\n// 設定字型顏色\n$font-color: red;\n\n.header {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n.content {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n.footer {\n  font-size: $size-xl;\n  color: $font-color;\n}\n\n\n以上就可以一口氣更換大量的效果，如果想要再改的話，只要變更變數的值就可以了，非常靈活。\n\nSCSS 變數做加減乘除好方便\n\n傳統 CSS 要做數值運算的話，得要透過 calc() 才能做到，不過在 SCSS 中的變數，很輕易的就可以做到跟一般的程式語言一樣的數值運算，例如：\n\n// 設定一個基準\n$font-m: 20px;\n// 將基準 * 2\n$font-l: $font-m * 2;\n\nh1 {\n  font-size: $font-l;\n}\n\np {\n  font-size: $font-m;\n}\n\n\n字串運用\n\n變數在 SCSS 中也可以做一般程式語言字串的使用，例如：\n\n@import url('https://fonts.googleapis.com/css2?family=Kufam\u0026amp;display=swap');\n$font-family-base: 'Kufam', cursive;\n\nh1 {\n  font-family: $font-family-base;\n}\n\np {\n  font-family: $font-family-base;\n}\n\n\n透過 darken、lighten 來調顏色\n\ndarken、lighten 是 SCSS 內建的功能，可以用來微調顏色，是一個非常有趣的功能，使用方法是 darken(orange, 10%);，這樣就可以將 orange 的顏色調深 10%，反之 lighten 就是調淺，例如：\n\n$bg-red: red;\n$bg-green: green;\n\nh1 {\n  background-color: lighten($bg-red, 30%);\n}\n\np {\n  background-color: darken($bg-green, 10%);\n}\n\nspan {\n  background-color: darken(orange, 10%);\n}\n\n","wordCount":265,"timeRequired":"PT2M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1095,8 +1095,9 @@ span {
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1117,7 +1118,7 @@ span {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

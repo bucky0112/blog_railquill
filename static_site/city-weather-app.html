@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>City Weather App 開發筆記 - Railquill</title>
+    <title>City Weather App 開發筆記 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/city-weather-app.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="City Weather App 開發筆記">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"City Weather App 開發筆記","description":"這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～","url":"https://railquill.vercel.app/city-weather-app.html","datePublished":"2020-09-26T16:41:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/city-weather-app.html"},"articleBody":"這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～\n\n\n\n天氣資料\n\n首先要找天氣資料來源，發現 Open Weather 有提供 API，不過要先去註冊申請拿到 API key 才能開始，註冊方面我就不多加解釋了。\n它有很多 API 可以玩，不過目前只需要拿到當前天氣狀況的資料，就選擇 Current Weather Data。\n\n\n這邊就直接跳到拿到 key 之後可以透過 API call 去拿資料：\n\n\n預設API call：https://api.openweathermap.org/data/2.5/weather?q={city name}\u0026amp;appid={API key}\n\n\nAPI call 的網址也可以試著加入想要的資料，例如：\n測量單位可以選：預設是 standard，選擇 metric ，溫度為攝氏，所以加上 \u0026amp;units=metric\n\n\n語系也可以選擇：http://api.openweathermap.org/data/2.5/weather?id=524901\u0026amp;lang=zh_tw\u0026amp;appid={API key}，但是只有顯示在 description\n\n\n就會得到以下資料是 json 格式：\n\n{\n    \"coord\": {\n        \"lon\": 121.53,\n        \"lat\": 25.05\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04d\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 299.54,  // 溫度。單位默認值：凱式\n        \"feels_like\": 302.86,\n        \"temp_min\": 298.71,\n        \"temp_max\": 300.15,\n        \"pressure\": 1011,\n        \"humidity\": 74\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 1.5,\n        \"deg\": 130\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1601011898,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 7949,\n        \"country\": \"TW\",\n        \"sunrise\": 1600983814,\n        \"sunset\": 1601027252\n    },\n    \"timezone\": 28800,\n    \"id\": 1668341,\n    \"name\": \"Taipei\",\n    \"cod\": 200\n}\n\n\n介紹功能\n\n拿到資料以後就可以來完成作品了，以下是我的簡單功能介紹：\n\n\n\n進入畫面直接顯示目前時間、溫度、天氣狀況，及最低到最高溫度。\n預設地點是台中。\n可搜尋城市，可透過輸入框鍵入地點（API 只提供英文），按 Enter 鍵或是按旁邊的按鈕都可以。\n如果輸入錯誤名稱就會跳提示，提醒你輸入錯了。\n\n\n後記\n\n目前大概是這些功能的小作品，未來如果想到什麼新的再加進去，或是發現哪邊需要改的 bug 再做修正。\n","wordCount":153,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"City Weather App 開發筆記","description":"這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～","url":"https://railquill.vercel.app/city-weather-app.html","datePublished":"2020-09-26T16:41:51Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/city-weather-app.html"},"articleBody":"這次單純使用 JavaScript 來串接 API 開發一個天氣小程式，也練習一下我的 SCSS，寫了一下英文文件發在 GitHub 上可以練習我的英文，這篇就稍微介紹一下我的開發過程吧～\n\n\n\n天氣資料\n\n首先要找天氣資料來源，發現 Open Weather 有提供 API，不過要先去註冊申請拿到 API key 才能開始，註冊方面我就不多加解釋了。\n它有很多 API 可以玩，不過目前只需要拿到當前天氣狀況的資料，就選擇 Current Weather Data。\n\n\n這邊就直接跳到拿到 key 之後可以透過 API call 去拿資料：\n\n\n預設API call：https://api.openweathermap.org/data/2.5/weather?q={city name}\u0026amp;appid={API key}\n\n\nAPI call 的網址也可以試著加入想要的資料，例如：\n測量單位可以選：預設是 standard，選擇 metric ，溫度為攝氏，所以加上 \u0026amp;units=metric\n\n\n語系也可以選擇：http://api.openweathermap.org/data/2.5/weather?id=524901\u0026amp;lang=zh_tw\u0026amp;appid={API key}，但是只有顯示在 description\n\n\n就會得到以下資料是 json 格式：\n\n{\n    \"coord\": {\n        \"lon\": 121.53,\n        \"lat\": 25.05\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04d\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 299.54,  // 溫度。單位默認值：凱式\n        \"feels_like\": 302.86,\n        \"temp_min\": 298.71,\n        \"temp_max\": 300.15,\n        \"pressure\": 1011,\n        \"humidity\": 74\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 1.5,\n        \"deg\": 130\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1601011898,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 7949,\n        \"country\": \"TW\",\n        \"sunrise\": 1600983814,\n        \"sunset\": 1601027252\n    },\n    \"timezone\": 28800,\n    \"id\": 1668341,\n    \"name\": \"Taipei\",\n    \"cod\": 200\n}\n\n\n介紹功能\n\n拿到資料以後就可以來完成作品了，以下是我的簡單功能介紹：\n\n\n\n進入畫面直接顯示目前時間、溫度、天氣狀況，及最低到最高溫度。\n預設地點是台中。\n可搜尋城市，可透過輸入框鍵入地點（API 只提供英文），按 Enter 鍵或是按旁邊的按鈕都可以。\n如果輸入錯誤名稱就會跳提示，提醒你輸入錯了。\n\n\n後記\n\n目前大概是這些功能的小作品，未來如果想到什麼新的再加進去，或是發現哪邊需要改的 bug 再做修正。\n","wordCount":153,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1065,8 +1065,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1087,7 +1088,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>

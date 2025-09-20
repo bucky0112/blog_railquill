@@ -1,7 +1,7 @@
 <!-- BEGIN app/views/layouts/static.html.erb --><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>學會 Mixin，讓你 SCSS 開發更快速 - Railquill</title>
+    <title>學會 Mixin，讓你 SCSS 開發更快速 - Bucky Chu | Railquill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     
@@ -11,7 +11,7 @@
       <meta name="description" content="如何使用 Mixin 來重複使用 CSS。">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Railquill">
+    <meta property="og:site_name" content="Bucky Chu | Railquill">
     <meta property="og:url" content="https://railquill.vercel.app/mixin-scss.html">
       <meta property="og:type" content="article">
       <meta property="og:title" content="學會 Mixin，讓你 SCSS 開發更快速">
@@ -32,7 +32,7 @@
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Railquill","url":null,"description":"Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and clean code.","publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"學會 Mixin，讓你 SCSS 開發更快速","description":"如何使用 Mixin 來重複使用 CSS。","url":"https://railquill.vercel.app/mixin-scss.html","datePublished":"2020-09-24T22:49:10Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/mixin-scss.html"},"articleBody":"以往自己在寫 CSS 時，多少會遇到想要寫某一個效果卻忘記怎麼開始，然後就需要上網找怎麼解決問題。當下雖然問題解決了，不過可能過沒多久，當遇到同樣問題時，又需要再去找解法，這時候 Mixin 就派上用場了。\n\n\n\n如何開始用 Mixin\n\n基本用法\n\nMixin 的用法我覺得有點像變數，只是差在變數只能給一個值，而 Mixin 則是把一個物件定義成一個變數，然後要用的時候再呼叫變數名稱就可以使用裡面的方法，就像下面的 CodePen：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/NWNowvB'\u0026gt;mixin demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n// 定義一個 @mixin，並給它一個名稱\n@mixin hide-text {\n    text-indent: 110%;\n    white-space: nowrap;\n    overflow: hidden;\n}\n\n// 要使用時，呼叫 @include 加上 mixin 名稱\n.h1 {\n    @include hide-text\n}\n\n\n帶入參數的用法\n\n這是比較進階的用法，用法跟 JavaScript 的函式蠻像的，可以帶入複數個參數，非常方便，寫 CSS 變的更像在寫一般程式語言了。\n\n// 下面有重複使用的部份\n.head {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n.main {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n.footer {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n\n// 可以帶入參數來更靈活使用\n@mixin p-style($p-size, $p-color) {\n  font-size: $p-size;\n  line-height: 2em;\n  color: $p-color;\n  margin: 15px;\n}\n\n.head {\n  @include p-style(20px, #677962);\n}\n\n.main {\n  @include p-style(30px, #933962);\n}\n\n.footer {\n  @include p-style(10px, #946809);\n}\n\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/gOrqooE'\u0026gt;mixin demo2\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":175,"timeRequired":"PT1M"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Bucky Chu | Railquill","url":null,"description":"From web applications to mobile apps and indie games, I love building across different platforms.  \r\nThis blog, built on **Railquill**, is my space to share insights, experiments, and the craft of writing clean, maintainable, and impactful software.\r\n","publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]}},{"@type":"Article","headline":"學會 Mixin，讓你 SCSS 開發更快速","description":"如何使用 Mixin 來重複使用 CSS。","url":"https://railquill.vercel.app/mixin-scss.html","datePublished":"2020-09-24T22:49:10Z","dateModified":"2025-09-19T17:23:22Z","author":{"@type":"Person","name":"Bucky Chu","url":"https://github.com/bucky0112"},"publisher":{"@type":"Organization","name":"Bucky Chu | Railquill","url":null,"logo":{"@type":"ImageObject","url":"/favicon.ico"},"contactPoint":{"@type":"ContactPoint","email":"bucky0112@gmail.com","contactType":"customer support"},"sameAs":["https://github.com/bucky0112/railquill","https://x.com/bucky0112"]},"mainEntityOfPage":{"@type":"WebPage","@id":"https://railquill.vercel.app/mixin-scss.html"},"articleBody":"以往自己在寫 CSS 時，多少會遇到想要寫某一個效果卻忘記怎麼開始，然後就需要上網找怎麼解決問題。當下雖然問題解決了，不過可能過沒多久，當遇到同樣問題時，又需要再去找解法，這時候 Mixin 就派上用場了。\n\n\n\n如何開始用 Mixin\n\n基本用法\n\nMixin 的用法我覺得有點像變數，只是差在變數只能給一個值，而 Mixin 則是把一個物件定義成一個變數，然後要用的時候再呼叫變數名稱就可以使用裡面的方法，就像下面的 CodePen：\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/NWNowvB'\u0026gt;mixin demo\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n\n// 定義一個 @mixin，並給它一個名稱\n@mixin hide-text {\n    text-indent: 110%;\n    white-space: nowrap;\n    overflow: hidden;\n}\n\n// 要使用時，呼叫 @include 加上 mixin 名稱\n.h1 {\n    @include hide-text\n}\n\n\n帶入參數的用法\n\n這是比較進階的用法，用法跟 JavaScript 的函式蠻像的，可以帶入複數個參數，非常方便，寫 CSS 變的更像在寫一般程式語言了。\n\n// 下面有重複使用的部份\n.head {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n.main {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n.footer {\n  font-size: 25px;\n  line-height: 2em;\n  color: #ff0999;\n  margin: 15px;\n}\n\n\n// 可以帶入參數來更靈活使用\n@mixin p-style($p-size, $p-color) {\n  font-size: $p-size;\n  line-height: 2em;\n  color: $p-color;\n  margin: 15px;\n}\n\n.head {\n  @include p-style(20px, #677962);\n}\n\n.main {\n  @include p-style(30px, #933962);\n}\n\n.footer {\n  @include p-style(10px, #946809);\n}\n\n\n\n  See the Pen \u0026lt;a href='https://codepen.io/bucky0112/pen/gOrqooE'\u0026gt;mixin demo2\u0026lt;/a\u0026gt; by Bucky Chu\n  (\u0026lt;a href='https://codepen.io/bucky0112'\u0026gt;@bucky0112\u0026lt;/a\u0026gt;) on \u0026lt;a href='https://codepen.io'\u0026gt;CodePen\u0026lt;/a\u0026gt;.\n\n","wordCount":175,"timeRequired":"PT1M"}]}
     </script>
     
     <!-- Canonical URL -->
@@ -864,7 +864,7 @@
     <header>
       <div class="container">
         <div class="header-content">
-            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Railquill</a></div>
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em;"><a href="/" style="color: var(--gray-900); text-decoration: none; transition: color 0.2s;">Bucky Chu | Railquill</a></div>
           <nav class="header-nav">
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -1060,8 +1060,9 @@
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <h3>About Railquill</h3>
-            <p>Thoughts on Ruby, Rails, and building beautiful web applications. Join me on this journey of continuous learning and ...</p>
+            <h3>About Bucky Chu | Railquill</h3>
+            <p>From web applications to mobile apps and indie games, I love building across different platforms.  
+This blog, built...</p>
           </div>
           <div class="footer-section">
             <h3>Quick Links</h3>
@@ -1082,7 +1083,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2025 Railquill. Built with Rails and love.</p>
+          <p>&copy; 2025 Bucky Chu | Railquill. Built with Rails and love.</p>
         </div>
       </div>
     </footer>
