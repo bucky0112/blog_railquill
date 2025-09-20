@@ -17,7 +17,7 @@ class StaticSiteGenerator
     FileUtils.mkdir_p(output_dir)
 
     # Get published posts
-    posts = Post.published.order(created_at: :desc)
+    posts = Post.published_ordered
 
     # Generate index page
     Rails.logger.info "Generating index page..."
