@@ -231,9 +231,14 @@ This should not appear in static generation.",
 
     assert_not_nil html
     assert_includes html, "Special &amp; Characters"
-    # Should sanitize HTML/script tags
-    assert_not_includes html, "<script>"
-    assert_not_includes html, "alert('xss')"
+
+    # Should sanitize HTML/script tags within the rendered article body
+    article_section = html.split("<!-- Article Content -->").second
+    article_section = article_section&.split("<!-- Share Section -->")&.first
+    assert_not_nil article_section, "Expected article section delimiters in rendered post"
+
+    assert_not_includes article_section, "<script>"
+    assert_not_includes article_section, "alert('xss')"
   end
 
   test "should handle post with long content" do

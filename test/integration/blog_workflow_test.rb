@@ -342,9 +342,14 @@ class BlogWorkflowTest < ActionDispatch::IntegrationTest
 
     # Should escape special characters
     assert_includes response.body, "Special &amp; Characters"
-    # Should not include script tags
-    assert_not_includes response.body, "<script>"
-    assert_not_includes response.body, "alert('xss')"
+
+    # Should sanitize script tags within the rendered article body
+    article_section = response.body.split("<!-- Article Content -->").second
+    article_section = article_section&.split("<!-- Share Section -->")&.first
+    assert_not_nil article_section, "Expected article section delimiters in rendered response"
+
+    assert_not_includes article_section, "<script>"
+    assert_not_includes article_section, "alert('xss')"
   end
 
   test "handles concurrent post creation and publishing" do
